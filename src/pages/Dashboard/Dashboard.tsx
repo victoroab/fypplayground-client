@@ -9,6 +9,8 @@ import {
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import { CChart } from '@coreui/react-chartjs'
+import { Axios } from '../../config/axios'
 
 const events = [{ title: 'Meeting', start: new Date() }]
 
@@ -21,20 +23,25 @@ const Dashboard = () => {
       </>
     )
   }
+
   return (
     <div className="flex flex-col">
-      <div className="flex gap-4 mb-4">
-        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-6">
-          <span className="mb-4 text-lg text-gray-900 font-bold">Menor</span>
-          <div className="flex justify-center mb-4 border rounded-2xl shadow-lg items-center gap-5 p-4">
-            <Avatar rounded={true} />
+      <div className="flex gap-4 mb-4 h-72">
+        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-4">
+          <span className="mb-4 text-lg text-gray-900 font-bold">My Menor</span>
+          <div className="flex flex-col w-56 justify-center mb-4 border rounded-2xl shadow-lg items-center gap-4 p-2">
+            <Avatar size="lg" />
             <span className="font-bold flex flex-col">
               Victor Balogun
-              <span className="text-sm font-semibold">MIS 400 Level</span>
+              <span className="text-sm m-auto font-semibold">
+                MIS 400 Level
+              </span>
             </span>
             <Button
               size="xs"
-              className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black"
+              // className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black hover:border-black"
+              color={'dark'}
+              outline={true}
             >
               View
             </Button>
@@ -43,7 +50,26 @@ const Dashboard = () => {
 
         <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-6 w-[48rem]"></div>
 
-        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-6 w-[20rem]"></div>
+        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-2 w-[20rem]">
+          <span className="mb-4 text-lg text-gray-900 font-bold">
+            Tasks Overview
+          </span>
+
+          <CChart
+            type="pie"
+            height={250}
+            width={200}
+            data={{
+              labels: ['completed', 'pending'],
+              datasets: [
+                {
+                  backgroundColor: ['#34495E', '#85929E'],
+                  data: [60, 40],
+                },
+              ],
+            }}
+          />
+        </div>
       </div>
 
       <div className="flex gap-4 mb-4">
@@ -52,12 +78,38 @@ const Dashboard = () => {
             Tasks
           </span>
           <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l font-bold tracking-tight text-gray-900 dark:text-white">
-              <Checkbox className="mr-6" />
-              Noteworthy technology acquisitions 2021
+            <span className="text-l flex items-center justify-around font-bold tracking-tight text-gray-900 dark:text-white">
+              Noteworthy technology acquisitions
+              <Button size="xs" color="dark" outline={true}>
+                View
+              </Button>
             </span>
           </Card>
           <Card className="h-16 mb-4 hover:bg-gray-50">
+            <span className="text-l flex items-center justify-around font-bold tracking-tight text-gray-900 dark:text-white">
+              Noteworthy technology acquisitions
+              <Button size="xs" color="dark" outline={true}>
+                View
+              </Button>
+            </span>
+          </Card>
+          <Card className="h-16 mb-4 hover:bg-gray-50">
+            <span className="text-l flex items-center justify-around font-bold tracking-tight text-gray-900 dark:text-white">
+              Noteworthy technology acquisitions
+              <Button size="xs" color="dark" outline={true}>
+                View
+              </Button>
+            </span>
+          </Card>
+          <Card className="h-16 mb-4 hover:bg-gray-50">
+            <span className="text-l flex items-center justify-around font-bold tracking-tight text-gray-900 dark:text-white">
+              Noteworthy technology acquisitions
+              <Button size="xs" color="dark" outline={true}>
+                View
+              </Button>
+            </span>
+          </Card>
+          {/* <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l font-bold tracking-tight text-gray-900 dark:text-white">
               <Checkbox className="mr-6" color="dark" />
               Noteworthy technology acquisitions 2021
@@ -86,14 +138,16 @@ const Dashboard = () => {
               <Checkbox className="mr-6" />
               Noteworthy technology acquisitions 2021
             </span>
-          </Card>
+          </Card> */}
         </div>
 
         <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-[60rem] flex-col p-6 overflow-y-scroll">
+          <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
+            Calendar & Events
+          </span>
           <FullCalendar
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
-            weekends={false}
             events={events}
             eventContent={renderEventContent}
           />

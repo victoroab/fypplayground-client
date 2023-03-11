@@ -19,6 +19,7 @@ import {
 } from 'react-icons/hi'
 import { BiBuoy } from 'react-icons/bi'
 import { useState, useEffect } from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 type Props = {
   rootLocation: string | undefined | null
@@ -138,7 +139,8 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
 
               <Link to="/workspace/search-mentors">
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
-                  <HiUser className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <AiOutlineSearch className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+
                   <span className="ml-3">Search Mentors</span>
                 </li>
               </Link>
