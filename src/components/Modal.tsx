@@ -9,8 +9,6 @@ const Modal = (props: Props) => {
   return (
     <>
       <button
-        // data-modal-target="defaultModal"
-        // data-modal-toggle="defaultModal"
         className="text-blue-300 bg-gray-900 hover:bg-slate-700 focus:outline-none  font-medium rounded-lg text-xs px-5 py-2.5 mr-2 mb-2"
         type="button"
         onClick={() => {

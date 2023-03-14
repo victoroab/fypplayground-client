@@ -17,9 +17,14 @@ import {
   HiTable,
   HiOutlineExclamationCircle,
 } from 'react-icons/hi'
+import { RxActivityLog } from 'react-icons/rx'
+import { RxDashboard } from 'react-icons/rx'
+import { TbNotification } from 'react-icons/tb'
+import { IoSettingsOutline } from 'react-icons/io5'
+import { VscSignOut } from 'react-icons/vsc'
 import { BiBuoy } from 'react-icons/bi'
-import { useState, useEffect } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { useState, useEffect } from 'react'
 
 type Props = {
   rootLocation: string | undefined | null
@@ -123,21 +128,27 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
         >
           <Sidebar.Items className="h-full px-3 pb-4 overflow-y-auto">
             <Sidebar.ItemGroup>
-              <Link to="/workspace">
+              <Link to="/workspace" onClick={() => setShowSide(false)}>
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-12 mb-2">
-                  <HiChartPie className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <RxDashboard className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Dashboard</span>
                 </li>
               </Link>
 
-              <Link to="/workspace/activities">
+              <Link
+                to="/workspace/activities"
+                onClick={() => setShowSide(false)}
+              >
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
-                  <HiShoppingBag className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <RxActivityLog className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Activities</span>
                 </li>
               </Link>
 
-              <Link to="/workspace/search-mentors">
+              <Link
+                to="/workspace/search-mentors"
+                onClick={() => setShowSide(false)}
+              >
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
                   <AiOutlineSearch className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
 
@@ -145,25 +156,31 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 </li>
               </Link>
 
-              <Link to="/workspace/mentorship-requests">
+              <Link
+                to="/workspace/mentorship-requests"
+                onClick={() => setShowSide(false)}
+              >
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
-                  <HiInbox className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <TbNotification className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Mentorship Requests</span>
                 </li>
               </Link>
 
-              <Link to="/workspace/settings">
+              <Link to="/workspace/settings" onClick={() => setShowSide(false)}>
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
-                  <HiTable className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <IoSettingsOutline className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Settings</span>
                 </li>
               </Link>
 
               <li
                 className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2"
-                onClick={onclick}
+                onClick={() => {
+                  onclick()
+                  setShowSide(false)
+                }}
               >
-                <HiArrowSmRight className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                <VscSignOut className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                 <span className="ml-3">Sign Out</span>
               </li>
             </Sidebar.ItemGroup>

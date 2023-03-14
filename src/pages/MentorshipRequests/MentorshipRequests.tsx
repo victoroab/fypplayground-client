@@ -1,6 +1,5 @@
 import { Alert, Avatar, Button, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 import { Axios } from '../../config/axios'
 
 type MentorRequestData = {

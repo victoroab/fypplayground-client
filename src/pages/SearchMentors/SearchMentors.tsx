@@ -200,6 +200,9 @@ const SearchMentors = () => {
           <Table.HeadCell>
             <span className="sr-only">View</span>
           </Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">View</span>
+          </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {mentors.map((mentor, id) => (
@@ -254,6 +257,11 @@ const SearchMentors = () => {
           <Table.HeadCell>Email</Table.HeadCell>
           <Table.HeadCell>Course</Table.HeadCell>
           <Table.HeadCell>Matric No</Table.HeadCell>
+          <Table.HeadCell>Compatibiliy Score</Table.HeadCell>
+
+          <Table.HeadCell>
+            <span className="sr-only">Edit</span>
+          </Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
@@ -269,6 +277,7 @@ const SearchMentors = () => {
             <Table.Cell>Sliver</Table.Cell>
             <Table.Cell>Laptop</Table.Cell>
             <Table.Cell>$2999</Table.Cell>
+            <Table.Cell>12</Table.Cell>
             <Table.Cell>
               <Button
                 size="xs"
@@ -293,6 +302,7 @@ const SearchMentors = () => {
             <Table.Cell>White</Table.Cell>
             <Table.Cell>Laptop PC</Table.Cell>
             <Table.Cell>$1999</Table.Cell>
+            <Table.Cell>10</Table.Cell>
             <Table.Cell>
               <Button
                 size="xs"
@@ -311,11 +321,11 @@ const SearchMentors = () => {
       </Table>
       <Tooltip
         placement="left"
-        content="Shows your 2 most compatible mentors based on the matching system"
+        content="Shows the 2 most compatible mentors for you based on the matching system"
       >
         <Button className="mt-6 mb-4" color="dark" outline={true}>
           <AiOutlineSearch className="mr-2 h-5 w-5 text-gray-600" />
-          Use Automated Matching
+          Find Match
         </Button>
       </Tooltip>
     </div>

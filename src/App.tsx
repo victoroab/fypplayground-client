@@ -7,7 +7,9 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import MyMentor from './pages/MyMentor/MyMentor'
 import SearchMentors from './pages/SearchMentors/SearchMentors'
 import MentorshipRequests from './pages/MentorshipRequests/MentorshipRequests'
+import MentorsRequests from './pages/MentorshipRequests/MentorsRequests'
 import Settings from './pages/Settings/Settings'
+import Mentees from './pages/Mentees/Mentees'
 
 function App() {
   const [rootLocation, setRootLocation] = useState<string | null>()
@@ -34,15 +36,17 @@ function App() {
         />
       ),
       children: [
-        { path: '/workspace', element: <Dashboard />, index: true },
+        { path: '/workspace', element: <Dashboard />, index: true }, // Reuse Route
         { path: '/workspace/my-mentor', element: <MyMentor /> },
         { path: '/workspace/search-mentors', element: <SearchMentors /> },
         {
-          path: '/workspace/mentorship-requests',
-          element: <MentorshipRequests />,
+          path: '/workspace/mentorship-requests', // Reuse Route
+          element: <MentorsRequests />,
         },
-        { path: '/workspace/activities', element: <div>Yo</div> },
-        { path: '/workspace/settings', element: <Settings /> },
+        { path: '/workspace/activities', element: <div>Yo</div> }, // Reuse Route
+        { path: '/workspace/settings', element: <Settings /> }, // Reuse Route
+        { path: '/workspace/my-mentees', element: <Mentees /> },
+        { path: '/workspace/:menteeId', element: <div>Individual Mentee</div> },
       ],
     },
   ])
