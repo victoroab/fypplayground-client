@@ -7,6 +7,7 @@ import {
   Textarea,
   TextInput,
   Tooltip,
+  Carousel,
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -46,13 +47,13 @@ const Dashboard = () => {
           </div>
         </div> */}
 
-        <div className="flex flex-col justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
+        <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
           <span className="mb-8 text-lg text-gray-900 font-bold">
             Menorship Details
           </span>
 
-          <div className="flex self-start justify-around">
-            <div className="flex flex-col self-start mr-6">
+          <div className="flex self-start w-full justify-around">
+            <div className="flex flex-col w-full self-start mr-6">
               <span className="font-semibold self-center mb-2">Mentor</span>
               <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
                 <Avatar size="lg" rounded={true} />
@@ -60,19 +61,19 @@ const Dashboard = () => {
                   Victor Balogun
                   <span className="text-sm font-semibold">MIS 400 Level</span>
                 </span>
-                <Button
+                {/* <Button
                   size="xs"
                   className="mb-2"
                   color={'dark'}
                   outline={true}
                 >
                   View
-                </Button>
+                </Button> */}
               </div>
             </div>
-            <div className="flex flex-col self-start">
+            <div className="flex flex-col w-full self-start">
               <span className="font-semibold self-center mb-2">Duration</span>
-              <div className="flex flex-col justify-center mb-2 border rounded-2xl shadow-lg items-start gap-4 p-4">
+              <div className="flex flex-col justify-center mb-2 border rounded-2xl shadow-lg items-start gap-4 p-4 h-28">
                 <div className="flex">
                   <span className="font-bold mr-2">Period: </span>
                   <span className="font-semibold flex flex-col items-start justify-center">
@@ -95,7 +96,7 @@ const Dashboard = () => {
           </span> */}
         </div>
 
-        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-2  mr-6">
+        <div className="flex flex-col w-1/2 items-center rounded-2xl bg-white dark:bg-gray-100 p-2 mr-6">
           <span className="mb-4 text-lg text-gray-900 font-bold">
             Tasks Overview
           </span>
@@ -116,7 +117,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-4 w-[36rem]">
+        <div className="flex flex-col w-full items-center rounded-2xl bg-white dark:bg-gray-100 p-4">
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
           <span className="mb-4 text-md text-gray-900 font-semibold">
             Please Engage

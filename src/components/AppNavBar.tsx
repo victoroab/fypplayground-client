@@ -10,13 +10,9 @@ import {
 import {
   HiChartPie,
   HiViewBoards,
-  HiInbox,
-  HiUser,
-  HiShoppingBag,
-  HiArrowSmRight,
-  HiTable,
   HiOutlineExclamationCircle,
 } from 'react-icons/hi'
+import { FiMessageSquare } from 'react-icons/fi'
 import { RxActivityLog } from 'react-icons/rx'
 import { RxDashboard } from 'react-icons/rx'
 import { TbNotification } from 'react-icons/tb'
@@ -129,9 +125,9 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
           <Sidebar.Items className="h-full px-3 pb-4 overflow-y-auto">
             <Sidebar.ItemGroup>
               <Link to="/workspace" onClick={() => setShowSide(false)}>
-                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-12 mb-2">
+                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-12 mb-2">
                   <RxDashboard className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
-                  <span className="ml-3">Dashboard</span>
+                  <span className="ml-3">Home</span>
                 </li>
               </Link>
 
@@ -139,9 +135,9 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 to="/workspace/activities"
                 onClick={() => setShowSide(false)}
               >
-                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
-                  <RxActivityLog className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
-                  <span className="ml-3">Activities</span>
+                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
+                  <FiMessageSquare className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
+                  <span className="ml-3">Messages</span>
                 </li>
               </Link>
 
@@ -149,7 +145,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 to="/workspace/search-mentors"
                 onClick={() => setShowSide(false)}
               >
-                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
+                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
                   <AiOutlineSearch className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
 
                   <span className="ml-3">Search Mentors</span>
@@ -160,21 +156,21 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 to="/workspace/mentorship-requests"
                 onClick={() => setShowSide(false)}
               >
-                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
+                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
                   <TbNotification className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Mentorship Requests</span>
                 </li>
               </Link>
 
               <Link to="/workspace/settings" onClick={() => setShowSide(false)}>
-                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2">
+                <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
                   <IoSettingsOutline className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Settings</span>
                 </li>
               </Link>
 
               <li
-                className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-black hover:text-white group mt-2 mb-2"
+                className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2"
                 onClick={() => {
                   onclick()
                   setShowSide(false)
