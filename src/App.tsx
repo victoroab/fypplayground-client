@@ -12,6 +12,7 @@ import Settings from './pages/Settings/Settings'
 import Mentees from './pages/Mentees/Mentees'
 import MentorDashboard from './pages/Dashboard/MentorDashboard'
 import MenteesTable from './pages/Mentees/MenteesTable'
+import Messages from './pages/Messages/Messages'
 
 function App() {
   const [rootLocation, setRootLocation] = useState<string | null>()
@@ -45,7 +46,7 @@ function App() {
           path: '/workspace/mentorship-requests', // Reuse Route
           element: <MentorsRequests />,
         },
-        { path: '/workspace/activities', element: <div>Yo</div> }, // Reuse Route
+        { path: '/workspace/activities', element: <Messages /> }, // Reuse Route
         { path: '/workspace/settings', element: <Settings /> }, // Reuse Route
         { path: '/workspace/my-mentees', element: <MenteesTable /> },
         { path: '/workspace/:menteeId', element: <Mentees /> },

@@ -33,20 +33,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex mb-4 h-72">
-        {/* <div className="flex flex-col items-center rounded-2xl bg-white dark:bg-gray-100 p-4">
-          <span className="mb-4 text-lg text-gray-900 font-bold">My Menor</span>
-          <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-4 p-2">
-            <Avatar size="lg" rounded={true} />
-            <span className="font-bold flex flex-col items-start justify-center">
-              Victor Balogun
-              <span className="text-sm font-semibold">MIS 400 Level</span>
-            </span>
-            <Button size="xs" className="mb-2" color={'dark'} outline={true}>
-              View
-            </Button>
-          </div>
-        </div> */}
-
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
           <span className="mb-8 text-lg text-gray-900 font-bold">
             Menorship Details
@@ -54,24 +40,38 @@ const Dashboard = () => {
 
           <div className="flex self-start w-full justify-around">
             <div className="flex flex-col w-full self-start mr-6">
-              <span className="font-semibold self-center mb-2">Mentor</span>
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
-                <Avatar size="lg" rounded={true} />
-                <span className="font-bold flex flex-col items-start justify-center">
-                  Victor Balogun
-                  <span className="text-sm font-semibold">MIS 400 Level</span>
+              <div className="flex flex-col justify-start mb-2 border rounded-2xl shadow-lg items-start p-4 pt-2">
+                <span className="font-bold self-center mb-3">Mentor</span>
+
+                <div className="flex gap-4 justify-start items-center">
+                  <Avatar size="md" rounded={true} />
+                  <span className="flex flex-col items-start gap-3">
+                    <div className="flex gap-4">
+                      <span className="font-bold">Name:</span>
+                      <span className="font-semibold">Victor Balogun</span>
+                      <span className="font-bold">Course:</span>
+                      <span className="font-semibold">MIS</span>
+                    </div>
+                    <div className="flex gap-4">
+                      <span className="font-bold">Level:</span>
+                      <span className="font-semibold">400</span>
+                      <span className="font-bold">Matric No:</span>
+                      <span className="font-semibold">19CH026505</span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div className="flex justify-between mt-6">
+                <span className="font-bold flex gap-3 items-start justify-center mr-2">
+                  Duration: <span className="font-semibold ">3 Months</span>{' '}
                 </span>
-                {/* <Button
-                  size="xs"
-                  className="mb-2"
-                  color={'dark'}
-                  outline={true}
-                >
-                  View
-                </Button> */}
+
+                <span className="font-bold flex gap-3 items-start justify-center mr-2">
+                  Time Left: <span className="font-semibold ">3 Months</span>{' '}
+                </span>
               </div>
             </div>
-            <div className="flex flex-col w-full self-start">
+            {/* <div className="flex flex-col w-full self-start">
               <span className="font-semibold self-center mb-2">Duration</span>
               <div className="flex flex-col justify-center mb-2 border rounded-2xl shadow-lg items-start gap-4 p-4 h-28">
                 <div className="flex">
@@ -87,7 +87,7 @@ const Dashboard = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* <span>
@@ -96,8 +96,8 @@ const Dashboard = () => {
           </span> */}
         </div>
 
-        <div className="flex flex-col w-1/2 items-center rounded-2xl bg-white dark:bg-gray-100 p-2 mr-6">
-          <span className="mb-4 text-lg text-gray-900 font-bold">
+        <div className="flex flex-col w-1/2 items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
+          <span className="mb-2 text-lg text-gray-900 font-bold">
             Tasks Overview
           </span>
 
@@ -117,7 +117,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="flex flex-col w-full items-center rounded-2xl bg-white dark:bg-gray-100 p-4">
+        <div className="flex flex-col w-full items-center rounded-2xl bg-white dark:bg-gray-100 p-6">
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
           <span className="mb-4 text-md text-gray-900 font-semibold">
             Please Engage

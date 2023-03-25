@@ -1,6 +1,6 @@
 ## To-Do
 
-- [] Create Mentor UI
+- [x] Create Mentor UI
 - [] Create Registration and Login pages
 - [] Create UI for messaging (Activities page)
 - [] Integrate Mentor endpoints
