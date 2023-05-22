@@ -137,7 +137,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
               >
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
                   <FiMessageSquare className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
-                  <span className="ml-3">Messages</span>
+                  <span className="ml-3">Actions</span>
                 </li>
               </Link>
 

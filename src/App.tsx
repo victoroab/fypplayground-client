@@ -44,12 +44,12 @@ function App() {
         { path: '/workspace/search-mentors', element: <SearchMentors /> },
         {
           path: '/workspace/mentorship-requests', // Reuse Route
-          element: <MentorsRequests />,
+          element: <MentorshipRequests />, //<MentorRquests />
         },
         { path: '/workspace/activities', element: <Messages /> }, // Reuse Route
         { path: '/workspace/settings', element: <Settings /> }, // Reuse Route
         { path: '/workspace/my-mentees', element: <MenteesTable /> },
-        { path: '/workspace/:menteeId', element: <Mentees /> },
+        { path: '/workspace/my-mentees/:menteeId', element: <Mentees /> },
       ],
     },
   ])

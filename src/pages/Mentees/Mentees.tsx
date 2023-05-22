@@ -1,10 +1,14 @@
-import { Table, Avatar, Button, Card, Checkbox } from 'flowbite-react'
+import { Avatar, Badge, Button, Card, Checkbox, Tooltip } from 'flowbite-react'
 import { CChart } from '@coreui/react-chartjs'
+import { HiCheck } from 'react-icons/hi'
 
 const Mentees = () => {
   return (
     <div className="min-h-screen">
       <div className="flex mb-4 flex-col">
+        <span className="self-center font-bold text-2xl mb-4 text-slate-700 ">
+          Student Information
+        </span>
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-4 mr-6">
           <div className="flex flex-col w-full self-start mr-6">
             <span className="flex self-center font-bold mb-4">Bio</span>
@@ -12,27 +16,52 @@ const Mentees = () => {
               <Avatar size="lg" />
               <div className="flex flex-col gap-3 justify-start items-start">
                 <span className="font-bold ">
-                  Name: Victor Oluwaseyi Balogun
+                  Name:{' '}
+                  <span className="font-semibold">
+                    Victor Oluwaseyi Balogun
+                  </span>
                 </span>
-                <span className="font-bold">Course: MIS</span>
-                <span className="font-bold">Level: 400 </span>
-              </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold ">Matric No: 19CH026505</span>
-                <span className="font-bold">Email: papioab@gmail.com</span>
-                <span className="font-bold">Gender: Male </span>
-              </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold">Ethnicity: Yoruba </span>
-                <span className="font-bold">Hobbies: Cooking</span>
-                <span className="font-bold">Skills: Fullstack Dev</span>
-              </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold">Class: First </span>
                 <span className="font-bold">
-                  Days Available: Mon Tue Wed Thu Fri Sat
+                  Course: <span className="font-semibold">MIS</span>
                 </span>
-                <span className="font-bold">Phone No: 123456789</span>
+                <span className="font-bold">
+                  Level: <span className="font-semibold">400</span>
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 justify-start items-start">
+                <span className="font-bold ">
+                  Matric No: <span className="font-semibold">19CH026505</span>
+                </span>
+                <span className="font-bold">
+                  Email:{' '}
+                  <span className="font-semibold">papioab@gmail.com</span>
+                </span>
+                <span className="font-bold">
+                  Gender: <span className="font-semibold">Male</span>{' '}
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 justify-start items-start">
+                <span className="font-bold">
+                  Ethnicity: <span className="font-semibold">Yoruba</span>{' '}
+                </span>
+                <span className="font-bold">
+                  Hobbies: <span className="font-semibold">Cooking</span>
+                </span>
+                <span className="font-bold">
+                  Skills: <span className="font-semibold">Fullstack Dev</span>
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 justify-start items-start">
+                <span className="font-bold">
+                  Class: <span className="font-semibold">First</span>{' '}
+                </span>
+                <span className="font-bold">
+                  Days Available:{' '}
+                  <span className="font-semibold">Mon Tue Wed Thu Fri Sat</span>
+                </span>
+                <span className="font-bold">
+                  Phone No: <span className="font-semibold">123456789</span>
+                </span>
               </div>
             </div>
           </div>
@@ -97,7 +126,9 @@ const Mentees = () => {
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Checkbox defaultChecked={true} disabled />
+                  <Tooltip content="complete">
+                    <Badge color="gray" size="sm" icon={HiCheck} />
+                  </Tooltip>
                 </span>
               </Card>
               <Card className="h-16 mb-4 hover:bg-gray-50">
@@ -115,7 +146,7 @@ const Mentees = () => {
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Checkbox defaultChecked={true} disabled />
+                  <Badge color="gray" size="sm" icon={HiCheck} />
                 </span>
               </Card>
             </div>
