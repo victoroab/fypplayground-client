@@ -24,11 +24,19 @@ function App() {
       ),
       children: [
         {
-          path: '/',
+          // path: '/',
           element: <Home />,
           index: true,
         },
       ],
+    },
+    {
+      path: '/hi',
+      element: (
+        <div>
+          <h2>HELLO VICTOR</h2>
+        </div>
+      ),
     },
     {
       path: '/workspace',
@@ -39,7 +47,7 @@ function App() {
         />
       ),
       children: [
-        { path: '/workspace', element: <Dashboard />, index: true }, // Reuse Route
+        { element: <Dashboard />, index: true }, // Reuse Route
         { path: '/workspace/my-mentor', element: <MyMentor /> },
         { path: '/workspace/search-mentors', element: <SearchMentors /> },
         {
