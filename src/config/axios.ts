@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const Axios = axios.create({
-  baseURL: 'https://foregoing-thing-production.up.railway.app/api',
+  baseURL: 'https://fyp-playground-server-1.herokuapp.com/',
 })
