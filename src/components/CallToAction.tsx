@@ -71,14 +71,11 @@ const CallToAction = ({ setVisible }: Props) => {
               className="flex flex-wrap justify-center gap-6"
               onClick={toggleModal}
             >
-              <a
-                href="#"
-                className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-              >
+              <span className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
                 <span className="relative text-base font-semibold text-dark">
                   Get Started
                 </span>
-              </a>
+              </span>
               <a
                 href="#"
                 className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-primary/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 before:border-gray-700 before:bg-gray-800 sm:w-max"

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import AppNavBar from './components/AppNavBar'
+import AppNavBar from './components/AppLayout'
 import Home from './pages/Home/Home'
 import Root from './pages/Root/Root'
 import Dashboard from './pages/Dashboard/Dashboard'
@@ -13,9 +13,9 @@ import Mentees from './pages/Mentees/Mentees'
 import MentorDashboard from './pages/Dashboard/MentorDashboard'
 import MenteesTable from './pages/Mentees/MenteesTable'
 import Messages from './pages/Messages/Messages'
+import AppLayout from './components/AppLayout'
 
 function App() {
-  const [rootLocation, setRootLocation] = useState<string | null>()
   const router = createBrowserRouter([
     {
       path: '/',
@@ -38,12 +38,7 @@ function App() {
     },
     {
       path: '/workspace',
-      element: (
-        <AppNavBar
-          rootLocation={rootLocation}
-          setRootLocation={setRootLocation}
-        />
-      ),
+      element: <AppLayout />,
       children: [
         { element: <Dashboard />, index: true }, // Reuse Route
         { path: '/workspace/my-mentor', element: <MyMentor /> },

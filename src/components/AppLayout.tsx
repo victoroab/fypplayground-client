@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import {
   Navbar,
   Dropdown,
@@ -20,20 +20,9 @@ import { IoSettingsOutline } from 'react-icons/io5'
 import { VscSignOut } from 'react-icons/vsc'
 import { BiBuoy } from 'react-icons/bi'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-type Props = {
-  rootLocation: string | undefined | null
-  setRootLocation: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >
-}
-
-const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
-  // const [rootLocation, setRootLocation] = useState<string | null>(null)
-
-  // console.log(rootLocation)
-
+const AppLayout = () => {
   const [showSide, setShowSide] = useState(false)
   const [visible, setVisible] = useState(false)
 
@@ -174,7 +163,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
               </Link>
 
               <li
-                className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2"
+                className="flex cursor-pointer items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2"
                 onClick={() => {
                   onclick()
                   setShowSide(false)
@@ -184,7 +173,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 <span className="ml-3">Sign Out</span>
               </li>
             </Sidebar.ItemGroup>
-            <Sidebar.ItemGroup>
+            <Sidebar.ItemGroup className="cursor-pointer">
               <Sidebar.Item icon={HiViewBoards}>Documentation</Sidebar.Item>
               <Sidebar.Item icon={BiBuoy}>Help</Sidebar.Item>
             </Sidebar.ItemGroup>
@@ -199,7 +188,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
     </main>
   )
 }
-export default AppNavBar
+export default AppLayout
 
 {
   /* className=

@@ -1,8 +1,40 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Modal } from 'flowbite-react'
 
 const Navbar = () => {
+  const [visible, setVisible] = useState<boolean>(false)
+
+  const onclick = () => {
+    setVisible(true)
+  }
+
+  const onclose = () => {
+    setVisible(false)
+  }
+
   return (
     <header>
+      <Modal show={visible} size="lg" popup={true} onClose={onclose}>
+        <Modal.Header className="bg-gray-800"></Modal.Header>
+        <Modal.Body className="bg-gray-800">
+          <div className="text-center">
+            {/* <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-200 dark:text-gray-200" /> */}
+            <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
+              Click on 'Sign up' to register an account, click on 'Login' to
+              login into your account
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button className="bg-primary" onClick={onclose}>
+                Sign up
+              </Button>
+              <Button color="gray" onClick={onclose}>
+                Login
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       <nav className="z-10 w-full absolute">
         <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
           <div className="flex flex-wrap items-center justify-between py-2 gap-6 md:py-4 md:gap-0 relative">
@@ -105,15 +137,12 @@ const Navbar = () => {
                 </ul>
               </div>
 
-              <div className="mt-12 lg:mt-0">
-                <a
-                  href="#"
-                  className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-                >
+              <div className="mt-12 lg:mt-0 cursor-pointer" onClick={onclick}>
+                <span className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
                   <span className="relative text-sm font-semibold text-white">
                     Get Started
                   </span>
-                </a>
+                </span>
               </div>
             </div>
           </div>

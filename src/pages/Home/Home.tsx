@@ -7,12 +7,12 @@ import { Button, Modal } from 'flowbite-react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 const Home = () => {
-  const [showSide, setShowSide] = useState<boolean>(false)
-  const [visible, setVisible] = useState<boolean>(false)
+  // const [showSide, setShowSide] = useState<boolean>(false)
 
-  const onclick = () => {
-    setVisible(true)
-  }
+  // const onclick = () => {
+  //   setVisible(true)
+  // }
+  const [visible, setVisible] = useState<boolean>(false)
   const onclose = () => {
     setVisible(false)
   }
