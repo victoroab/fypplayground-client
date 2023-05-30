@@ -37,13 +37,12 @@ const Dashboard = () => {
           <span className="mb-8 text-lg text-gray-900 font-bold">
             Menorship Details
           </span>
-
           <div className="flex self-start w-full justify-around">
             <div className="flex flex-col w-full self-start mr-6">
               <div className="flex flex-col justify-start mb-2 border rounded-2xl shadow-lg items-start p-4 pt-2">
                 <span className="font-bold self-center mb-3">Mentor</span>
 
-                <div className="flex gap-4 justify-start items-center">
+                {/* <div className="flex gap-4 justify-start items-center">
                   <Avatar size="md" rounded={true} />
                   <span className="flex flex-col items-start gap-3">
                     <div className="flex gap-4">
@@ -59,9 +58,9 @@ const Dashboard = () => {
                       <span className="font-semibold">19CH026505</span>
                     </div>
                   </span>
-                </div>
+                </div> */}
               </div>
-              <div className="flex justify-between mt-6">
+              {/* <div className="flex justify-between mt-6">
                 <span className="font-bold flex gap-3 items-start justify-center mr-2">
                   Duration: <span className="font-semibold ">3 Months</span>{' '}
                 </span>
@@ -69,31 +68,9 @@ const Dashboard = () => {
                 <span className="font-bold flex gap-3 items-start justify-center mr-2">
                   Time Left: <span className="font-semibold ">3 Months</span>{' '}
                 </span>
-              </div>
+              </div> */}
             </div>
-            {/* <div className="flex flex-col w-full self-start">
-              <span className="font-semibold self-center mb-2">Duration</span>
-              <div className="flex flex-col justify-center mb-2 border rounded-2xl shadow-lg items-start gap-4 p-4 h-28">
-                <div className="flex">
-                  <span className="font-bold mr-2">Period: </span>
-                  <span className="font-semibold flex flex-col items-start justify-center">
-                    3 Months
-                  </span>
-                </div>
-                <div className="flex">
-                  <span className="font-bold mr-2">Time Left: </span>
-                  <span className="font-semibold flex flex-col items-start justify-center">
-                    3 Months
-                  </span>
-                </div>
-              </div>
-            </div> */}
           </div>
-
-          {/* <span>
-            UI for details about mentorship e.g Duration (start date - finish
-            date), no of days spent, Rating,{' '}
-          </span> */}
         </div>
 
         <div className="flex flex-col w-1/2 items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
@@ -124,7 +101,7 @@ const Dashboard = () => {
           </span>
 
           <div className="flex w-full flex-col self-start mr-6">
-            <div className="flex w-full justify-start mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
+            {/* <div className="flex w-full justify-start mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
               <span className="font-bold w-full flex flex-col gap-3 items-start justify-center">
                 Question 1
                 <span className="text-md font-semibold">
@@ -157,7 +134,7 @@ const Dashboard = () => {
                   </Tooltip>
                 </span>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -201,7 +178,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-[60rem] flex-col p-6 overflow-y-scroll">
+        <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-full flex-col p-6 overflow-y-scroll">
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Calendar & Events
           </span>
@@ -227,7 +204,7 @@ const Dashboard = () => {
               required={true}
               rows={4}
             />
-            <Button className="bg-blue-800 hover:bg-white hover:text-blue-700 hover:border-blue-700 border-2 border-b-4">
+            <Button className="bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2 border-b-4">
               Create
             </Button>
           </div>
@@ -262,7 +239,7 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-            <Button className="self-end bg-blue-800 hover:bg-white hover:text-blue-700 hover:border-blue-700 border-2 border-b-4">
+            <Button className="self-end bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2 border-b-4">
               Schedule
             </Button>
           </div>

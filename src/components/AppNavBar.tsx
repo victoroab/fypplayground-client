@@ -54,17 +54,19 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
         rounded={true}
         className="fixed z-50 w-full border-b border-gray-200 bg-white border-r"
       >
-        <Navbar.Brand href="https://flowbite.com/">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="mr-3 h-6 sm:h-9"
-            alt="Flowbite Logo"
-          />
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            Mentoring System
-          </span>
+        <Navbar.Brand href="">
+          <div className="flex items-center justify-center sm:items-center sm:justify-center">
+            <img
+              src="../../.././public/Group2.svg"
+              className="h-4 pr-2 sm:h-8"
+              alt="Vomentor Logo"
+            />
+            <span className="self-center whitespace-nowrap text-xl font-bold dark:text-white text-[#34495E]">
+              Vomentor
+            </span>
+          </div>
         </Navbar.Brand>
-        <div className="flex md:order-2">
+        <div className="flex lg:order-2">
           <Dropdown
             arrowIcon={false}
             inline={true}
@@ -75,7 +77,9 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
                 rounded={true}
               >
                 <div className="space-y-1 font-medium dark:text-white">
-                  <div className="text-black">Victor Balogun</div>
+                  <div className="text-black" id="user-name">
+                    Victor Balogun
+                  </div>
                 </div>
               </Avatar>
             }
@@ -92,7 +96,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
             <Dropdown.Divider />
             <Dropdown.Item onClick={onclick}>Sign out</Dropdown.Item>
           </Dropdown>
-          <Navbar.Toggle onClick={reveal} />
+          <Navbar.Toggle onClick={reveal} id="nav-toggle" />
         </div>
       </Navbar>
       <div className="w-fit">
@@ -119,7 +123,7 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
           className={`${
             showSide
               ? 'fixed top-0 left-0 z-40 w-64 h-screen pt-10 border-r border-gray-200'
-              : 'fixed top-0 left-0 z-40 w-64 h-screen pt-10 border-r border-gray-200 transition-transform -translate-x-full sm:translate-x-0'
+              : 'fixed top-0 left-0 z-40 w-64 h-screen pt-10 border-r border-gray-200 transition-transform -translate-x-full lg:translate-x-0'
           }`}
         >
           <Sidebar.Items className="h-full px-3 pb-4 overflow-y-auto">
@@ -181,25 +185,27 @@ const AppNavBar = ({ rootLocation, setRootLocation }: Props) => {
               </li>
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
-              <Sidebar.Item icon={HiChartPie}>Upgrade to Pro</Sidebar.Item>
               <Sidebar.Item icon={HiViewBoards}>Documentation</Sidebar.Item>
               <Sidebar.Item icon={BiBuoy}>Help</Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
       </div>
-      <div className="p-4 sm:ml-64">
+      <div className="p-4 lg:ml-64">
         <div className="p-4 rounded-lg border-gray-600 mt-14">
           <Outlet />
         </div>
       </div>
-      {/* className=
-      {`${
-        showSide
-          ? 'fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r border-gray-200'
-          : 'fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r border-gray-200 transition-transform -translate-x-full sm:translate-x-0'
-      }`} */}
     </main>
   )
 }
 export default AppNavBar
+
+{
+  /* className=
+      {`${
+        showSide
+          ? 'fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r border-gray-200'
+          : 'fixed top-0 left-0 z-40 w-64 h-screen pt-20 border-r border-gray-200 transition-transform -translate-x-full sm:translate-x-0'
+      }`} */
+}

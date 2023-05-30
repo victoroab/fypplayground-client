@@ -222,7 +222,7 @@ const SearchMentors = () => {
               <Table.Cell>
                 <Button
                   size="xs"
-                  className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black"
+                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
                   onClick={() => viewModal(mentor)}
                 >
                   View
@@ -281,7 +281,7 @@ const SearchMentors = () => {
             <Table.Cell>
               <Button
                 size="xs"
-                className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black"
+                className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
               >
                 View
               </Button>
@@ -306,7 +306,7 @@ const SearchMentors = () => {
             <Table.Cell>
               <Button
                 size="xs"
-                className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black"
+                className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
               >
                 View
               </Button>
@@ -323,8 +323,11 @@ const SearchMentors = () => {
         placement="left"
         content="Shows the 2 most compatible mentors for you based on the matching system"
       >
-        <Button className="mt-6 mb-4" color="dark" outline={true}>
-          <AiOutlineSearch className="mr-2 h-5 w-5 text-gray-600" />
+        <Button
+          className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"
+          outline={true}
+        >
+          <AiOutlineSearch className="mr-2 h-5 w-5" />
           Find Match
         </Button>
       </Tooltip>

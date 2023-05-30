@@ -1,25 +1,16 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
-type Props = {
-  rootLocation: string | undefined | null
-  setRootLocation: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >
-}
-
-const Root = ({ rootLocation, setRootLocation }: Props) => {
-  // const [rootLocation, setRootLocation] = useState<string | null>()
-
+const Root = () => {
   return (
-    <>
-      <Navbar setRootLocation={setRootLocation} rootLocation={rootLocation} />
-
+    <body className="bg-gray-900">
+      <Navbar />
       <div>
         <Outlet />
       </div>
-    </>
+      <Footer />
+    </body>
   )
 }
 export default Root
