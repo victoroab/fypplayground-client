@@ -18,7 +18,7 @@ export type Mentor = {
 }
 
 type MentorRequest = {
-  menteeId: string
+  studentId: string
 }
 
 const SearchMentors = () => {
@@ -88,7 +88,7 @@ const SearchMentors = () => {
   }
 
   const [requestMentor, setRequestMentor] = useState<MentorRequest>({
-    menteeId: '4c228a98-a889-4e97-9ad8-1c8358041d4d',
+    studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f',
   })
 
   const requestMentorshipOnView = async () => {
@@ -108,9 +108,9 @@ const SearchMentors = () => {
       }
     )
 
-    if (request.data === '') {
+    if (request.data) {
       setAlertState(true)
-      setAlertMessage('Request Sent')
+      setAlertMessage(request.data)
       setTimeout(() => {
         setAlertState(false)
       }, 2000)

@@ -42,7 +42,7 @@ const MentorshipRequests = () => {
   const deleteRequest = async (mentorId: string) => {
     const request = await Axios.post(
       `/a/u/mentee/${mentorId}/delete-mentorship-requests`,
-      { menteeId: '4c228a98-a889-4e97-9ad8-1c8358041d4d' },
+      { studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f' },
       { withCredentials: true }
     )
 
