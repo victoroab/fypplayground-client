@@ -19,7 +19,6 @@ const Messages = () => {
       'postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'Messages' },
       (payload) => {
-        console.log('Changes Received', payload)
         setRemount((prev) => !prev)
       }
     )
@@ -49,8 +48,6 @@ const Messages = () => {
 
     messageRef.current!.value = ''
   }
-
-  console.log(messages)
 
   return (
     <div className="text-lg font-bold">
