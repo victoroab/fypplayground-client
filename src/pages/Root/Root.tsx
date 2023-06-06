@@ -4,13 +4,13 @@ import Footer from '../../components/Footer'
 
 const Root = () => {
   return (
-    <body className="bg-gray-900">
+    <div className="bg-gray-900">
       <Navbar />
       <div>
         <Outlet />
       </div>
       <Footer />
-    </body>
+    </div>
   )
 }
 export default Root

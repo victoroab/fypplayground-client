@@ -46,7 +46,7 @@ const AppLayout = () => {
         <Navbar.Brand href="">
           <div className="flex items-center justify-center sm:items-center sm:justify-center">
             <img
-              src="../../.././public/Group2.svg"
+              src="/Group2.svg"
               className="h-4 pr-2 sm:h-8"
               alt="Vomentor Logo"
             />
@@ -124,10 +124,7 @@ const AppLayout = () => {
                 </li>
               </Link>
 
-              <Link
-                to="/workspace/activities"
-                onClick={() => setShowSide(false)}
-              >
+              <Link to="/workspace/actions" onClick={() => setShowSide(false)}>
                 <li className="flex items-center p-2 text-base font-medium text-black rounded-lg hover:bg-[#34495e] hover:text-white group mt-2 mb-2">
                   <FiMessageSquare className="w-6 h-6 text-black transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" />
                   <span className="ml-3">Actions</span>
