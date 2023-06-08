@@ -18,6 +18,7 @@ import { AuthProvider } from './Auth/AuthProvider'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { supabase } from './config/supabase'
+import SignIn from './pages/SignIn/SignIn'
 
 function App() {
   const router = createBrowserRouter([
@@ -44,13 +45,7 @@ function App() {
     },
     {
       path: '/sign-in',
-      element: (
-        <Auth
-          supabaseClient={supabase}
-          appearance={{ theme: ThemeSupa }}
-          theme="dark"
-        />
-      ),
+      element: <SignIn />,
     },
     // Protected (Requires Auth)
     {

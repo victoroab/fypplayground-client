@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button, Modal } from 'flowbite-react'
 import { supabase } from '../config/supabase'
 
 const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false)
-  const [signedIn, setSignedIn] = useState(false)
+
+  const navigate = useNavigate()
 
   const onclick = () => {
     setVisible(true)
@@ -38,13 +39,18 @@ const Navbar = () => {
               login into your account
             </h3>
             <div className="flex justify-center gap-4">
-              <Button className="bg-primary" onClick={onclose}>
+              <Button
+                className="bg-primary"
+                onClick={() => {
+                  onclose(), navigate('/sign-up')
+                }}
+              >
                 Sign up
               </Button>
               <Button
                 color="gray"
                 onClick={() => {
-                  onclose(), signIn()
+                  onclose(), navigate('/sign-in')
                 }}
               >
                 Login
