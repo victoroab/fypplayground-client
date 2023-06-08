@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { Button, Modal } from 'flowbite-react'
+import { supabase } from '../config/supabase'
 
 const Navbar = () => {
   const [visible, setVisible] = useState<boolean>(false)
+  const [signedIn, setSignedIn] = useState(false)
 
   const onclick = () => {
     setVisible(true)
@@ -11,6 +13,17 @@ const Navbar = () => {
 
   const onclose = () => {
     setVisible(false)
+  }
+
+  const signIn = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: 'konjidaddy12@gmail.com',
+      password: 'br0@db1s3',
+    })
+
+    if (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -28,13 +41,20 @@ const Navbar = () => {
               <Button className="bg-primary" onClick={onclose}>
                 Sign up
               </Button>
-              <Button color="gray" onClick={onclose}>
+              <Button
+                color="gray"
+                onClick={() => {
+                  onclose(), signIn()
+                }}
+              >
                 Login
               </Button>
             </div>
           </div>
         </Modal.Body>
       </Modal>
+      {/* {signedIn === true ? <Navigate to="/" /> : null} */}
+
       <nav className="z-10 w-full absolute">
         <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
           <div className="flex flex-wrap items-center justify-between py-2 gap-6 md:py-4 md:gap-0 relative">

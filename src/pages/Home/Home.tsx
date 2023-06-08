@@ -5,6 +5,7 @@ import Testimonials from '../../components/Testimonials'
 import CallToAction from '../../components/CallToAction'
 import { Button, Modal } from 'flowbite-react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   // const [showSide, setShowSide] = useState<boolean>(false)
@@ -29,10 +30,10 @@ const Home = () => {
             </h3>
             <div className="flex justify-center gap-4">
               <Button className="bg-primary" onClick={onclose}>
-                Sign up
+                <Link to="/sign-up">Sign up</Link>
               </Button>
               <Button color="gray" onClick={onclose}>
-                Login
+                <Link to="/sign-in">Login</Link>
               </Button>
             </div>
           </div>

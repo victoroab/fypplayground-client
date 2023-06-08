@@ -65,7 +65,10 @@ const Messages = () => {
         <>
           {messages.map((message, id) => {
             return message.sender === '2' ? (
-              <div className={`flex self-start items-center justify-center`}>
+              <div
+                className={`flex self-start items-center justify-center`}
+                key={id}
+              >
                 <Avatar size="xs" />
                 <div className="ml-3">
                   <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
@@ -74,7 +77,10 @@ const Messages = () => {
                 </div>
               </div>
             ) : (
-              <div className={`flex self-end items-center justify-center`}>
+              <div
+                className={`flex self-end items-center justify-center`}
+                key={id}
+              >
                 <div className="mr-3">
                   <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
                     <span>{message.message}</span>

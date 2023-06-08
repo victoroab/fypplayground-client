@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AppNavBar from './components/AppLayout'
 import Home from './pages/Home/Home'
@@ -15,6 +14,10 @@ import MenteesTable from './pages/Mentees/MenteesTable'
 import Actions from './pages/Actions/Actions'
 import AppLayout from './components/AppLayout'
 import Register from './pages/Register/Register'
+import { AuthProvider } from './Auth/AuthProvider'
+import { Auth } from '@supabase/auth-ui-react'
+import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { supabase } from './config/supabase'
 
 function App() {
   const router = createBrowserRouter([
@@ -36,12 +39,27 @@ function App() {
       ],
     },
     {
-      path: '/register',
+      path: '/sign-up',
       element: <Register />,
     },
     {
+      path: '/sign-in',
+      element: (
+        <Auth
+          supabaseClient={supabase}
+          appearance={{ theme: ThemeSupa }}
+          theme="dark"
+        />
+      ),
+    },
+    // Protected (Requires Auth)
+    {
       path: '/workspace',
-      element: <AppLayout />,
+      element: (
+        <AuthProvider>
+          <AppLayout />
+        </AuthProvider>
+      ),
       children: [
         { element: <Dashboard />, index: true }, // Reuse Route
         { path: '/workspace/my-mentor', element: <MyMentor /> },
