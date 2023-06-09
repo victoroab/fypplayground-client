@@ -31,9 +31,12 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { supabase } from '../config/supabase'
 
 const AppLayout = () => {
-  const session = useContext(AuthContext)
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+
   const navigate = useNavigate()
   const location = useLocation()
+
   // const SESSION_KEY = localStorage.getItem('session_key')
   // console.log(session)
   // console.log(JSON.parse(SESSION_KEY))
@@ -60,6 +63,7 @@ const AppLayout = () => {
   const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     localStorage.removeItem('session_key')
+
     navigate('/')
 
     if (error) {
@@ -125,16 +129,16 @@ const AppLayout = () => {
                 >
                   <div className="space-y-1 font-medium dark:text-white">
                     <div className="text-black" id="user-name">
-                      Victor Balogun
+                      {sessionData.user.email}
                     </div>
                   </div>
                 </Avatar>
               }
             >
               <Dropdown.Header>
-                <span className="block text-sm">Victor Balogun</span>
+                {/* <span className="block text-sm">Victor Balogun</span> */}
                 <span className="block truncate text-sm font-medium">
-                  oab@gmail.com
+                  {sessionData.user.email}
                 </span>
               </Dropdown.Header>
               <Dropdown.Item>Dashboard</Dropdown.Item>

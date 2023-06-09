@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: Props) => {
   const session = localStorage.getItem('session_key')
 
   return (
-    <AuthContext.Provider value={session}>
+    <AuthContext.Provider value={{ session }}>
       {!loading && children}
     </AuthContext.Provider>
   )

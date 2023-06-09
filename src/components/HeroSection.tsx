@@ -25,10 +25,9 @@ const HeroSection = ({ setVisible }: Props) => {
               <span className="text-white">you.</span>
             </h1>
             <p className="mt-8 text-gray-300">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio
-              incidunt nam itaque sed eius modi error totam sit illum. Voluptas
-              doloribus asperiores quaerat aperiam. Quidem harum omnis beatae
-              ipsum soluta!
+              With the introduction of our interactive and user-friendly online
+              platform, making mentorship easier for you has never been more
+              accessible and efficient.
             </p>
             <div className="mt-16 flex flex-wrap justify-center gap-y-4 gap-x-6">
               <span

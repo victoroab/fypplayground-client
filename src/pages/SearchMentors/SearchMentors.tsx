@@ -1,7 +1,8 @@
 import { Alert, Table, Button, Avatar, Tooltip, Modal } from 'flowbite-react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Axios } from '../../config/axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../../Auth/AuthProvider'
 
 export type Mentor = {
   id: string
@@ -22,6 +23,10 @@ type MentorRequest = {
 }
 
 const SearchMentors = () => {
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
+
   const [mentors, setMentors] = useState<Mentor[]>([])
   const [alertState, setAlertState] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
@@ -34,7 +39,7 @@ const SearchMentors = () => {
 
   const fetchMentors = async () => {
     try {
-      const mentors = await Axios.get('/u/mentors/view')
+      const mentors = await Axios.get('/mentors/view')
       setMentors(mentors.data)
     } catch (e) {
       console.log(e)
@@ -87,22 +92,22 @@ const SearchMentors = () => {
     onclick()
   }
 
-  const [requestMentor, setRequestMentor] = useState<MentorRequest>({
-    studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f',
-  })
+  // const [requestMentor, setRequestMentor] = useState<MentorRequest>({
+  //   studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f',
+  // })
 
   const requestMentorshipOnView = async () => {
-    await Axios.post(
-      `/a/u/mentor/${viewMentor.id}/request-mentor`,
-      requestMentor,
-      { withCredentials: true }
-    )
+    await Axios.post(`/mentor/${viewMentor.id}/request-mentor`, user.email, {
+      withCredentials: true,
+    })
   }
 
   const requestMentorship = async (id: string) => {
     const request = await Axios.post(
-      `/a/u/mentor/${id}/request-mentor`,
-      requestMentor,
+      `/mentor/${id}/request-mentor`,
+      {
+        studentEmail: user.email,
+      },
       {
         withCredentials: true,
       }

@@ -42,7 +42,7 @@ const Navbar = () => {
               {/* <Button
                 className="bg-primary"
                 onClick={() => {
-                  onclose(), navigate('/sign-up')
+                  onclose(), navigate('/sign-up/student')
                 }}
               >
                 Sign up
@@ -50,10 +50,10 @@ const Navbar = () => {
               <Dropdown label="Sign Up">
                 <Dropdown.Item
                   onClick={() => {
-                    onclose(), navigate('/sign-up')
+                    onclose(), navigate('/sign-up/student')
                   }}
                 >
-                  <Link to="/sign-up">
+                  <Link to="/sign-up/student">
                     <span>As Student</span>
                   </Link>
                 </Dropdown.Item>

@@ -1,5 +1,7 @@
+import { UserButton } from '@clerk/clerk-react'
 import { Alert, Avatar, Button, Table } from 'flowbite-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../Auth/AuthProvider'
 import { Axios } from '../../config/axios'
 
 type MentorRequestData = {
@@ -18,6 +20,10 @@ type MentorRequestData = {
 }
 
 const MentorshipRequests = () => {
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
+
   const [mount, setMount] = useState(false)
 
   const [alertState, setAlertState] = useState(false)
@@ -28,7 +34,11 @@ const MentorshipRequests = () => {
 
   const fetcher = async () => {
     try {
-      const requests = await Axios.get('a/u/mentee/get-mentorship-requests')
+      const requests = await Axios.post(
+        '/mentee/get-mentorship-requests',
+        { studentEmail: user.email },
+        { withCredentials: true }
+      )
       setMentors(requests.data['mentorshipRequests'])
     } catch (e) {
       console.log(e)
@@ -41,8 +51,8 @@ const MentorshipRequests = () => {
 
   const deleteRequest = async (mentorId: string) => {
     const request = await Axios.post(
-      `/a/u/mentee/${mentorId}/delete-mentorship-requests`,
-      { studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f' },
+      `/mentee/${mentorId}/delete-mentorship-requests`,
+      { studentEmail: user.email },
       { withCredentials: true }
     )
 

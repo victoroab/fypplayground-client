@@ -31,13 +31,13 @@ const Home = () => {
             <div className="flex justify-center gap-4">
               <Dropdown label="Sign Up">
                 <Dropdown.Item onClick={onclose}>
-                  <Link to="/sign-up">
+                  <Link to="/sign-up/student">
                     <span>As Student</span>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>As Mentor</Dropdown.Item>
               </Dropdown>
-              {/* <Link to="/sign-up">
+              {/* <Link to="/sign-up/student">
                 <Button className="bg-primary" onClick={onclose}>
                   Sign up
                 </Button>

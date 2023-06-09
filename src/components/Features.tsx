@@ -20,10 +20,10 @@ const Features = () => {
             A technology-first approach to guidance and support
           </h2>
           <p className="text-gray-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ad
-            ipsum pariatur autem, fugit laborum in atque amet obcaecati? Nisi
-            minima aspernatur, quidem nulla cupiditate nam consequatur eligendi
-            magni adipisci.
+            By prioritizing a technology-first approach to guidance and support,
+            we can harness the power of digital tools and platforms to enhance
+            the mentorship experience, fostering meaningful connections and
+            accelerating personal and professional growth.
           </p>
         </div>
 
@@ -43,8 +43,9 @@ const Features = () => {
                   Mentorship matching
                 </h5>
                 <p className="text-gray-300">
-                  Neque Dolor, fugiat non cum doloribus aperiam voluptates
-                  nostrum.
+                  Our platform offers a cutting-edge mentorship matching
+                  feature, ensuring that you find the perfect mentor or mentee
+                  who shares your goals, interests, and expertise.
                 </p>
               </div>
               <a
@@ -82,8 +83,10 @@ const Features = () => {
                   Video Conferencing
                 </h5>
                 <p className="text-gray-300">
-                  Neque Dolor, fugiat non cum doloribus aperiam voluptates
-                  nostrum.
+                  Experience seamless and immersive mentorship interactions
+                  through our integrated video conferencing feature, enabling
+                  face-to-face connections that transcend geographical
+                  boundaries.
                 </p>
               </div>
               <a
@@ -121,8 +124,9 @@ const Features = () => {
                   Real time progress tracking
                 </h5>
                 <p className="text-gray-300">
-                  Neque Dolor, fugiat non cum doloribus aperiam voluptates
-                  nostrum.
+                  Our platform incorporates a powerful real-time progress
+                  tracking feature, allowing mentors and mentees to monitor
+                  their development, set goals, and track milestones together.
                 </p>
               </div>
               <a
@@ -160,8 +164,9 @@ const Features = () => {
                   More features
                 </h5>
                 <p className="text-gray-300">
-                  Neque Dolor, fugiat non cum doloribus aperiam voluptates
-                  nostrum.
+                  Unlock a range of additional features on our platform,
+                  including personalized goal setting, resource libraries, and
+                  discussion forums.
                 </p>
               </div>
               <a

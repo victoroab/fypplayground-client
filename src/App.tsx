@@ -15,9 +15,6 @@ import Actions from './pages/Actions/Actions'
 import AppLayout from './components/AppLayout'
 import Register from './pages/Register/Register'
 import { AuthProvider } from './Auth/AuthProvider'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { supabase } from './config/supabase'
 import SignIn from './pages/SignIn/SignIn'
 
 function App() {
@@ -40,7 +37,7 @@ function App() {
       ],
     },
     {
-      path: '/sign-up',
+      path: '/sign-up/student',
       element: <Register />,
     },
     {

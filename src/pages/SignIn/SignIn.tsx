@@ -1,21 +1,50 @@
 import { supabase } from '../../config/supabase'
 import { useNavigate } from 'react-router-dom'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useState } from 'react'
+
+type SignInData = {
+  email: string
+  password: string
+}
 
 const SignIn = () => {
   const navigate = useNavigate()
+  const [error, setError] = useState<any>(null)
 
-  const signIn = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInData>()
+
+  const onSubmit: SubmitHandler<SignInData> = async (formData) => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: 'konjidaddy12@gmail.com',
-      password: 'br0@db1s3',
+      email: formData.email,
+      password: formData.password,
     })
 
-    if (error) {
-      console.log(error)
+    if (data.session) {
+      navigate('/workspace')
     }
 
-    navigate('/workspace')
+    if (error) {
+      setError(error)
+    }
   }
+
+  // const signIn = async () => {
+  // const { data, error } = await supabase.auth.signInWithPassword({
+  //   email: 'konjidaddy12@gmail.com',
+  //   password: 'br0@db1s3',
+  // })
+
+  //   if (error) {
+  //     console.log(error)
+  //   }
+
+  //   navigate('/workspace')
+  // }
   return (
     <>
       <div className="bg-gray-900 min-h-screen">
@@ -35,7 +64,10 @@ const SignIn = () => {
                   <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                     Sign In
                   </h1>
-                  <form className="space-y-4 md:space-y-6" action="#">
+                  <form
+                    className="space-y-4 md:space-y-6"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
                     <div>
                       <label
                         htmlFor="email"
@@ -45,11 +77,11 @@ const SignIn = () => {
                       </label>
                       <input
                         type="email"
-                        name="email"
                         id="email"
                         className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                         placeholder="name@email.com"
                         required
+                        {...register('email')}
                       />
                     </div>
                     <div>
@@ -61,21 +93,24 @@ const SignIn = () => {
                       </label>
                       <input
                         type="password"
-                        name="password"
                         id="password"
                         placeholder="••••••••"
                         className="border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                         required
+                        {...register('password')}
                       />
                     </div>
 
                     <button
                       type="submit"
                       className="w-full text-white bg-[#25425F] hover:bg-[#6E8498] focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
-                      onClick={signIn}
                     >
                       Sign In
                     </button>
+
+                    {/* <span className="text-gray-400 text-sm">
+                      {!error ? '' : error.AuthApiError}
+                    </span> */}
                     <p className="text-sm font-light text-gray-400">
                       Don't have an account?{' '}
                       <a
