@@ -3,7 +3,7 @@ import HeroSection from '../../components/HeroSection'
 import Features from '../../components/Features'
 import Testimonials from '../../components/Testimonials'
 import CallToAction from '../../components/CallToAction'
-import { Button, Modal } from 'flowbite-react'
+import { Button, Modal, Dropdown } from 'flowbite-react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 
@@ -29,9 +29,20 @@ const Home = () => {
               login into your account
             </h3>
             <div className="flex justify-center gap-4">
-              <Button className="bg-primary" onClick={onclose}>
-                <Link to="/sign-up">Sign up</Link>
-              </Button>
+              <Dropdown label="Sign Up">
+                <Dropdown.Item onClick={onclose}>
+                  <Link to="/sign-up">
+                    <span>As Student</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>As Mentor</Dropdown.Item>
+              </Dropdown>
+              {/* <Link to="/sign-up">
+                <Button className="bg-primary" onClick={onclose}>
+                  Sign up
+                </Button>
+              </Link> */}
+
               <Button color="gray" onClick={onclose}>
                 <Link to="/sign-in">Login</Link>
               </Button>

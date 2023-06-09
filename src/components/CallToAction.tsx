@@ -68,7 +68,7 @@ const CallToAction = ({ setVisible }: Props) => {
               foster mentorships.
             </p>
             <div
-              className="flex flex-wrap justify-center gap-6"
+              className="flex cursor-pointer flex-wrap justify-center gap-6"
               onClick={toggleModal}
             >
               <span className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Button, Modal } from 'flowbite-react'
+import { Button, Dropdown, Modal } from 'flowbite-react'
 import { supabase } from '../config/supabase'
 
 const Navbar = () => {
@@ -39,14 +39,26 @@ const Navbar = () => {
               login into your account
             </h3>
             <div className="flex justify-center gap-4">
-              <Button
+              {/* <Button
                 className="bg-primary"
                 onClick={() => {
                   onclose(), navigate('/sign-up')
                 }}
               >
                 Sign up
-              </Button>
+              </Button> */}
+              <Dropdown label="Sign Up">
+                <Dropdown.Item
+                  onClick={() => {
+                    onclose(), navigate('/sign-up')
+                  }}
+                >
+                  <Link to="/sign-up">
+                    <span>As Student</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>As Mentor</Dropdown.Item>
+              </Dropdown>
               <Button
                 color="gray"
                 onClick={() => {
