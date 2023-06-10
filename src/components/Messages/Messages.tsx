@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, Ref } from 'react'
-import { TextInput, Button, Avatar } from 'flowbite-react'
-import MessageBox from './MessageBox'
+import { TextInput, Button, Avatar, Spinner } from 'flowbite-react'
 import { supabase } from '../../config/supabase'
 
 const Messages = () => {
@@ -50,8 +49,8 @@ const Messages = () => {
   }
 
   return (
-    <div className="text-lg font-bold">
-      <div className="flex flex-col items-center justify-start mb-5 w-full border border-3 p-6 gap-3">
+    <div className="text-lg font-bold min-h-[85vh]">
+      <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-5 w-full border border-3 p-6 gap-3">
         {/* <div className="flex self-start items-center justify-center">
           <Avatar size="xs" />
           <MessageBox className="ml-3" />
@@ -62,43 +61,51 @@ const Messages = () => {
           <Avatar size="xs" />
         </div> */}
 
-        <>
-          {messages.map((message, id) => {
-            return message.sender === '2' ? (
-              <div
-                className={`flex self-start items-center justify-center`}
-                key={id}
-              >
-                <Avatar size="xs" />
-                <div className="ml-3">
-                  <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                    <span>{message.message}</span>
+        <div className="overflow-y-scroll w-full border h-[40rem]">
+          {messages.length === 0 ? (
+            <div>
+              <Spinner color="gray" />
+            </div>
+          ) : (
+            <div className="border flex flex-col">
+              {messages.map((message, id) => {
+                return message.sender === '2' ? (
+                  <div
+                    className={`flex self-start items-center justify-center`}
+                    key={id}
+                  >
+                    <Avatar size="xs" rounded />
+                    <div className="ml-3">
+                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                        <span>{message.message}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ) : (
-              <div
-                className={`flex self-end items-center justify-center`}
-                key={id}
-              >
-                <div className="mr-3">
-                  <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                    <span>{message.message}</span>
+                ) : (
+                  <div
+                    className={`flex self-end items-center justify-center mr-4`}
+                    key={id}
+                  >
+                    <div className="mr-3">
+                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                        <span>{message.message}</span>
+                      </div>
+                    </div>
+                    <Avatar size="xs" rounded />
                   </div>
-                </div>
-                <Avatar size="xs" />
-              </div>
-            )
-          })}
-        </>
+                )
+              })}
+            </div>
+          )}
+        </div>
 
         <form
-          className="m-auto flex gap-5 justify-center w-full"
+          className="border flex gap-5 justify-center w-full"
           onSubmit={(e) => sendMessage(e)}
         >
           <TextInput
             placeholder="Enter a message"
-            className="w-full"
+            className="w-full rounded-lg"
             ref={messageRef}
           />
           <Button className="bg-[#25425F]" onClick={(e) => sendMessage(e)}>

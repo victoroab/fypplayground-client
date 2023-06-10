@@ -1,5 +1,5 @@
 import { supabase } from '../../config/supabase'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
 
@@ -113,12 +113,9 @@ const SignIn = () => {
                     </span> */}
                     <p className="text-sm font-light text-gray-400">
                       Don't have an account?{' '}
-                      <a
-                        href="#"
-                        className="font-medium hover:underline text-primary-500"
-                      >
-                        Sign up here
-                      </a>
+                      <span className="font-medium hover:underline text-primary-500">
+                        <Link to="/">Sign up here</Link>
+                      </span>
                     </p>
                   </form>
                 </div>

@@ -21,3 +21,16 @@
     display: inline;
   }
 }
+
+#dash-r1 {
+  @media (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+#dash-r3 {
+  @media (max-width: 786px) {
+    display: flex;
+    flex-direction: column;
+  }
+}

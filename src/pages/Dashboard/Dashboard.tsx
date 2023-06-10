@@ -32,8 +32,11 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex mb-4 h-72">
-        <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
+      <div className="flex flex-wrap justify-between items-center mb-4 h-auto">
+        <div
+          id="dash-r1"
+          className="flex flex-col h-64 w-[28rem] mb-3 justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6"
+        >
           <span className="mb-8 text-lg text-gray-900 font-bold">
             Menorship Details
           </span>
@@ -73,7 +76,10 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col w-1/2 items-center rounded-2xl bg-white dark:bg-gray-100 p-6 mr-6">
+        <div
+          id="dash-r1"
+          className="flex flex-col w-[28rem] mb-3 h-64 items-center rounded-2xl bg-white dark:bg-gray-100 p-2"
+        >
           <span className="mb-2 text-lg text-gray-900 font-bold">
             Tasks Overview
           </span>
@@ -94,7 +100,10 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="flex flex-col w-full items-center rounded-2xl bg-white dark:bg-gray-100 p-6">
+        <div
+          id="dash-r1"
+          className="flex flex-col w-[28rem] mb-3 h-64 items-center rounded-2xl bg-white dark:bg-gray-100 p-6"
+        >
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
           <span className="mb-4 text-md text-gray-900 font-semibold">
             Please Engage
@@ -178,7 +187,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-full flex-col p-6 overflow-y-scroll">
+        <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-2/3 flex-col p-6 overflow-y-scroll">
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Calendar & Events
           </span>
@@ -191,8 +200,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="flex align-center h-48 mb-4 rounded-2xl bg-white dark:bg-gray-200 flex-col p-6">
+      <div id="dash-r3" className="flex w-full gap-4 mb-4">
+        <div className="flex w-1/2 align-center h-48 mb-4 rounded-2xl bg-white dark:bg-gray-200 flex-col p-6">
           <span className="mb-4 text-lg text-gray-900 font-bold self-center">
             Create Task
           </span>
@@ -209,7 +218,7 @@ const Dashboard = () => {
             </Button>
           </div>
         </div>
-        <div className="flex align-center h-48 mb-4 rounded-2xl bg-white dark:bg-gray-200 flex-col p-6">
+        <div className="flex w-1/2 align-center h-48 mb-4 rounded-2xl bg-white dark:bg-gray-200 flex-col p-6">
           <span className="mb-4 text-lg text-gray-900 font-bold self-center">
             Schedule Event
           </span>
@@ -225,7 +234,7 @@ const Dashboard = () => {
                 placeholder="Title of event"
               />
             </div>
-            <div>
+            <div className="">
               <div className="mb-2 block">
                 <Label htmlFor="date" value="Date" />
               </div>

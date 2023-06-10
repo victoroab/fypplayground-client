@@ -16,6 +16,8 @@ import AppLayout from './components/AppLayout'
 import Register from './pages/Register/Register'
 import { AuthProvider } from './Auth/AuthProvider'
 import SignIn from './pages/SignIn/SignIn'
+import Upload from './components/Upload/Upload'
+import Messages from './components/Messages/Messages'
 
 function App() {
   const router = createBrowserRouter([
@@ -60,7 +62,12 @@ function App() {
           path: '/workspace/mentorship-requests', // Reuse Route
           element: <MentorshipRequests />, //<MentorsRquests />
         },
-        { path: '/workspace/actions', element: <Actions /> }, // Reuse Route
+        {
+          path: '/workspace/actions',
+          element: <Actions />,
+        }, // Reuse Route
+        { path: '/workspace/actions/upload', element: <Upload /> },
+        { path: '/workspace/actions/message', element: <Messages /> },
         { path: '/workspace/settings', element: <Settings /> }, // Reuse Route
         { path: '/workspace/my-mentees', element: <MenteesTable /> },
         { path: '/workspace/my-mentees/:studentId', element: <Mentees /> },

@@ -11,27 +11,26 @@ export type Mentor = {
   lastName: string
   gender: string
   email: string
-  level: number
-  matricNo: string
-  course: string
+  rank: string
+  staffNo: string
+  department: string
   Hobbies: { id: string; hobbies: string }
   Skills: { id: string; skills: string }
 }
 
-type MentorRequest = {
-  studentId: string
-}
-
 const SearchMentors = () => {
+  const user = {
+    email: 'dev@gmail.com',
+  }
+
   const { session } = useContext(AuthContext)
   const sessionData = JSON.parse(session)
-  const { user } = sessionData
+
+  // const { user } = sessionData
 
   const [mentors, setMentors] = useState<Mentor[]>([])
   const [alertState, setAlertState] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
-
-  let responseMessage: number
 
   const [visible, setVisible] = useState(false)
   const onclick = () => setVisible(true)
@@ -52,13 +51,13 @@ const SearchMentors = () => {
   const [viewMentor, setViewMentor] = useState<Mentor>({
     id: '',
     firstName: '',
-    course: '',
+    department: '',
     email: '',
     gender: '',
     Hobbies: { id: '', hobbies: '' },
     lastName: '',
-    level: 1,
-    matricNo: '',
+    rank: '',
+    staffNo: '',
     middleName: '',
     Skills: { id: '', skills: '' },
   })
@@ -67,34 +66,30 @@ const SearchMentors = () => {
     id,
     firstName,
     lastName,
-    level,
+    rank,
     Hobbies,
     Skills,
-    course,
+    department,
     email,
     gender,
-    matricNo,
+    staffNo,
     middleName,
   }: Mentor) => {
     setViewMentor({
       id,
       firstName,
       lastName,
-      level,
+      rank,
       Hobbies,
       Skills,
-      course,
+      department,
       email,
       gender,
-      matricNo,
+      staffNo,
       middleName,
     })
     onclick()
   }
-
-  // const [requestMentor, setRequestMentor] = useState<MentorRequest>({
-  //   studentId: '040b71b8-e08a-4de8-8cd9-3c5d0d7e498f',
-  // })
 
   const requestMentorshipOnView = async () => {
     await Axios.post(`/mentor/${viewMentor.id}/request-mentor`, user.email, {
@@ -149,12 +144,14 @@ const SearchMentors = () => {
                   ' ' +
                   viewMentor.lastName}
               </span>
-              <span className="font-semibold">Course: {viewMentor.course}</span>
-              <span className="font-semibold">Level: {viewMentor.level}</span>
+              <span className="font-semibold">
+                department: {viewMentor.department}
+              </span>
+              <span className="font-semibold">rank: {viewMentor.rank}</span>
               <span className="font-semibold">Email: {viewMentor.email}</span>
               <span className="font-semibold">Gender: {viewMentor.gender}</span>
               <span className="font-semibold">
-                Matric No: {viewMentor.matricNo}
+                Staff No: {viewMentor.staffNo}
               </span>
               <span className="font-semibold">
                 Hobbies: {viewMentor.Hobbies.hobbies.replace(/,/g, ', ')}
@@ -200,8 +197,8 @@ const SearchMentors = () => {
           </Table.HeadCell>
           <Table.HeadCell>Name</Table.HeadCell>
           <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>Course</Table.HeadCell>
-          <Table.HeadCell>Matric No</Table.HeadCell>
+          <Table.HeadCell>department</Table.HeadCell>
+          <Table.HeadCell>staff No</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">View</span>
           </Table.HeadCell>
@@ -222,8 +219,8 @@ const SearchMentors = () => {
                 {mentor.firstName + ' ' + mentor.lastName}
               </Table.Cell>
               <Table.Cell>{mentor.email}</Table.Cell>
-              <Table.Cell>{mentor.course}</Table.Cell>
-              <Table.Cell>{mentor.matricNo}</Table.Cell>
+              <Table.Cell>{mentor.department}</Table.Cell>
+              <Table.Cell>{mentor.staffNo}</Table.Cell>
               <Table.Cell>
                 <Button
                   size="xs"
@@ -260,8 +257,8 @@ const SearchMentors = () => {
           </Table.HeadCell>
           <Table.HeadCell>Name</Table.HeadCell>
           <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>Course</Table.HeadCell>
-          <Table.HeadCell>Matric No</Table.HeadCell>
+          <Table.HeadCell>department</Table.HeadCell>
+          <Table.HeadCell>staff No</Table.HeadCell>
           <Table.HeadCell>Compatibiliy Score</Table.HeadCell>
 
           <Table.HeadCell>

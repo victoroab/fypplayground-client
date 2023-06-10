@@ -20,9 +20,13 @@ type MentorRequestData = {
 }
 
 const MentorshipRequests = () => {
+  const user = {
+    email: 'dev@gmail.com',
+  }
+
   const { session } = useContext(AuthContext)
   const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { user } = sessionData
 
   const [mount, setMount] = useState(false)
 
@@ -104,8 +108,8 @@ const MentorshipRequests = () => {
           <Table.HeadCell className="sr-only"></Table.HeadCell>
           <Table.HeadCell>Name</Table.HeadCell>
           <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>Course</Table.HeadCell>
-          <Table.HeadCell>Matric No</Table.HeadCell>
+          <Table.HeadCell>Depatment</Table.HeadCell>
+          <Table.HeadCell>Staff No</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>

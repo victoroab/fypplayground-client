@@ -37,29 +37,6 @@ const AppLayout = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // const SESSION_KEY = localStorage.getItem('session_key')
-  // console.log(session)
-  // console.log(JSON.parse(SESSION_KEY))
-
-  // const [session, setSession] = useState<any | null>(null)
-
-  // useEffect(() => {
-  //   setLoading(true)
-  //   supabase.auth.getSession().then(({ data: { session } }) => {
-  //     setSession(session)
-  //   })
-
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange((_event, session) => {
-  //     setSession(session)
-  //   })
-
-  //   setLoading(false)
-
-  //   return () => subscription.unsubscribe()
-  // }, [])
-
   const signOut = async () => {
     const { error } = await supabase.auth.signOut()
     localStorage.removeItem('session_key')
@@ -129,7 +106,7 @@ const AppLayout = () => {
                 >
                   <div className="space-y-1 font-medium dark:text-white">
                     <div className="text-black" id="user-name">
-                      {sessionData.user.email}
+                      {!sessionData ? '' : sessionData.user.email}
                     </div>
                   </div>
                 </Avatar>
@@ -138,12 +115,18 @@ const AppLayout = () => {
               <Dropdown.Header>
                 {/* <span className="block text-sm">Victor Balogun</span> */}
                 <span className="block truncate text-sm font-medium">
-                  {sessionData.user.email}
+                  {!sessionData ? '' : sessionData.user.email}
                 </span>
               </Dropdown.Header>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Notifications</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/workspace">Dashboard</Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/workspace/settings">Settings</Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/workspace/mentorship-requests">Notifications</Link>
+              </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={onclick}>Sign out</Dropdown.Item>
             </Dropdown>
@@ -164,11 +147,16 @@ const AppLayout = () => {
                     onClick={() => {
                       onclose(), signOut()
                     }}
+                    className="bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
                   >
                     Yes, I'm sure
                   </Button>
                   {/* {signedOut ? <Navigate to="/" /> : null} */}
-                  <Button color="gray" onClick={onclose}>
+                  <Button
+                    // color="gray"
+                    onClick={onclose}
+                    className="bg-gray-200 text-gray-900 hover:border-[#6E8498] hover:text-[#6E8498] hover:bg-white"
+                  >
                     No, cancel
                   </Button>
                 </div>

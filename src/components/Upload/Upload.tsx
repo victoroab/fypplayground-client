@@ -1,18 +1,13 @@
-import { FileInput, TextInput, Button } from 'flowbite-react'
+import { FileInput, TextInput, Button, Card, Select } from 'flowbite-react'
 import { Axios } from '../../config/axios'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { supabase } from '../../config/supabase'
 import { v4 as uuidv4 } from 'uuid'
 
 const Upload = () => {
   const [files, setFiles] = useState<any[]>([])
+  // const input = useRef<HTMLInputElement | null>(null)
   const [caption, setCaption] = useState('')
-
-  const getBuckets = async () => {
-    const { data: buckets, error } = await supabase.storage.getBucket('avatars')
-    // setBuckets(buckets)
-    return buckets
-  }
 
   const uploadFile = async (e: any) => {
     e.preventDefault()
@@ -50,40 +45,54 @@ const Upload = () => {
   }, [])
 
   return (
-    <div className="">
-      <h1 className="text-2xl font-extrabold">Hello</h1>
-      <form
-        className="w-1/3 flex gap-4 flex-col"
-        encType="multipart/form-data"
-        onSubmit={uploadFile}
-      >
-        <input type="file" onChange={(e) => uploadFile(e)} />
+    <div className="min-h-screen">
+      <div>
+        <Card className="mb-3 flex ">
+          <form
+            className="w-1/3 flex gap-4 flex-col"
+            encType="multipart/form-data"
+            onSubmit={uploadFile}
+          >
+            <input type="file" onChange={(e) => uploadFile(e)} />
 
-        <TextInput
-          type="text"
-          name="caption"
-          placeholder="caption"
-          onChange={(e) => setCaption(e.target.value)}
-          value={caption}
-        />
-        {caption}
-        <Button type="submit" className="bg-[#25425F]">
-          Submit
-        </Button>
-      </form>
-
-      <span>
-        {files.map((file) => (
-          <div className="grid grid-flow-col">
-            <img
-              src={`https://zrmhmgszaxdkexnpvcko.supabase.co/storage/v1/object/public/avatars/public/avatar45d0abc.png?t=2023-06-05T11%3A57%3A03.606Z/${file.name}`}
-              alt=""
-              height={100}
-              width={100}
+            <TextInput
+              type="text"
+              name="caption"
+              placeholder="caption"
+              onChange={(e) => setCaption(e.target.value)}
+              value={caption}
             />
-          </div>
-        ))}
-      </span>
+
+            <Select id="to">
+              <option>Mentor</option>
+              <option>Storage</option>
+            </Select>
+
+            <Button
+              type="submit"
+              className="bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2 border-b-4"
+            >
+              Submit
+            </Button>
+          </form>
+        </Card>
+
+        <Card>
+          <span>
+            {files.map((file) => (
+              <div className="grid grid-flow-col">
+                {file.name}
+                <img
+                  src={`https://zrmhmgszaxdkexnpvcko.supabase.co/storage/v1/object/public/avatars/public/avatar45d0abc.png?t=2023-06-05T11%3A57%3A03.606Z/${file.name}`}
+                  alt=""
+                  height={100}
+                  width={100}
+                />
+              </div>
+            ))}
+          </span>
+        </Card>
+      </div>
     </div>
   )
 }
