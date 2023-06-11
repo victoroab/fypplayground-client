@@ -59,12 +59,13 @@ function App() {
         </AuthProvider>
       ),
       children: [
-        { element: <Dashboard />, index: true }, // <MentorDashboard /> <Dashboard />
+        // Student's routes
+        { element: <Dashboard />, index: true },
         { path: '/workspace/my-mentor', element: <MyMentor /> },
         { path: '/workspace/search-mentors', element: <SearchMentors /> },
         {
-          path: '/workspace/mentorship-requests', // Reuse Route
-          element: <MentorshipRequests />, //<MentorsRequests />(Mentor) //<MentorshipRquests />(Student)
+          path: '/workspace/mentorship-requests',
+          element: <MentorshipRequests />,
         },
         {
           path: '/workspace/actions',
@@ -72,9 +73,19 @@ function App() {
         }, // Reuse Route
         { path: '/workspace/actions/upload', element: <Upload /> },
         { path: '/workspace/actions/message', element: <Messages /> },
-        { path: '/workspace/settings', element: <Settings /> }, // Reuse Route
-        { path: '/workspace/my-mentees', element: <MenteesTable /> },
-        { path: '/workspace/my-mentees/:studentId', element: <Mentees /> },
+        { path: '/workspace/settings', element: <Settings /> },
+
+        // Mentor's Routes
+        { path: '/workspace/m', element: <MentorDashboard /> },
+        { path: '/workspace/m/actions' },
+        { path: '/workspace/m/actions/upload' },
+        { path: '/workspace/m/actions/message' },
+        { path: '/workspace/m/mentees', element: <MenteesTable /> },
+        { path: '/workspace/m/mentees/:studentId', element: <Mentees /> },
+        {
+          path: '/workspace/m/mentorship-requests',
+          element: <MentorsRequests />,
+        },
       ],
     },
   ])

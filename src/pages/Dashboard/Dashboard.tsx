@@ -174,7 +174,12 @@ const Dashboard = () => {
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
-              <Button size="xs" color="dark" outline={true} id="tsk-btn">
+              <Button
+                size="xs"
+                color=""
+                id="tsk-btn"
+                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+              >
                 View
               </Button>
             </span>
@@ -182,7 +187,12 @@ const Dashboard = () => {
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
-              <Button size="xs" color="dark" outline={true} id="tsk-btn">
+              <Button
+                size="xs"
+                color=""
+                id="tsk-btn"
+                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+              >
                 View
               </Button>
             </span>
@@ -190,7 +200,12 @@ const Dashboard = () => {
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
-              <Button size="xs" color="dark" outline={true} id="tsk-btn">
+              <Button
+                size="xs"
+                color=""
+                id="tsk-btn"
+                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+              >
                 View
               </Button>
             </span>
@@ -198,7 +213,12 @@ const Dashboard = () => {
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
-              <Button size="xs" color="dark" outline={true} id="tsk-btn">
+              <Button
+                size="xs"
+                color=""
+                id="tsk-btn"
+                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+              >
                 View
               </Button>
             </span>

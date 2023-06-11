@@ -2,6 +2,7 @@ import { supabase } from '../../config/supabase'
 import { Link, useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
+import { Axios } from '../../config/axios'
 
 type SignInData = {
   email: string
@@ -11,6 +12,16 @@ type SignInData = {
 const SignIn = () => {
   const navigate = useNavigate()
   const [error, setError] = useState<any>(null)
+
+  const getUser = async (email: string) => {
+    const data = await Axios.post(
+      '/sign-up/get-user',
+      { email: email },
+      { withCredentials: true }
+    )
+
+    return data.data
+  }
 
   const {
     register,
@@ -24,8 +35,15 @@ const SignIn = () => {
       password: formData.password,
     })
 
+    const userType = await getUser(formData.email)
+    localStorage.setItem('userData', JSON.stringify(userType))
+
     if (data.session) {
-      navigate('/workspace')
+      if (userType.type === 'student') {
+        navigate('/workspace')
+      } else if (userType.type === 'mentor') {
+        navigate('/workspace/m')
+      }
     }
 
     if (error) {
@@ -61,6 +79,16 @@ const SignIn = () => {
               <div className="flex items-center mb-20 text-4xl font-semibold text-white mt-20"></div>
               <div className="w-full mx-auto rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                  <div className="flex items-center justify-center sm:items-center sm:justify-center">
+                    <img
+                      src="/Group2.svg"
+                      className="h-8 pr-2"
+                      alt="Vomentor Logo"
+                    />
+                    <span className="self-center whitespace-nowrap text-xl font-bold text-white">
+                      Vomentor
+                    </span>
+                  </div>
                   <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                     Sign In
                   </h1>

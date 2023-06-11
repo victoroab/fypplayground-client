@@ -224,6 +224,7 @@ const SearchMentors = () => {
               <Table.Cell>
                 <Button
                   size="xs"
+                  color=""
                   className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
                   onClick={() => viewModal(mentor)}
                 >
@@ -247,7 +248,7 @@ const SearchMentors = () => {
 
       <div className="grid items-center mb-6 mt-6">
         <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
-          Best Matched Mentors
+          Recommended Mentors
         </span>
       </div>
       <Table hoverable={true}>
@@ -325,7 +326,7 @@ const SearchMentors = () => {
       </Table>
       <Tooltip
         placement="left"
-        content="Shows the 2 most compatible mentors for you based on the matching system"
+        content="Shows the 2 most compatible mentors for you based on the mentor matching system"
       >
         <Button
           className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"

@@ -50,7 +50,7 @@ const Messages = () => {
 
   return (
     <div className="text-lg font-bold min-h-[85vh]">
-      <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-5 w-full border border-3 p-6 gap-3">
+      <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-3 w-full border border-3 p-6 gap-3">
         {/* <div className="flex self-start items-center justify-center">
           <Avatar size="xs" />
           <MessageBox className="ml-3" />

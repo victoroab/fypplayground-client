@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import { supabase } from '../config/supabase'
+import { Axios } from '../config/axios'
 
 export const AuthContext = createContext<any | null>(null)
 
