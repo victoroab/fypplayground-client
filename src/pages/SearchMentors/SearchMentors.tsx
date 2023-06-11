@@ -284,6 +284,7 @@ const SearchMentors = () => {
               <Button
                 size="xs"
                 className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                color=""
               >
                 View
               </Button>
@@ -309,6 +310,7 @@ const SearchMentors = () => {
               <Button
                 size="xs"
                 className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                color=""
               >
                 View
               </Button>
@@ -328,6 +330,7 @@ const SearchMentors = () => {
         <Button
           className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"
           outline={true}
+          color=""
         >
           <AiOutlineSearch className="mr-2 h-5 w-5" />
           Find Match

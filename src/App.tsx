@@ -43,6 +43,10 @@ function App() {
       element: <Register />,
     },
     {
+      path: '/sign-up/mentor',
+      // element: <RegisterMentor />,
+    },
+    {
       path: '/sign-in',
       element: <SignIn />,
     },
@@ -55,12 +59,12 @@ function App() {
         </AuthProvider>
       ),
       children: [
-        { element: <Dashboard />, index: true }, // Reuse Route
+        { element: <Dashboard />, index: true }, // <MentorDashboard /> <Dashboard />
         { path: '/workspace/my-mentor', element: <MyMentor /> },
         { path: '/workspace/search-mentors', element: <SearchMentors /> },
         {
           path: '/workspace/mentorship-requests', // Reuse Route
-          element: <MentorshipRequests />, //<MentorsRquests />
+          element: <MentorshipRequests />, //<MentorsRequests />(Mentor) //<MentorshipRquests />(Student)
         },
         {
           path: '/workspace/actions',

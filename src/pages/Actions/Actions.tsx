@@ -16,8 +16,10 @@ const Actions = () => {
           <span className="pb-6">Upload File/Image</span>{' '}
           <Button
             size="xs"
-            className="bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            // color="gray"
+            className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             onClick={() => navigate('/workspace/actions/upload')}
+            color=""
           >
             {'>'}
           </Button>
@@ -26,8 +28,9 @@ const Actions = () => {
           <span className="pb-6">Message Mentor</span>{' '}
           <Button
             size="xs"
-            className="bg-[#25425F]  hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             onClick={() => navigate('/workspace/actions/message')}
+            color=""
           >
             {'>'}
           </Button>
@@ -36,7 +39,8 @@ const Actions = () => {
           <span className="pb-6">Schedule Meeting</span>{' '}
           <Button
             size="xs"
-            className="bg-[#25425F]  hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            color=""
           >
             {'>'}
           </Button>
@@ -45,7 +49,8 @@ const Actions = () => {
           <span className="pb-6">View Tasks</span>{' '}
           <Button
             size="xs"
-            className="bg-[#25425F]  hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+            color=""
           >
             {'>'}
           </Button>

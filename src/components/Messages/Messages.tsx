@@ -108,7 +108,11 @@ const Messages = () => {
             className="w-full rounded-lg"
             ref={messageRef}
           />
-          <Button className="bg-[#25425F]" onClick={(e) => sendMessage(e)}>
+          <Button
+            className="bg-[#25425F] text-white"
+            onClick={(e) => sendMessage(e)}
+            color=""
+          >
             Send
           </Button>
         </form>

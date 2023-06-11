@@ -58,7 +58,7 @@ const Upload = () => {
             <TextInput
               type="text"
               name="caption"
-              placeholder="caption"
+              placeholder="Add caption"
               onChange={(e) => setCaption(e.target.value)}
               value={caption}
             />
@@ -70,7 +70,8 @@ const Upload = () => {
 
             <Button
               type="submit"
-              className="bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2 border-b-4"
+              className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2 border-b-4"
+              color=""
             >
               Submit
             </Button>
