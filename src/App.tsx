@@ -18,6 +18,7 @@ import { AuthProvider } from './Auth/AuthProvider'
 import SignIn from './pages/SignIn/SignIn'
 import Upload from './components/Upload/Upload'
 import Messages from './components/Messages/Messages'
+import RegisterMentor from './pages/Register/RegisterMentor'
 
 function App() {
   const router = createBrowserRouter([
@@ -44,7 +45,7 @@ function App() {
     },
     {
       path: '/sign-up/mentor',
-      // element: <RegisterMentor />,
+      element: <RegisterMentor />,
     },
     {
       path: '/sign-in',

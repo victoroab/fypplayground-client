@@ -35,7 +35,11 @@ const Home = () => {
                     <span>As Student</span>
                   </Link>
                 </Dropdown.Item>
-                <Dropdown.Item>As Mentor</Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/sign-up/mentor">
+                    <span>As Mentor</span>
+                  </Link>
+                </Dropdown.Item>
               </Dropdown>
               {/* <Link to="/sign-up/student">
                 <Button className="bg-primary" onClick={onclose}>
