@@ -91,8 +91,9 @@ const MentorMessages = () => {
   return (
     <div className="text-lg font-bold min-h-[85vh]">
       <Button.Group outline>
-        {students.map((student) => (
+        {students.map((student, id) => (
           <Button
+            key={id}
             color="gray"
             onClick={() => {
               setCurrentStudent(student.email), setRemount((prev) => !prev)

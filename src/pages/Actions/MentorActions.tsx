@@ -11,12 +11,12 @@ const MentorActions = () => {
       <div className="min-h-screen flex flex-wrap items-start my-auto gap-6 p-3">
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">Upload File/Image</span>{' '}
-          <Select>
+          {/* <Select>
             <option>storage</option>
             <option>Mentee 1</option>
             <option>Mentee 2</option>
             <option>Mentee 3</option>
-          </Select>
+          </Select> */}
           <Button
             size="xs"
             // color="gray"
@@ -29,11 +29,11 @@ const MentorActions = () => {
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">Message Mentee</span>{' '}
-          <Select>
+          {/* <Select>
             <option>Mentee 1</option>
             <option>Mentee 2</option>
             <option>Mentee 3</option>
-          </Select>
+          </Select> */}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
@@ -45,11 +45,11 @@ const MentorActions = () => {
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">Schedule Meeting</span>{' '}
-          <Select>
+          {/* <Select>
             <option>Mentee 1</option>
             <option>Mentee 2</option>
             <option>Mentee 3</option>
-          </Select>
+          </Select> */}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
@@ -60,11 +60,11 @@ const MentorActions = () => {
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">View Tasks</span>
-          <Select>
+          {/* <Select>
             <option>Mentee 1</option>
             <option>Mentee 2</option>
             <option>Mentee 3</option>
-          </Select>
+          </Select> */}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"

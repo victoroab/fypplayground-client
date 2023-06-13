@@ -6,9 +6,6 @@ const Mentees = () => {
   return (
     <div className="min-h-screen">
       <div className="flex mb-4 flex-col">
-        <span className="self-center font-bold text-2xl mb-4 text-slate-700 ">
-          Student Information
-        </span>
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-4 mr-6">
           <div className="flex flex-col w-full self-start mr-6">
             <span className="flex self-center font-bold mb-4">Bio</span>
@@ -119,38 +116,74 @@ const Mentees = () => {
         </div>
         <div className="flex align-center mb-4 rounded-2xl bg-white dark:bg-gray-200 w-2/3 flex-col p-4">
           <span className="flex self-center font-bold mb-4">
-            Mentee's Tasks
+            Student's Tasks
           </span>
           <div className="flex w-full">
-            <div className="flex align-center h-96 mb-4 rounded-2xl bg-white dark:bg-gray-200 w-2/3 flex-col overflow-y-scroll p-6">
+            {/* <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
+              Tasks
+            </span> */}
+            <div className="w-2/3">
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Tooltip content="complete">
-                    <Badge color="gray" size="sm" icon={HiCheck} />
-                  </Tooltip>
+                  <Button
+                    size="xs"
+                    color=""
+                    id="tsk-btn"
+                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+                  >
+                    View
+                  </Button>
                 </span>
               </Card>
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Checkbox disabled />
+                  <Button
+                    size="xs"
+                    color=""
+                    id="tsk-btn"
+                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+                  >
+                    View
+                  </Button>
                 </span>
               </Card>
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Checkbox disabled />
+                  <Button
+                    size="xs"
+                    color=""
+                    id="tsk-btn"
+                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+                  >
+                    View
+                  </Button>
                 </span>
               </Card>
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Badge color="gray" size="sm" icon={HiCheck} />
+                  <Button
+                    size="xs"
+                    color=""
+                    id="tsk-btn"
+                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+                  >
+                    View
+                  </Button>
                 </span>
               </Card>
             </div>
-            <span className="w-1/3">
+            <div
+              id="dash-r1"
+              className="flex flex-col w-1/3 mb-3 h-64 items-center rounded-2xl bg-white dark:bg-gray-100 p-2"
+            >
+              <span className="mb-2 text-lg text-gray-900 font-bold">
+                Tasks Overview
+              </span>
+
               <CChart
                 type="pie"
                 height={250}
@@ -160,12 +193,12 @@ const Mentees = () => {
                   datasets: [
                     {
                       backgroundColor: ['#34495E', '#85929E'],
-                      data: [50, 50],
+                      data: [60, 40],
                     },
                   ],
                 }}
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
