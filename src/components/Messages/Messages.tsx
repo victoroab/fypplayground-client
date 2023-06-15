@@ -1,14 +1,24 @@
-import { useState, useEffect, useRef, Ref } from 'react'
+import { useState, useEffect, useRef, Ref, useContext } from 'react'
 import { TextInput, Button, Avatar, Spinner } from 'flowbite-react'
 import { supabase } from '../../config/supabase'
+import { AuthContext } from '../../Auth/AuthProvider'
+import { Axios } from '../../config/axios'
+import { useMutation } from '@tanstack/react-query'
 
 const Messages = () => {
-  const ID = '1'
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
+  const userData = JSON.parse(localStorage.getItem('userData')!)
+
+  const [mentor, setMentor] = useState('')
+
   const messageRef = useRef<HTMLInputElement>(null)
   const [messages, setMessages] = useState<any[]>([])
   const [remount, setRemount] = useState(false)
 
   useEffect(() => {
+    fetchMentor()
     fetchMessages()
   }, [remount])
 
@@ -23,22 +33,78 @@ const Messages = () => {
     )
     .subscribe()
 
+  const fetchMentor = async () => {
+    try {
+      const response = await Axios.post(
+        '/mentee/get-mentor',
+        { studentEmail: user.email },
+        { withCredentials: true }
+      )
+      setMentor(response.data.mentor.email)
+      return response
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const fetchMessages = async () => {
-    const { data, error } = await supabase.from('Messages').select()
+    const { data, error } = await supabase
+      .from('Messages')
+      .select()
+      .eq('sender', user.email)
+      .eq('receipent', userData.mentor.email)
+      .order('created_at', { ascending: true })
+
     if (data) {
       setMessages(data)
     } else {
       console.log(error)
     }
+
+    const { data: receiver, error: secondError } = await supabase
+      .from('Messages')
+      .select()
+      .eq('sender', userData.mentor.email)
+      .eq('receipent', user.email)
+      .order('created_at', { ascending: true })
+
+    if (receiver) {
+      setMessages((prev) => [...prev, ...receiver])
+      // setMessages(receiver)
+    } else {
+      console.log(secondError)
+    }
   }
+
+  console.log(messages)
+
+  // const fetchMessages2 = async () => {
+  //   const { data: receiver, error: secondError } = await supabase
+  //     .from('Messages')
+  //     .select()
+  //     .eq('sender', mentor)
+  //     .eq('receipent', user.email)
+  //     .order('created_at')
+
+  //   if (receiver) {
+  //     setMessages2(receiver)
+  //     // setMessages(receiver)
+  //   } else {
+  //     console.log(secondError)
+  //   }
+  // }
+
+  console.log(mentor)
+  // console.log(messages)
+  // console.log(messages2)
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
-      sender: '1',
+      sender: user.email,
       message,
-      receipent: '2',
+      receipent: mentor,
     })
 
     if (error) {
@@ -68,33 +134,37 @@ const Messages = () => {
             </div>
           ) : (
             <div className="border flex flex-col">
-              {messages.map((message, id) => {
-                return message.sender === '2' ? (
-                  <div
-                    className={`flex self-start items-center justify-center`}
-                    key={id}
-                  >
-                    <Avatar size="xs" rounded />
-                    <div className="ml-3">
-                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                        <span>{message.message}</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={`flex self-end items-center justify-center mr-4`}
-                    key={id}
-                  >
-                    <div className="mr-3">
-                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                        <span>{message.message}</span>
-                      </div>
-                    </div>
-                    <Avatar size="xs" rounded />
-                  </div>
+              {messages
+                .sort(
+                  (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
                 )
-              })}
+                .map((message, id) => {
+                  return message.sender === mentor ? (
+                    <div
+                      className={`flex self-start items-center justify-center`}
+                      key={id}
+                    >
+                      <Avatar size="xs" rounded />
+                      <div className="ml-3">
+                        <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                          <span>{message.message}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className={`flex self-end items-center justify-center mr-4`}
+                      key={id}
+                    >
+                      <div className="mr-3">
+                        <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                          <span>{message.message}</span>
+                        </div>
+                      </div>
+                      <Avatar size="xs" rounded />
+                    </div>
+                  )
+                })}
             </div>
           )}
         </div>

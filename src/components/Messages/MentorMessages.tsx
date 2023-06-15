@@ -1,5 +1,12 @@
 import { useState, useEffect, useRef, Ref, useContext } from 'react'
-import { TextInput, Button, Avatar, Spinner, Select } from 'flowbite-react'
+import {
+  TextInput,
+  Button,
+  Avatar,
+  Spinner,
+  Select,
+  Dropdown,
+} from 'flowbite-react'
 import { supabase } from '../../config/supabase'
 import { AuthContext } from '../../Auth/AuthProvider'
 import { Axios } from '../../config/axios'
@@ -19,7 +26,7 @@ const MentorMessages = () => {
   useEffect(() => {
     fetchMessages()
     fetchStudents()
-  }, [remount])
+  }, [remount, currentStudent])
 
   supabase
     .channel('any')
@@ -51,6 +58,7 @@ const MentorMessages = () => {
       .select()
       .eq('sender', user.email)
       .eq('receipent', currentStudent)
+      .order('created_at', { ascending: true })
     // .eq('sender', currentStudent)
     // .eq('receipent', user.email)
     if (sender) {
@@ -64,6 +72,7 @@ const MentorMessages = () => {
       .select()
       .eq('sender', currentStudent)
       .eq('receipent', user.email)
+      .order('created_at', { ascending: true })
 
     if (receiver) {
       setMessages((prev) => [...prev, ...receiver])
@@ -88,9 +97,25 @@ const MentorMessages = () => {
     messageRef.current!.value = ''
   }
 
+  console.log(messages)
+
   return (
     <div className="text-lg font-bold min-h-[85vh]">
-      <Button.Group outline>
+      <Dropdown label="Select Student" size="xs">
+        {students.map((student, id) => (
+          <Dropdown.Item
+            key={id}
+            color="gray"
+            onClick={() => {
+              setCurrentStudent(student.email), setRemount((prev) => !prev)
+            }}
+          >
+            {`${student.firstName}`} {`${student.lastName}`}
+          </Dropdown.Item>
+        ))}
+      </Dropdown>
+
+      {/* <Button.Group outline>
         {students.map((student, id) => (
           <Button
             key={id}
@@ -102,7 +127,7 @@ const MentorMessages = () => {
             {`${student.firstName}`} {`${student.lastName}`}
           </Button>
         ))}
-      </Button.Group>
+      </Button.Group> */}
       {/* <ul className="flex gap-3">
         {students.map((student) => (
           <li
@@ -114,39 +139,44 @@ const MentorMessages = () => {
       </ul> */}
       <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-3 w-full border border-3 p-6 gap-3">
         <div className="overflow-y-scroll w-full border h-[40rem]">
-          {messages.length === 0 ? (
+          {currentStudent === '' ? (
             <div>
-              <Spinner color="gray" />
+              {/* <Spinner color="gray" /> */}
+              Select Student
             </div>
           ) : (
             <div className="border flex flex-col">
-              {messages.map((message, id) => {
-                return message.sender === currentStudent ? (
-                  <div
-                    className={`flex self-start items-center justify-center`}
-                    key={id}
-                  >
-                    <Avatar size="xs" rounded />
-                    <div className="ml-3">
-                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                        <span>{message.message}</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={`flex self-end items-center justify-center mr-4`}
-                    key={id}
-                  >
-                    <div className="mr-3">
-                      <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
-                        <span>{message.message}</span>
-                      </div>
-                    </div>
-                    <Avatar size="xs" rounded />
-                  </div>
+              {messages
+                .sort(
+                  (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
                 )
-              })}
+                .map((message, id) => {
+                  return message.sender === currentStudent ? (
+                    <div
+                      className={`flex self-start items-center justify-center`}
+                      key={id}
+                    >
+                      <Avatar size="xs" rounded />
+                      <div className="ml-3">
+                        <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                          <span>{message.message}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className={`flex self-end items-center justify-center mr-4`}
+                      key={id}
+                    >
+                      <div className="mr-3">
+                        <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
+                          <span>{message.message}</span>
+                        </div>
+                      </div>
+                      <Avatar size="xs" rounded />
+                    </div>
+                  )
+                })}
             </div>
           )}
         </div>

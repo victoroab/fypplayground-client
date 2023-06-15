@@ -37,19 +37,19 @@ const AppLayout = () => {
 
   const location = useLocation()
 
-  // if (session === 'null') {
-  //   return (
-  //     <div>
-  //       {/* <Link to="/">Go Home, Not Signed in</Link> */}
-  //       <Navigate to="/" state={{ from: location }} replace />
-  //       {/* <h1>Please Sign In to Continue</h1> */}
-  //     </div>
-  //   )
-  // }
+  if (session === 'null') {
+    return (
+      <div>
+        {/* <Link to="/">Go Home, Not Signed in</Link> */}
+        <Navigate to="/" state={{ from: location }} replace />
+        {/* <h1>Please Sign In to Continue</h1> */}
+      </div>
+    )
+  }
 
-  // const userType = userData.type // Comment out for development
+  const userType = userData.type // Comment out for development
 
-  const userType: any = 'mentor'
+  // const userType: any = 'mentor'
 
   const navigate = useNavigate()
 

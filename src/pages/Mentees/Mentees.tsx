@@ -1,66 +1,121 @@
 import { Avatar, Badge, Button, Card, Checkbox, Tooltip } from 'flowbite-react'
 import { CChart } from '@coreui/react-chartjs'
 import { HiCheck } from 'react-icons/hi'
+import { useParams } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { Axios } from '../../config/axios'
+import { AuthContext } from '../../Auth/AuthProvider'
 
 const Mentees = () => {
+  const { studentId } = useParams()
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
+
+  const [student, setStudent] = useState<any[]>([])
+
+  useEffect(() => {
+    fetchStudent()
+  }, [])
+
+  const fetchStudent = async () => {
+    try {
+      const response = await Axios.post(
+        '/mentor/get-student-by-id',
+        { studentId: studentId },
+        { withCredentials: true }
+      )
+      setStudent([response.data])
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  console.log(student)
+
   return (
     <div className="min-h-screen">
       <div className="flex mb-4 flex-col">
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-4 mr-6">
           <div className="flex flex-col w-full self-start mr-6">
             <span className="flex self-center font-bold mb-4">Bio</span>
-            <div className="flex justify-around mb-2 border rounded-2xl shadow-lg gap-4 p-4">
-              <Avatar size="lg" />
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold ">
-                  Name:{' '}
-                  <span className="font-semibold">
-                    Victor Oluwaseyi Balogun
+            {student.map((student, id) => (
+              <div
+                className="flex justify-around mb-2 border rounded-2xl shadow-lg gap-4 p-4"
+                key={id}
+              >
+                <Avatar size="lg" />
+                <div className="flex flex-col gap-3 justify-start items-start">
+                  <span className="font-bold ">
+                    Name:{' '}
+                    <span className="font-semibold">
+                      {`${
+                        student.firstName +
+                        ' ' +
+                        student.middleName +
+                        ' ' +
+                        student.lastName
+                      }`}
+                    </span>
                   </span>
-                </span>
-                <span className="font-bold">
-                  Course: <span className="font-semibold">MIS</span>
-                </span>
-                <span className="font-bold">
-                  Level: <span className="font-semibold">400</span>
-                </span>
+                  {/* <span className="font-bold">
+                    Course: <span className="font-semibold">MIS</span>
+                  </span>
+                  <span className="font-bold">
+                    Level: <span className="font-semibold">400</span>
+                  </span> */}
+                </div>
+                <div className="flex flex-col gap-3 justify-start items-start">
+                  <span className="font-bold ">
+                    Matric No:{' '}
+                    <span className="font-semibold">{student.matricNo}</span>
+                  </span>
+                  <span className="font-bold">
+                    Email:{' '}
+                    <span className="font-semibold">{student.email}</span>
+                  </span>
+                  <span className="font-bold">
+                    Gender:{' '}
+                    <span className="font-semibold">{student.gender}</span>{' '}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3 justify-start items-start">
+                  <span className="font-bold">
+                    Ethnicity:{' '}
+                    <span className="font-semibold">{student.ethnicity}</span>{' '}
+                  </span>
+                  <span className="font-bold">
+                    Hobbies:{' '}
+                    <span className="font-semibold">
+                      {student.Hobbies.hobbies
+                        .split(',')
+                        .map((hobbie: any) => `${hobbie + ',' + ' '}`)}
+                    </span>
+                  </span>
+                  <span className="font-bold">
+                    Skills:{' '}
+                    <span className="font-semibold">
+                      {student.Skills.skills
+                        .split(',')
+                        .map((skill: any) => `${skill + ',' + ' '}`)}
+                    </span>
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3 justify-start items-start">
+                  {/* <span className="font-bold">
+                    Class: <span className="font-semibold">First</span>{' '}
+                  </span> */}
+                  <span className="font-bold">
+                    Days Available:{' '}
+                    <span className="font-semibold">
+                      {student.Availability.days
+                        .split(',')
+                        .map((day: any) => `${day + ',' + ' '}`)}
+                    </span>
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold ">
-                  Matric No: <span className="font-semibold">19CH026505</span>
-                </span>
-                <span className="font-bold">
-                  Email:{' '}
-                  <span className="font-semibold">papioab@gmail.com</span>
-                </span>
-                <span className="font-bold">
-                  Gender: <span className="font-semibold">Male</span>{' '}
-                </span>
-              </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold">
-                  Ethnicity: <span className="font-semibold">Yoruba</span>{' '}
-                </span>
-                <span className="font-bold">
-                  Hobbies: <span className="font-semibold">Cooking</span>
-                </span>
-                <span className="font-bold">
-                  Skills: <span className="font-semibold">Fullstack Dev</span>
-                </span>
-              </div>
-              <div className="flex flex-col gap-3 justify-start items-start">
-                <span className="font-bold">
-                  Class: <span className="font-semibold">First</span>{' '}
-                </span>
-                <span className="font-bold">
-                  Days Available:{' '}
-                  <span className="font-semibold">Mon Tue Wed Thu Fri Sat</span>
-                </span>
-                <span className="font-bold">
-                  Phone No: <span className="font-semibold">123456789</span>
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

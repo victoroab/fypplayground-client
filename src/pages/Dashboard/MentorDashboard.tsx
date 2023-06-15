@@ -6,11 +6,16 @@ import {
   Textarea,
   Label,
   TextInput,
+  Tooltip,
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { CChart } from '@coreui/react-chartjs'
 import { useNavigate } from 'react-router-dom'
+import { BsQuestionCircle } from 'react-icons/bs'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../Auth/AuthProvider'
+import { Axios } from '../../config/axios'
 
 const events = [
   { title: 'Meeting', start: new Date() },
@@ -18,7 +23,32 @@ const events = [
 ]
 
 const MentorDashboard = () => {
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
   const navigate = useNavigate()
+
+  const [students, setStudents] = useState<any[]>([])
+
+  useEffect(() => {
+    fetchStudents()
+  }, [])
+
+  const fetchStudents = async () => {
+    try {
+      const response = await Axios.post(
+        '/mentor/get-students',
+        { mentorEmail: user.email },
+        { withCredentials: true }
+      )
+      setStudents(response.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  console.log(students)
+
   function renderEventContent(eventInfo: any) {
     return (
       <>
@@ -37,52 +67,21 @@ const MentorDashboard = () => {
           <span className="mb-4 text-lg text-gray-900 font-bold">
             My Students
           </span>
-          <div className="flex gap-7 w-full justify-between cursor-default">
-            <div
-              className="flex w-1/5"
-              onClick={() =>
-                navigate('/workspace/m/mentees/student-id-goes-here')
-              }
-            >
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]">
+          <div className="flex gap-7 w-full justify-start cursor-default">
+            {students.map((student, id) => (
+              <div
+                className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]"
+                onClick={() => navigate(`/workspace/m/mentees/${student.id}`)}
+                key={id}
+              >
                 <Card>
                   <Avatar />
                 </Card>
-                <span className="font-bold mb-3">Firstname Lastname</span>
+                <span className="font-bold mb-3">
+                  {`${student.firstName}`} {`${student.lastName}`}
+                </span>
               </div>
-            </div>
-            <div className="flex w-1/5">
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]">
-                <Card>
-                  <Avatar />
-                </Card>
-                <span className="font-bold mb-3">Firstname Lastname</span>
-              </div>
-            </div>
-            <div className="flex w-1/5">
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]">
-                <Card>
-                  <Avatar />
-                </Card>
-                <span className="font-bold mb-3">Firstname Lastname</span>
-              </div>
-            </div>
-            <div className="flex w-1/5">
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]">
-                <Card>
-                  <Avatar />
-                </Card>
-                <span className="font-bold mb-3">Firstname Lastname</span>
-              </div>
-            </div>
-            <div className="flex w-1/5">
-              <div className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]">
-                <Card>
-                  <Avatar />
-                </Card>
-                <span className="font-bold mb-3">Firstname Lastname</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 

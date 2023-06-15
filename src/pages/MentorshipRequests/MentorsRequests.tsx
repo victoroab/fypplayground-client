@@ -19,13 +19,13 @@ type MentorRequestData = {
 }
 
 const studentsRequests = () => {
-  const user = {
-    email: 'mentor1@gmail.com',
-  }
+  // const user = {
+  //   email: 'mentor1@gmail.com',
+  // }
 
-  // const { session } = useContext(AuthContext)
-  // const sessionData = JSON.parse(session)
-  // const { user } = sessionData
+  const { session } = useContext(AuthContext)
+  const sessionData = JSON.parse(session)
+  const { user } = sessionData
 
   const [mount, setMount] = useState(false)
   const [students, setStudents] =
