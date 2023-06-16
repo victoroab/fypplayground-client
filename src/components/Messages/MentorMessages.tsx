@@ -23,9 +23,18 @@ const MentorMessages = () => {
   const [students, setStudents] = useState<any[]>([])
   const [currentStudent, setCurrentStudent] = useState('')
 
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollToBottom = () => {
+    if (bottomRef.current)
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }
+
   useEffect(() => {
-    fetchMessages()
     fetchStudents()
+    Promise.all([sentMessages, receivedMessages]).then((data) =>
+      setMessages([...data[0].data!, ...data[1].data!])
+    )
+    scrollToBottom()
   }, [remount, currentStudent])
 
   supabase
@@ -52,34 +61,19 @@ const MentorMessages = () => {
     }
   }
 
-  const fetchMessages = async () => {
-    const { data: sender, error } = await supabase
-      .from('Messages')
-      .select()
-      .eq('sender', user.email)
-      .eq('receipent', currentStudent)
-      .order('created_at', { ascending: true })
-    // .eq('sender', currentStudent)
-    // .eq('receipent', user.email)
-    if (sender) {
-      setMessages(sender)
-    } else {
-      console.log(error)
-    }
+  const sentMessages = supabase
+    .from('Messages')
+    .select()
+    .eq('sender', user.email)
+    .eq('receipent', currentStudent)
+    .order('created_at', { ascending: true })
 
-    const { data: receiver, error: secondError } = await supabase
-      .from('Messages')
-      .select()
-      .eq('sender', currentStudent)
-      .eq('receipent', user.email)
-      .order('created_at', { ascending: true })
-
-    if (receiver) {
-      setMessages((prev) => [...prev, ...receiver])
-    } else {
-      console.log(secondError)
-    }
-  }
+  const receivedMessages = supabase
+    .from('Messages')
+    .select()
+    .eq('sender', currentStudent)
+    .eq('receipent', user.email)
+    .order('created_at', { ascending: true })
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -115,28 +109,6 @@ const MentorMessages = () => {
         ))}
       </Dropdown>
 
-      {/* <Button.Group outline>
-        {students.map((student, id) => (
-          <Button
-            key={id}
-            color="gray"
-            onClick={() => {
-              setCurrentStudent(student.email), setRemount((prev) => !prev)
-            }}
-          >
-            {`${student.firstName}`} {`${student.lastName}`}
-          </Button>
-        ))}
-      </Button.Group> */}
-      {/* <ul className="flex gap-3">
-        {students.map((student) => (
-          <li
-            onClick={() => {
-              setCurrentStudent(student.email), setRemount((prev) => !prev)
-            }}
-          >{`${student.firstName} ${student.lastName}`}</li>
-        ))}
-      </ul> */}
       <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-3 w-full border border-3 p-6 gap-3">
         <div className="overflow-y-scroll w-full border h-[40rem]">
           {currentStudent === '' ? (
@@ -145,7 +117,7 @@ const MentorMessages = () => {
               Select Student
             </div>
           ) : (
-            <div className="border flex flex-col">
+            <div className="border flex flex-col" ref={bottomRef}>
               {messages
                 .sort(
                   (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
@@ -177,6 +149,7 @@ const MentorMessages = () => {
                     </div>
                   )
                 })}
+              <div className="mt-10"></div>
             </div>
           )}
         </div>

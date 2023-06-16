@@ -12,15 +12,38 @@ import {
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { CChart } from '@coreui/react-chartjs'
-import { BsQuestionCircle } from 'react-icons/bs'
 import { Axios } from '../../config/axios'
+import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../Auth/AuthProvider'
+import { useMutation } from '@tanstack/react-query'
 
 const events = [
-  { title: 'Meeting', start: new Date() },
-  { title: 'Check', start: new Date('March 14, 2023 15:13:00:') },
+  { title: '- Meeting', start: new Date() },
+  { title: '- Check', start: new Date('March 14, 2023 15:13:00:') },
 ]
 
 const Dashboard = () => {
+  const userData = JSON.parse(localStorage.getItem('userData')!)
+
+  const cp = async (studentEmail: string) => {
+    return Axios.post(
+      '/mentee/get-mentor',
+      { studentEmail: studentEmail },
+      { withCredentials: true }
+    ).then((res) => res.data)
+  }
+
+  const postMutation = useMutation({
+    mutationFn: cp,
+    onSuccess: (data, variables, context) => {
+      setMentor(data.mentor)
+    },
+  })
+
+  const navigate = useNavigate()
+  const [mentor, setMentor] = useState<any | null>(null)
+
   function renderEventContent(eventInfo: any) {
     return (
       <>
@@ -30,6 +53,11 @@ const Dashboard = () => {
     )
   }
 
+  useEffect(() => {
+    postMutation.mutate(userData.email)
+    // getMentor()
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-wrap justify-between items-center mb-4 h-auto">
@@ -37,41 +65,27 @@ const Dashboard = () => {
           id="dash-r1"
           className="flex flex-col h-64 w-[31rem] mb-3 justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-6"
         >
-          <span className="mb-8 text-lg text-gray-900 font-bold">
-            Menorship Details
-          </span>
+          <span className="mb-8 text-lg text-gray-900 font-bold">Mentor</span>
           <div className="flex self-start w-full justify-around">
             <div className="flex flex-col w-full self-start mr-6">
-              <div className="flex flex-col justify-start mb-2 border rounded-2xl shadow-lg items-start p-4 pt-2">
-                <span className="font-bold self-center mb-3">Mentor</span>
-
-                {/* <div className="flex gap-4 justify-start items-center">
-                  <Avatar size="md" rounded={true} />
-                  <span className="flex flex-col items-start gap-3">
-                    <div className="flex gap-4">
-                      <span className="font-bold">Name:</span>
-                      <span className="font-semibold">Victor Balogun</span>
-                      <span className="font-bold">Course:</span>
-                      <span className="font-semibold">MIS</span>
-                    </div>
-                    <div className="flex gap-4">
-                      <span className="font-bold">Level:</span>
-                      <span className="font-semibold">400</span>
-                      <span className="font-bold">Matric No:</span>
-                      <span className="font-semibold">19CH026505</span>
-                    </div>
+              {mentor ? (
+                <div
+                  className="flex justify-start mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]"
+                  // onClick={() => navigate(`/workspace/m/mentees/`)}
+                >
+                  <Card>
+                    <Avatar />
+                  </Card>
+                  <span className="font-bold mb-3">
+                    {`${mentor.firstName}`} {`${mentor.lastName}`}
                   </span>
-                </div> */}
-              </div>
-              {/* <div className="flex justify-between mt-6">
-                <span className="font-bold flex gap-3 items-start justify-center mr-2">
-                  Duration: <span className="font-semibold ">3 Months</span>{' '}
-                </span>
-
-                <span className="font-bold flex gap-3 items-start justify-center mr-2">
-                  Time Left: <span className="font-semibold ">3 Months</span>{' '}
-                </span>
-              </div> */}
+                  <span className="font-semibold mb-3">
+                    {`${mentor.department}`}
+                  </span>
+                </div>
+              ) : (
+                <span></span>
+              )}
             </div>
           </div>
         </div>
@@ -171,46 +185,7 @@ const Dashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Tasks
           </span>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
+          <Card className="h-auto mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
               <Button

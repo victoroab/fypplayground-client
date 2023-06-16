@@ -17,9 +17,23 @@ const Messages = () => {
   const [messages, setMessages] = useState<any[]>([])
   const [remount, setRemount] = useState(false)
 
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollToBottom = () => {
+    if (bottomRef.current)
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }
+
+  const initialScroll = () => {
+    bottomRef!.current!.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }
+
   useEffect(() => {
     fetchMentor()
-    fetchMessages()
+    Promise.all([sentMessages, receivedMessages]).then((data) =>
+      setMessages([...data[0].data!, ...data[1].data!])
+    )
+    scrollToBottom()
+    // initialScroll()
   }, [remount])
 
   supabase
@@ -47,56 +61,19 @@ const Messages = () => {
     }
   }
 
-  const fetchMessages = async () => {
-    const { data, error } = await supabase
-      .from('Messages')
-      .select()
-      .eq('sender', user.email)
-      .eq('receipent', userData.mentor.email)
-      .order('created_at', { ascending: true })
+  const sentMessages = supabase
+    .from('Messages')
+    .select()
+    .eq('sender', user.email)
+    .eq('receipent', userData.mentor.email)
+    .order('created_at', { ascending: true })
 
-    if (data) {
-      setMessages(data)
-    } else {
-      console.log(error)
-    }
-
-    const { data: receiver, error: secondError } = await supabase
-      .from('Messages')
-      .select()
-      .eq('sender', userData.mentor.email)
-      .eq('receipent', user.email)
-      .order('created_at', { ascending: true })
-
-    if (receiver) {
-      setMessages((prev) => [...prev, ...receiver])
-      // setMessages(receiver)
-    } else {
-      console.log(secondError)
-    }
-  }
-
-  console.log(messages)
-
-  // const fetchMessages2 = async () => {
-  //   const { data: receiver, error: secondError } = await supabase
-  //     .from('Messages')
-  //     .select()
-  //     .eq('sender', mentor)
-  //     .eq('receipent', user.email)
-  //     .order('created_at')
-
-  //   if (receiver) {
-  //     setMessages2(receiver)
-  //     // setMessages(receiver)
-  //   } else {
-  //     console.log(secondError)
-  //   }
-  // }
-
-  console.log(mentor)
-  // console.log(messages)
-  // console.log(messages2)
+  const receivedMessages = supabase
+    .from('Messages')
+    .select()
+    .eq('sender', userData.mentor.email)
+    .eq('receipent', user.email)
+    .order('created_at', { ascending: true })
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -110,30 +87,20 @@ const Messages = () => {
     if (error) {
       console.log(error)
     }
-
+    scrollToBottom()
     messageRef.current!.value = ''
   }
 
   return (
     <div className="text-lg font-bold min-h-[85vh]">
-      <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-3 w-full border border-3 p-6 gap-3">
-        {/* <div className="flex self-start items-center justify-center">
-          <Avatar size="xs" />
-          <MessageBox className="ml-3" />
-        </div>
-
-        <div className="flex self-end items-center justify-center mb-6">
-          <MessageBox className="mr-3" />
-          <Avatar size="xs" />
-        </div> */}
-
-        <div className="overflow-y-scroll w-full border h-[40rem]">
+      <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-1 w-full border border-3 p-6 gap-1">
+        <div className="overflow-y-scroll w-full border h-[45rem]">
           {messages.length === 0 ? (
             <div>
               <Spinner color="gray" />
             </div>
           ) : (
-            <div className="border flex flex-col">
+            <div className="border flex flex-col" ref={bottomRef}>
               {messages
                 .sort(
                   (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
@@ -165,6 +132,7 @@ const Messages = () => {
                     </div>
                   )
                 })}
+              <div className="mt-10"></div>
             </div>
           )}
         </div>
@@ -180,7 +148,9 @@ const Messages = () => {
           />
           <Button
             className="bg-[#25425F] text-white"
-            onClick={(e) => sendMessage(e)}
+            onClick={(e) => {
+              sendMessage(e)
+            }}
             color=""
           >
             Send

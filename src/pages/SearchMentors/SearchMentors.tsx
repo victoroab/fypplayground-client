@@ -3,6 +3,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { Axios } from '../../config/axios'
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../Auth/AuthProvider'
+import { useMutation } from '@tanstack/react-query'
 
 export type Mentor = {
   id: string
@@ -19,14 +20,9 @@ export type Mentor = {
 }
 
 const SearchMentors = () => {
-  const user = {
-    email: 'dev@gmail.com',
-  }
+  const userData = JSON.parse(localStorage.getItem('userData')!)
 
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-
-  // const { user } = sessionData
+  const [mentor, setMentor] = useState<any>(null)
 
   const [mentors, setMentors] = useState<Mentor[]>([])
   const [alertState, setAlertState] = useState(false)
@@ -36,16 +32,35 @@ const SearchMentors = () => {
   const onclick = () => setVisible(true)
   const onclose = () => setVisible(false)
 
+  const cp = async (studentEmail: string) => {
+    return Axios.post(
+      '/mentee/get-mentor',
+      { studentEmail: studentEmail },
+      { withCredentials: true }
+    ).then((res) => res.data)
+  }
+
+  const postMutation = useMutation({
+    mutationFn: cp,
+    onSuccess: (data, variables, context) => {
+      setMentor(data.mentor)
+    },
+  })
+
   const fetchMentors = async () => {
     try {
-      const mentors = await Axios.get('/mentors/view')
-      setMentors(mentors.data)
+      const mentors = await Axios.get('/mentors/view', {
+        withCredentials: true,
+        headers: { 'x-user': userData.email },
+      })
+      if (mentor) setMentors(mentors.data)
     } catch (e) {
       console.log(e)
     }
   }
   useEffect(() => {
     fetchMentors()
+    postMutation.mutate(userData.email)
   }, [])
 
   const [viewMentor, setViewMentor] = useState<Mentor>({
@@ -92,16 +107,20 @@ const SearchMentors = () => {
   }
 
   const requestMentorshipOnView = async () => {
-    await Axios.post(`/mentor/${viewMentor.id}/request-mentor`, user.email, {
-      withCredentials: true,
-    })
+    await Axios.post(
+      `/mentor/${viewMentor.id}/request-mentor`,
+      userData.email,
+      {
+        withCredentials: true,
+      }
+    )
   }
 
   const requestMentorship = async (id: string) => {
     const request = await Axios.post(
       `/mentor/${id}/request-mentor`,
       {
-        studentEmail: user.email,
+        studentEmail: userData.email,
       },
       {
         withCredentials: true,
@@ -126,9 +145,13 @@ const SearchMentors = () => {
   return (
     <div className="min-h-screen">
       <div className="grid items-center mb-4">
-        <span className="text-lg text-gray-900 flex items-center justify-around font-bold">
-          Available Mentors
-        </span>
+        {!mentor ? (
+          <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
+            Recommended Mentors
+          </span>
+        ) : (
+          'You have a mentor'
+        )}
       </div>
 
       <Modal show={visible} size="xl" onClose={onclose}>
@@ -190,7 +213,67 @@ const SearchMentors = () => {
         </span>
       </Alert>
 
-      <Table hoverable={true} striped={true}>
+      {!mentor ? (
+        <Table hoverable={true} striped={true}>
+          <Table.Head>
+            <Table.HeadCell>
+              <span className="sr-only">Profile</span>
+            </Table.HeadCell>
+            <Table.HeadCell>Name</Table.HeadCell>
+            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>department</Table.HeadCell>
+            <Table.HeadCell>staff No</Table.HeadCell>
+            <Table.HeadCell>
+              <span className="sr-only">View</span>
+            </Table.HeadCell>
+            <Table.HeadCell>
+              <span className="sr-only">View</span>
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            {mentors.map((mentor, id) => (
+              <Table.Row
+                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                key={id}
+              >
+                <Table.Cell>
+                  <Avatar rounded={true} />
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {mentor.firstName + ' ' + mentor.lastName}
+                </Table.Cell>
+                <Table.Cell>{mentor.email}</Table.Cell>
+                <Table.Cell>{mentor.department}</Table.Cell>
+                <Table.Cell>{mentor.staffNo}</Table.Cell>
+                <Table.Cell>
+                  <Button
+                    size="xs"
+                    color=""
+                    className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                    onClick={() => viewModal(mentor)}
+                  >
+                    View
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    color="success"
+                    size="xs"
+                    outline={true}
+                    onClick={() => requestMentorship(mentor.id)}
+                  >
+                    Send Request
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      ) : (
+        ''
+      )}
+
+      {/* <Table hoverable={true} striped={true}>
         <Table.Head>
           <Table.HeadCell>
             <span className="sr-only">Profile</span>
@@ -244,99 +327,113 @@ const SearchMentors = () => {
             </Table.Row>
           ))}
         </Table.Body>
-      </Table>
+      </Table> */}
 
       <div className="grid items-center mb-6 mt-6">
-        <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
-          Recommended Mentors
-        </span>
+        {!mentor ? (
+          <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
+            Recommended Mentors
+          </span>
+        ) : (
+          ''
+        )}
       </div>
-      <Table hoverable={true}>
-        <Table.Head>
-          <Table.HeadCell>
-            <span className="sr-only">Profile</span>
-          </Table.HeadCell>
-          <Table.HeadCell>Name</Table.HeadCell>
-          <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>department</Table.HeadCell>
-          <Table.HeadCell>staff No</Table.HeadCell>
-          <Table.HeadCell>Compatibiliy Score</Table.HeadCell>
 
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell>
-              <Avatar rounded={true} />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Apple MacBook Pro 17"
-            </Table.Cell>
-            <Table.Cell>Sliver</Table.Cell>
-            <Table.Cell>Laptop</Table.Cell>
-            <Table.Cell>$2999</Table.Cell>
-            <Table.Cell>12</Table.Cell>
-            <Table.Cell>
-              <Button
-                size="xs"
-                className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                color=""
-              >
-                View
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button color="success" size="xs" outline={true}>
-                Send Request
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell>
-              <Avatar rounded={true} />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Microsoft Surface Pro
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>10</Table.Cell>
-            <Table.Cell>
-              <Button
-                size="xs"
-                className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                color=""
-              >
-                View
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button color="success" size="xs" outline={true}>
-                Send Request
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-      <Tooltip
-        placement="left"
-        content="Shows the 2 most compatible mentors for you based on the mentor matching system"
-      >
-        <Button
-          className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"
-          outline={true}
-          color=""
+      {!mentor ? (
+        <Table hoverable={true}>
+          <Table.Head>
+            <Table.HeadCell>
+              <span className="sr-only">Profile</span>
+            </Table.HeadCell>
+            <Table.HeadCell>Name</Table.HeadCell>
+            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>department</Table.HeadCell>
+            <Table.HeadCell>staff No</Table.HeadCell>
+            <Table.HeadCell>Compatibiliy Score</Table.HeadCell>
+
+            <Table.HeadCell>
+              <span className="sr-only">Edit</span>
+            </Table.HeadCell>
+            <Table.HeadCell>
+              <span className="sr-only">Edit</span>
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell>
+                <Avatar rounded={true} />
+              </Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                Apple MacBook Pro 17"
+              </Table.Cell>
+              <Table.Cell>Sliver</Table.Cell>
+              <Table.Cell>Laptop</Table.Cell>
+              <Table.Cell>$2999</Table.Cell>
+              <Table.Cell>12</Table.Cell>
+              <Table.Cell>
+                <Button
+                  size="xs"
+                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                  color=""
+                >
+                  View
+                </Button>
+              </Table.Cell>
+              <Table.Cell>
+                <Button color="success" size="xs" outline={true}>
+                  Send Request
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell>
+                <Avatar rounded={true} />
+              </Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                Microsoft Surface Pro
+              </Table.Cell>
+              <Table.Cell>White</Table.Cell>
+              <Table.Cell>Laptop PC</Table.Cell>
+              <Table.Cell>$1999</Table.Cell>
+              <Table.Cell>10</Table.Cell>
+              <Table.Cell>
+                <Button
+                  size="xs"
+                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                  color=""
+                >
+                  View
+                </Button>
+              </Table.Cell>
+              <Table.Cell>
+                <Button color="success" size="xs" outline={true}>
+                  Send Request
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      ) : (
+        ''
+      )}
+
+      {!mentor ? (
+        <Tooltip
+          placement="left"
+          content="Shows the 2 most compatible mentors for you based on the mentor matching system"
         >
-          <AiOutlineSearch className="mr-2 h-5 w-5" />
-          Find Match
-        </Button>
-      </Tooltip>
+          <Button
+            className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"
+            outline={true}
+            color=""
+          >
+            <AiOutlineSearch className="mr-2 h-5 w-5" />
+            Find Match
+          </Button>
+        </Tooltip>
+      ) : (
+        ''
+      )}
     </div>
   )
 }
