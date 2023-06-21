@@ -80,8 +80,8 @@ const Upload = () => {
 
         <Card>
           <span>
-            {files.map((file) => (
-              <div className="grid grid-flow-col">
+            {files.map((file, id) => (
+              <div className="grid grid-flow-col" key={id}>
                 {file.name}
                 <img
                   src={`https://zrmhmgszaxdkexnpvcko.supabase.co/storage/v1/object/public/avatars/public/avatar45d0abc.png?t=2023-06-05T11%3A57%3A03.606Z/${file.name}`}

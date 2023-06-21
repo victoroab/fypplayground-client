@@ -8,25 +8,33 @@ import {
   TextInput,
   Tooltip,
   Carousel,
+  Spinner,
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { CChart } from '@coreui/react-chartjs'
 import { Axios } from '../../config/axios'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../Auth/AuthProvider'
-import { useMutation } from '@tanstack/react-query'
+import { useContext, useEffect, useState, useRef } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-const events = [
-  { title: '- Meeting', start: new Date() },
-  { title: '- Check', start: new Date('March 14, 2023 15:13:00:') },
-]
+// const events = [
+//   { title: '- Meeting', start: new Date() },
+//   { title: '- Check', start: new Date('March 14, 2023 15:13:00:') },
+//   { title: '- Check', start: new Date('Sat Jun 24 2023') },
+// ]
 
 const Dashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
+  // const userData = { type: 'student', email: 'student2@gmail.com' }
+  const queryClient = useQueryClient()
+  const inputRef = useRef<any>(null)
+  const titleRef = useRef<any>(null)
+  const dateRef = useRef<any>(null)
 
-  const cp = async (studentEmail: string) => {
+  const [mentor, setMentor] = useState<any | null>(null)
+
+  const getMentor = async (studentEmail: string) => {
     return Axios.post(
       '/mentee/get-mentor',
       { studentEmail: studentEmail },
@@ -35,14 +43,100 @@ const Dashboard = () => {
   }
 
   const postMutation = useMutation({
-    mutationFn: cp,
-    onSuccess: (data, variables, context) => {
+    mutationFn: getMentor,
+    onSuccess: (data) => {
       setMentor(data.mentor)
     },
   })
 
-  const navigate = useNavigate()
-  const [mentor, setMentor] = useState<any | null>(null)
+  const getTasks = async () => {
+    try {
+      const tasks = await Axios.get('/mentee/get-tasks', {
+        withCredentials: true,
+        headers: { 'x-user': userData.email },
+      })
+      return tasks.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const tasksQuery = useQuery({
+    queryKey: ['tasks'],
+    queryFn: getTasks,
+  })
+
+  const createTask = async () => {
+    try {
+      const result = await Axios.post(
+        '/mentee/create-task',
+        {
+          studentEmail: userData.email,
+          title: inputRef.current.value,
+        },
+        { withCredentials: true }
+      )
+      return result
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const createTaskMutation = useMutation({
+    mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['tasks']), (inputRef.current.value = '')
+    },
+  })
+
+  const [events, setEvents] = useState([])
+
+  const getSchedules = async () => {
+    const response = await Axios.get('/mentee/get-schedules', {
+      withCredentials: true,
+      headers: { 'x-user': 'student2@gmail.com' },
+    })
+    return response.data
+  }
+
+  const createSchedule = async () => {
+    const response = await Axios.post(
+      '/mentee/create-schedule',
+      {
+        studentEmail: userData.email,
+        title: titleRef.current.value,
+        date: dateRef.current.value,
+      },
+      { withCredentials: true }
+    )
+    return response
+  }
+
+  const scheduleQuery = useQuery({
+    queryKey: ['schedules'],
+    queryFn: getSchedules,
+  })
+
+  useEffect(() => {
+    if (scheduleQuery.data) {
+      const eventsData = scheduleQuery.data.map((schedule: any) => ({
+        title: `- ${schedule.title}`,
+        date: new Date(schedule.date),
+      }))
+
+      setEvents(eventsData)
+    }
+  }, [scheduleQuery.data])
+
+  const scheduleMutation = useMutation({
+    mutationFn: createSchedule,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['schedules']),
+        (inputRef.current.value = ''),
+        (titleRef.current.value = ''),
+        (dateRef.current.value = '')
+    },
+  })
 
   function renderEventContent(eventInfo: any) {
     return (
@@ -55,7 +149,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     postMutation.mutate(userData.email)
-    // getMentor()
   }, [])
 
   return (
@@ -185,19 +278,25 @@ const Dashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Tasks
           </span>
-          <Card className="h-auto mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
+          {tasksQuery.isLoading ? (
+            <Spinner />
+          ) : (
+            tasksQuery.data.map((task: any, id: any) => (
+              <Card className="h-auto mb-4 hover:bg-gray-50" key={id}>
+                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
+                  {task.title}
+                  <Button
+                    size="xs"
+                    color=""
+                    id="tsk-btn"
+                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+                  >
+                    View
+                  </Button>
+                </span>
+              </Card>
+            ))
+          )}
         </div>
       </div>
 
@@ -216,6 +315,7 @@ const Dashboard = () => {
             <Textarea
               id="comment"
               className="h-20"
+              ref={inputRef}
               placeholder="Input a task"
               required={true}
               rows={4}
@@ -224,6 +324,9 @@ const Dashboard = () => {
               className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
               color=""
               size="sm"
+              onClick={() => {
+                createTaskMutation.mutate()
+              }}
             >
               Create
             </Button>
@@ -251,6 +354,7 @@ const Dashboard = () => {
                 sizing="md"
                 placeholder="Title of event"
                 className=""
+                ref={titleRef}
               />
             </div>
 
@@ -263,6 +367,7 @@ const Dashboard = () => {
                 <input
                   type="date"
                   id="date"
+                  ref={dateRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5"
                   placeholder="Select date"
                 />
@@ -274,6 +379,7 @@ const Dashboard = () => {
                 className="self-end text-white bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
                 color=""
                 size="sm"
+                onClick={() => scheduleMutation.mutate()}
               >
                 Schedule
               </Button>
