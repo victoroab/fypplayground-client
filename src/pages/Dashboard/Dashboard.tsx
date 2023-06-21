@@ -94,7 +94,7 @@ const Dashboard = () => {
   const getSchedules = async () => {
     const response = await Axios.get('/mentee/get-schedules', {
       withCredentials: true,
-      headers: { 'x-user': 'student2@gmail.com' },
+      headers: { 'x-user': userData.email },
     })
     return response.data
   }

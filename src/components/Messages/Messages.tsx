@@ -3,6 +3,7 @@ import { TextInput, Button, Avatar, Spinner } from 'flowbite-react'
 import { supabase } from '../../config/supabase'
 import { AuthContext } from '../../Auth/AuthProvider'
 import { Axios } from '../../config/axios'
+import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from '@tanstack/react-query'
 
 const Messages = () => {
@@ -79,6 +80,7 @@ const Messages = () => {
     e.preventDefault()
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
+      id: uuidv4(),
       sender: user.email,
       message,
       receipent: mentor,

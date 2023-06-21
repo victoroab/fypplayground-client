@@ -79,6 +79,7 @@
 #dash-r3-c2 {
   @media (max-width: 1214px) {
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 

@@ -10,6 +10,7 @@ import {
 import { supabase } from '../../config/supabase'
 import { AuthContext } from '../../Auth/AuthProvider'
 import { Axios } from '../../config/axios'
+import { v4 as uuidv4 } from 'uuid'
 
 const MentorMessages = () => {
   const { session } = useContext(AuthContext)
@@ -79,6 +80,7 @@ const MentorMessages = () => {
     e.preventDefault()
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
+      id: uuidv4(),
       sender: user.email,
       message,
       receipent: currentStudent,
@@ -90,8 +92,6 @@ const MentorMessages = () => {
 
     messageRef.current!.value = ''
   }
-
-  console.log(messages)
 
   return (
     <div className="text-lg font-bold min-h-[85vh]">
