@@ -45,7 +45,7 @@ const AppLayout = () => {
     )
   }
 
-  const userType = userData.type // Comment out for development
+  const userType = userData?.type // Comment out for development
 
   // const userType: any = 'student'
 

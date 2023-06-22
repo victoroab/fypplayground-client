@@ -52,7 +52,7 @@ const Messages = () => {
     try {
       const response = await Axios.post(
         '/mentee/get-mentor',
-        { studentEmail: user.email },
+        { studentEmail: user?.email },
         { withCredentials: true }
       )
       setMentor(response.data.mentor.email)
@@ -66,13 +66,13 @@ const Messages = () => {
     .from('Messages')
     .select()
     .eq('sender', user.email)
-    .eq('receipent', userData.mentor.email)
+    .eq('receipent', userData?.mentor?.email)
     .order('created_at', { ascending: true })
 
   const receivedMessages = supabase
     .from('Messages')
     .select()
-    .eq('sender', userData.mentor.email)
+    .eq('sender', userData?.mentor?.email)
     .eq('receipent', user.email)
     .order('created_at', { ascending: true })
 
@@ -81,7 +81,7 @@ const Messages = () => {
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
       id: uuidv4(),
-      sender: user.email,
+      sender: user?.email,
       message,
       receipent: mentor,
     })
