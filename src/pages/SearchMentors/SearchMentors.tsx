@@ -147,7 +147,7 @@ const SearchMentors = () => {
       <div className="grid items-center mb-4">
         {!mentor ? (
           <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
-            Recommended Mentors
+            Mentors
           </span>
         ) : (
           'You have a mentor'
