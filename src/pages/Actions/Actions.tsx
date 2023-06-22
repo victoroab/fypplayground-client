@@ -8,9 +8,6 @@ const Actions = () => {
   const navigate = useNavigate()
   return (
     <div className="min-h-screen">
-      {/* <Upload /> */}
-      {/* <Messages /> */}
-      {/* <AuthClient /> */}
       <div className="min-h-screen flex flex-wrap items-start my-auto gap-6 p-3">
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">Upload File/Image</span>{' '}
@@ -36,11 +33,12 @@ const Actions = () => {
           </Button>
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
-          <span className="pb-6">Schedule Meeting</span>{' '}
+          <span className="pb-6">Schedule Event</span>{' '}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             color=""
+            onClick={() => navigate('/workspace/actions/schedules')}
           >
             {'>'}
           </Button>
@@ -51,6 +49,7 @@ const Actions = () => {
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             color=""
+            onClick={() => navigate('/workspace/actions/tasks')}
           >
             {'>'}
           </Button>

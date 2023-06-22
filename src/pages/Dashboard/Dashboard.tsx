@@ -9,20 +9,16 @@ import {
   Tooltip,
   Carousel,
   Spinner,
+  Badge,
 } from 'flowbite-react'
+import { HiCheck } from 'react-icons/hi'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { CChart } from '@coreui/react-chartjs'
 import { Axios } from '../../config/axios'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect, useState, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-
-// const events = [
-//   { title: '- Meeting', start: new Date() },
-//   { title: '- Check', start: new Date('March 14, 2023 15:13:00:') },
-//   { title: '- Check', start: new Date('Sat Jun 24 2023') },
-// ]
 
 const Dashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
@@ -31,6 +27,8 @@ const Dashboard = () => {
   const inputRef = useRef<any>(null)
   const titleRef = useRef<any>(null)
   const dateRef = useRef<any>(null)
+
+  const navigate = useNavigate()
 
   const [mentor, setMentor] = useState<any | null>(null)
 
@@ -66,6 +64,23 @@ const Dashboard = () => {
     queryFn: getTasks,
   })
 
+  const getTaskNumbers = async () => {
+    try {
+      const numbers = await Axios.get('/mentee/get-task-number', {
+        withCredentials: true,
+        headers: { 'x-user': userData.email },
+      })
+      return numbers.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const numbersQuery = useQuery({
+    queryKey: ['numbers'],
+    queryFn: getTaskNumbers,
+  })
+
   const createTask = async () => {
     try {
       const result = await Axios.post(
@@ -86,6 +101,7 @@ const Dashboard = () => {
     mutationFn: createTask,
     onSuccess: () => {
       queryClient.invalidateQueries(['tasks']), (inputRef.current.value = '')
+      queryClient.invalidateQueries(['numbers'])
     },
   })
 
@@ -151,6 +167,8 @@ const Dashboard = () => {
     postMutation.mutate(userData.email)
   }, [])
 
+  console.log(tasksQuery.data)
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-wrap justify-between items-center mb-4 h-auto">
@@ -200,7 +218,7 @@ const Dashboard = () => {
               datasets: [
                 {
                   backgroundColor: ['#34495E', '#85929E'],
-                  data: [60, 40],
+                  data: numbersQuery.data,
                 },
               ],
             }}
@@ -281,18 +299,15 @@ const Dashboard = () => {
           {tasksQuery.isLoading ? (
             <Spinner />
           ) : (
-            tasksQuery.data.map((task: any, id: any) => (
-              <Card className="h-auto mb-4 hover:bg-gray-50" key={id}>
+            tasksQuery.data?.slice(0, 4).map((task: any, id: any) => (
+              <Card
+                className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
+                key={id}
+                onClick={() => navigate('/workspace/actions/tasks')}
+              >
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   {task.title}
-                  <Button
-                    size="xs"
-                    color=""
-                    id="tsk-btn"
-                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-                  >
-                    View
-                  </Button>
+                  {task.completed !== '' ? <Badge icon={HiCheck} /> : ''}
                 </span>
               </Card>
             ))
