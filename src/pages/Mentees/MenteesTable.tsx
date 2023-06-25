@@ -1,10 +1,12 @@
 import { Table, Avatar, Button } from 'flowbite-react'
+import { useNavigate } from 'react-router-dom'
 
 const MenteesTable = () => {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen">
-      <span className="text-lg text-gray-900 flex items-center justify-around font-bold mb-2">
-        My Mentees{' '}
+      <span className="text-lg text-gray-900 flex items-center justify-around font-bold mb-4">
+        My Students
       </span>
       <Table hoverable={true}>
         <Table.Head>
@@ -15,12 +17,6 @@ const MenteesTable = () => {
           <Table.HeadCell>Email</Table.HeadCell>
           <Table.HeadCell>Course</Table.HeadCell>
           <Table.HeadCell>Matric No</Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">Edit</span>
-          </Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
@@ -39,48 +35,11 @@ const MenteesTable = () => {
             <Table.Cell>
               <Button
                 size="xs"
-                className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black"
+                className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                color=""
+                onClick={() => navigate('/workspace/m/mentees/:studentId')}
               >
                 View
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button size="xs" outline={true}>
-                Send Message
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button size="xs" color="failure" outline={true}>
-                Remove
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell>
-              <Avatar rounded={true} />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Microsoft Surface Pro
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>
-              <Button
-                size="xs"
-                className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black"
-              >
-                View
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button size="xs" outline={true}>
-                Send Message
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button size="xs" color="failure" outline={true}>
-                Remove
               </Button>
             </Table.Cell>
           </Table.Row>

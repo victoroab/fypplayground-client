@@ -7,9 +7,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from '@tanstack/react-query'
 
 const Messages = () => {
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
   const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const [mentor, setMentor] = useState('')
@@ -52,7 +52,7 @@ const Messages = () => {
     try {
       const response = await Axios.post(
         '/mentee/get-mentor',
-        { studentEmail: user?.email },
+        { studentEmail: userData?.email },
         { withCredentials: true }
       )
       setMentor(response.data.mentor.email)
@@ -65,7 +65,7 @@ const Messages = () => {
   const sentMessages = supabase
     .from('Messages')
     .select()
-    .eq('sender', user.email)
+    .eq('sender', userData?.email)
     .eq('receipent', userData?.mentor?.email)
     .order('created_at', { ascending: true })
 
@@ -73,7 +73,7 @@ const Messages = () => {
     .from('Messages')
     .select()
     .eq('sender', userData?.mentor?.email)
-    .eq('receipent', user.email)
+    .eq('receipent', userData?.email)
     .order('created_at', { ascending: true })
 
   const sendMessage = async (e: any) => {
@@ -81,7 +81,7 @@ const Messages = () => {
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
       id: uuidv4(),
-      sender: user?.email,
+      sender: userData?.email,
       message,
       receipent: mentor,
     })

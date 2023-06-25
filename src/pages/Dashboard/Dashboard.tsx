@@ -22,6 +22,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 const Dashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
+  console.log(userData)
   // const userData = { type: 'student', email: 'student2@gmail.com' }
   const queryClient = useQueryClient()
   const inputRef = useRef<any>(null)
@@ -32,7 +33,7 @@ const Dashboard = () => {
 
   const [mentor, setMentor] = useState<any | null>(null)
 
-  const getMentor = async (studentEmail: string) => {
+  const getMentor = async ({ studentEmail }: { studentEmail: string }) => {
     return Axios.post(
       '/mentee/get-mentor',
       { studentEmail: studentEmail },
@@ -51,7 +52,7 @@ const Dashboard = () => {
     try {
       const tasks = await Axios.get('/mentee/get-tasks', {
         withCredentials: true,
-        headers: { 'x-user': userData.email },
+        headers: { 'x-user': userData?.email },
       })
       return tasks.data
     } catch (e) {
@@ -86,7 +87,7 @@ const Dashboard = () => {
       const result = await Axios.post(
         '/mentee/create-task',
         {
-          studentEmail: userData.email,
+          studentEmail: userData?.email,
           title: inputRef.current.value,
         },
         { withCredentials: true }
@@ -164,10 +165,8 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    postMutation.mutate(userData.email)
+    postMutation.mutate({ studentEmail: userData?.email })
   }, [])
-
-  console.log(tasksQuery.data)
 
   return (
     <div className="min-h-screen flex flex-col">

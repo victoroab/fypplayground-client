@@ -47,7 +47,7 @@ const AppLayout = () => {
 
   const userType = userData?.type // Comment out for development
 
-  // const userType: any = 'student'
+  // const userType: any = 'mentor'
 
   const navigate = useNavigate()
 
@@ -118,7 +118,6 @@ const AppLayout = () => {
                 }
               >
                 <Dropdown.Header>
-                  {/* <span className="block text-sm">Victor Balogun</span> */}
                   <span className="block truncate text-sm font-medium">
                     {!sessionData ? '' : sessionData.user.email}
                   </span>
@@ -157,9 +156,7 @@ const AppLayout = () => {
                     >
                       Yes, I'm sure
                     </Button>
-                    {/* {signedOut ? <Navigate to="/" /> : null} */}
                     <Button
-                      // color="gray"
                       onClick={onclose}
                       className="bg-gray-200 text-gray-900 border-2 hover:border-[#6E8498] hover:bg-white hover:text-[#6E8498]"
                       color=""
@@ -277,12 +274,7 @@ const AppLayout = () => {
                 arrowIcon={false}
                 inline={true}
                 label={
-                  <Avatar
-                    alt="User settings"
-                    // img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    className="sm:h-8"
-                    rounded={true}
-                  >
+                  <Avatar alt="User settings" className="sm:h-8" rounded={true}>
                     <div className="space-y-1 font-medium dark:text-white">
                       <div className="text-black" id="user-name">
                         {!sessionData ? '' : sessionData.user.email}
@@ -292,7 +284,6 @@ const AppLayout = () => {
                 }
               >
                 <Dropdown.Header>
-                  {/* <span className="block text-sm">Victor Balogun</span> */}
                   <span className="block truncate text-sm font-medium">
                     {!sessionData ? '' : sessionData.user.email}
                   </span>
@@ -331,9 +322,7 @@ const AppLayout = () => {
                     >
                       Yes, I'm sure
                     </Button>
-                    {/* {signedOut ? <Navigate to="/" /> : null} */}
                     <Button
-                      // color="gray"
                       onClick={onclose}
                       className="bg-gray-200 text-gray-900 border-2 hover:border-[#6E8498] hover:bg-white hover:text-[#6E8498]"
                       color=""

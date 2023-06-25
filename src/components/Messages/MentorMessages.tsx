@@ -13,9 +13,11 @@ import { Axios } from '../../config/axios'
 import { v4 as uuidv4 } from 'uuid'
 
 const MentorMessages = () => {
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
+
+  const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const messageRef = useRef<HTMLInputElement>(null)
   const [messages, setMessages] = useState<any[]>([])
@@ -53,7 +55,7 @@ const MentorMessages = () => {
     try {
       const response = await Axios.post(
         '/mentor/get-students',
-        { mentorEmail: user.email },
+        { mentorEmail: userData?.email },
         { withCredentials: true }
       )
       setStudents(response.data)
@@ -65,7 +67,7 @@ const MentorMessages = () => {
   const sentMessages = supabase
     .from('Messages')
     .select()
-    .eq('sender', user.email)
+    .eq('sender', userData?.email)
     .eq('receipent', currentStudent)
     .order('created_at', { ascending: true })
 
@@ -73,7 +75,7 @@ const MentorMessages = () => {
     .from('Messages')
     .select()
     .eq('sender', currentStudent)
-    .eq('receipent', user.email)
+    .eq('receipent', userData?.email)
     .order('created_at', { ascending: true })
 
   const sendMessage = async (e: any) => {
@@ -81,7 +83,7 @@ const MentorMessages = () => {
     const message = messageRef.current?.value
     const { error } = await supabase.from('Messages').insert({
       id: uuidv4(),
-      sender: user.email,
+      sender: userData?.email,
       message,
       receipent: currentStudent,
     })
@@ -128,7 +130,7 @@ const MentorMessages = () => {
                       className={`flex self-start items-center justify-center`}
                       key={id}
                     >
-                      <Avatar size="xs" rounded />
+                      <Avatar size="xs" rounded img="/flogo.webp" />
                       <div className="ml-3">
                         <div className="bg-white min-h-[2.7rem] border rounded-lg p-1 w-52 flex items-center text-base font-semibold pl-4">
                           <span>{message.message}</span>

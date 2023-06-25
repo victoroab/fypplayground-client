@@ -13,7 +13,7 @@ const Navbar = () => {
   }
 
   const onclose = () => {
-    setVisible(false)
+    setVisible((prev) => !prev)
   }
 
   const signIn = async () => {
@@ -53,11 +53,15 @@ const Navbar = () => {
                     onclose(), navigate('/sign-up/student')
                   }}
                 >
-                  <Link to="/sign-up/student">
-                    <span>As Student</span>
-                  </Link>
+                  <span>As Student</span>
                 </Dropdown.Item>
-                <Dropdown.Item>As Mentor</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    onclose(), navigate('/sign-up/mentor')
+                  }}
+                >
+                  <span>As Mentor</span>
+                </Dropdown.Item>
               </Dropdown>
               <Button
                 color="gray"

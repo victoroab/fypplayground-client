@@ -20,9 +20,11 @@ type MentorRequestData = {
 }
 
 const MentorshipRequests = () => {
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
+
+  const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const [mount, setMount] = useState(false)
 
@@ -36,7 +38,7 @@ const MentorshipRequests = () => {
     try {
       const requests = await Axios.post(
         '/mentee/get-mentorship-requests',
-        { studentEmail: user.email },
+        { studentEmail: userData?.email },
         { withCredentials: true }
       )
       setMentors(requests.data['mentorshipRequests'])
@@ -52,7 +54,7 @@ const MentorshipRequests = () => {
   const deleteRequest = async (mentorId: string) => {
     const request = await Axios.post(
       `/mentee/${mentorId}/delete-mentorship-requests`,
-      { studentEmail: user.email },
+      { studentEmail: userData.email },
       { withCredentials: true }
     )
 

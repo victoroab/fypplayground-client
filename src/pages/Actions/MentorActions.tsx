@@ -11,15 +11,8 @@ const MentorActions = () => {
       <div className="min-h-screen flex flex-wrap items-start my-auto gap-6 p-3">
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
           <span className="pb-6">Upload File/Image</span>{' '}
-          {/* <Select>
-            <option>storage</option>
-            <option>Mentee 1</option>
-            <option>Mentee 2</option>
-            <option>Mentee 3</option>
-          </Select> */}
           <Button
             size="xs"
-            // color="gray"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             onClick={() => navigate('/workspace/m/actions/upload')}
             color=""
@@ -28,12 +21,7 @@ const MentorActions = () => {
           </Button>
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
-          <span className="pb-6">Message Mentee</span>{' '}
-          {/* <Select>
-            <option>Mentee 1</option>
-            <option>Mentee 2</option>
-            <option>Mentee 3</option>
-          </Select> */}
+          <span className="pb-6">Message Student</span>{' '}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
@@ -44,12 +32,7 @@ const MentorActions = () => {
           </Button>
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
-          <span className="pb-6">Schedule Meeting</span>{' '}
-          {/* <Select>
-            <option>Mentee 1</option>
-            <option>Mentee 2</option>
-            <option>Mentee 3</option>
-          </Select> */}
+          <span className="pb-6">Schedule Event</span>{' '}
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
@@ -59,16 +42,13 @@ const MentorActions = () => {
           </Button>
         </Card>
         <Card className="w-56 h-64 p-3 flex flex-col text-3xl font-bold text-gray-400">
-          <span className="pb-6">View Tasks</span>
-          {/* <Select>
-            <option>Mentee 1</option>
-            <option>Mentee 2</option>
-            <option>Mentee 3</option>
-          </Select> */}
+          <span className="pb-6">View Students</span>
+
           <Button
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             color=""
+            onClick={() => navigate('/workspace/m/mentees')}
           >
             {'>'}
           </Button>

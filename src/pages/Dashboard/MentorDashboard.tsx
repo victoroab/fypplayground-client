@@ -23,9 +23,12 @@ const events = [
 ]
 
 const MentorDashboard = () => {
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
+  const userData = JSON.parse(localStorage.getItem('userData')!)
+  console.log(userData?.email)
+
   const navigate = useNavigate()
 
   const [students, setStudents] = useState<any[]>([])
@@ -38,7 +41,7 @@ const MentorDashboard = () => {
     try {
       const response = await Axios.post(
         '/mentor/get-students',
-        { mentorEmail: user.email },
+        { mentorEmail: userData?.email },
         { withCredentials: true }
       )
       setStudents(response.data)

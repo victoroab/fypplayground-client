@@ -2,7 +2,6 @@ import { Alert, Table, Button, Avatar, Tooltip, Modal } from 'flowbite-react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Axios } from '../../config/axios'
 import { useState, useEffect, useContext } from 'react'
-import { AuthContext } from '../../Auth/AuthProvider'
 import { useMutation } from '@tanstack/react-query'
 
 export type Mentor = {
@@ -53,14 +52,14 @@ const SearchMentors = () => {
         withCredentials: true,
         headers: { 'x-user': userData.email },
       })
-      if (mentor) setMentors(mentors.data)
+      if (mentor) setMentors(mentors?.data)
     } catch (e) {
       console.log(e)
     }
   }
   useEffect(() => {
     fetchMentors()
-    postMutation.mutate(userData.email)
+    postMutation.mutate(userData?.email)
   }, [])
 
   const [viewMentor, setViewMentor] = useState<Mentor>({
@@ -185,12 +184,12 @@ const SearchMentors = () => {
             </div>
           </div>
           <Button
-            className="bg-black text-white hover:bg-white border-2 border-b-4 hover:text-black border-black hover:border-black m-auto"
-            size="md"
-            // outline={true}
+            size="xs"
+            className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+            color=""
             onClick={() => setVisible(false)}
           >
-            Close
+            View
           </Button>
         </Modal.Body>
       </Modal>
@@ -272,62 +271,6 @@ const SearchMentors = () => {
       ) : (
         ''
       )}
-
-      {/* <Table hoverable={true} striped={true}>
-        <Table.Head>
-          <Table.HeadCell>
-            <span className="sr-only">Profile</span>
-          </Table.HeadCell>
-          <Table.HeadCell>Name</Table.HeadCell>
-          <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>department</Table.HeadCell>
-          <Table.HeadCell>staff No</Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">View</span>
-          </Table.HeadCell>
-          <Table.HeadCell>
-            <span className="sr-only">View</span>
-          </Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          {mentors.map((mentor, id) => (
-            <Table.Row
-              className="bg-white dark:border-gray-700 dark:bg-gray-800"
-              key={id}
-            >
-              <Table.Cell>
-                <Avatar rounded={true} />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {mentor.firstName + ' ' + mentor.lastName}
-              </Table.Cell>
-              <Table.Cell>{mentor.email}</Table.Cell>
-              <Table.Cell>{mentor.department}</Table.Cell>
-              <Table.Cell>{mentor.staffNo}</Table.Cell>
-              <Table.Cell>
-                <Button
-                  size="xs"
-                  color=""
-                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                  onClick={() => viewModal(mentor)}
-                >
-                  View
-                </Button>
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  color="success"
-                  size="xs"
-                  outline={true}
-                  onClick={() => requestMentorship(mentor.id)}
-                >
-                  Send Request
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table> */}
 
       <div className="grid items-center mb-6 mt-6">
         {!mentor ? (

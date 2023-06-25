@@ -8,9 +8,11 @@ import { AuthContext } from '../../Auth/AuthProvider'
 
 const Mentees = () => {
   const { studentId } = useParams()
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
+
+  const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const [student, setStudent] = useState<any[]>([])
 
@@ -34,7 +36,7 @@ const Mentees = () => {
   console.log(student)
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[86.7vh]">
       <div className="flex mb-4 flex-col">
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-4 mr-6">
           <div className="flex flex-col w-full self-start mr-6">
@@ -121,7 +123,7 @@ const Mentees = () => {
       </div>
 
       <div className="flex w-full">
-        <div className="flex mr-4 align-center mb-4 rounded-2xl bg-white dark:bg-gray-200 w-1/3 flex-col p-4">
+        {/* <div className="flex mr-4 align-center mb-4 rounded-2xl bg-white dark:bg-gray-200 w-1/3 flex-col p-4">
           <span className="mb-4 font-bold text-gray-900 self-center">
             Mentorship Info
           </span>
@@ -142,83 +144,31 @@ const Mentees = () => {
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               <span>Meetings Held: </span>
-              {/* <Button size="xs" color="dark" outline={true}>
-              Schedule Meeting
-            </Button> */}
               <span className="font-semibold">0 Meetings</span>
             </span>
           </Card>
-          <span className="flex justify-around">
-            <Button size="md" color="dark" outline={true}>
+          <span className="flex gap-2 justify-around">
+            <Button size="xs" color="dark" outline={true}>
               Schedule Meeting
             </Button>
-            <Button size="md" outline={true}>
+            <Button size="xs" outline={true}>
               Send Message
             </Button>
-            <Button size="md" color="failure" outline={true}>
+            <Button size="xs" color="failure" outline={true}>
               Remove Mentee
             </Button>
           </span>
-        </div>
-        <div className="flex align-center mb-4 rounded-2xl bg-white dark:bg-gray-200 w-2/3 flex-col p-4">
+        </div> */}
+        <div className="flex align-center mb-4 rounded-2xl bg-white dark:bg-gray-200 w-full flex-col p-4">
           <span className="flex self-center font-bold mb-4">
             Student's Tasks
           </span>
           <div className="flex w-full">
-            {/* <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
-              Tasks
-            </span> */}
             <div className="w-2/3">
               <Card className="h-16 mb-4 hover:bg-gray-50">
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   Noteworthy technology
-                  <Button
-                    size="xs"
-                    color=""
-                    id="tsk-btn"
-                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-                  >
-                    View
-                  </Button>
-                </span>
-              </Card>
-              <Card className="h-16 mb-4 hover:bg-gray-50">
-                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-                  Noteworthy technology
-                  <Button
-                    size="xs"
-                    color=""
-                    id="tsk-btn"
-                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-                  >
-                    View
-                  </Button>
-                </span>
-              </Card>
-              <Card className="h-16 mb-4 hover:bg-gray-50">
-                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-                  Noteworthy technology
-                  <Button
-                    size="xs"
-                    color=""
-                    id="tsk-btn"
-                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-                  >
-                    View
-                  </Button>
-                </span>
-              </Card>
-              <Card className="h-16 mb-4 hover:bg-gray-50">
-                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-                  Noteworthy technology
-                  <Button
-                    size="xs"
-                    color=""
-                    id="tsk-btn"
-                    className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-                  >
-                    View
-                  </Button>
+                  <Badge icon={HiCheck} />
                 </span>
               </Card>
             </div>

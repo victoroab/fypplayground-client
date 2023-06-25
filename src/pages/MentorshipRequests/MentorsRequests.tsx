@@ -23,9 +23,11 @@ const studentsRequests = () => {
   //   email: 'mentor1@gmail.com',
   // }
 
-  const { session } = useContext(AuthContext)
-  const sessionData = JSON.parse(session)
-  const { user } = sessionData
+  // const { session } = useContext(AuthContext)
+  // const sessionData = JSON.parse(session)
+  // const { user } = sessionData
+
+  const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const [mount, setMount] = useState(false)
   const [students, setStudents] =
@@ -35,7 +37,7 @@ const studentsRequests = () => {
     try {
       const requests = await Axios.post(
         '/mentor/get-mentorship-requests',
-        { mentorEmail: user.email },
+        { mentorEmail: userData?.email },
         { withCredentials: true }
       )
       setStudents(requests.data['mentorshipRequests'])
@@ -51,7 +53,7 @@ const studentsRequests = () => {
   const acceptRequest = async (studentId: string) => {
     const request = await Axios.post(
       `/mentee/${studentId}/accept-mentee`,
-      { mentorEmail: user.email },
+      { mentorEmail: userData?.email },
       { withCredentials: true }
     )
 
