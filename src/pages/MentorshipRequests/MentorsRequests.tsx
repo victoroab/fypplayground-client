@@ -76,6 +76,9 @@ const studentsRequests = () => {
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">Edit</span>
+          </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {students?.map((student, id) => {
@@ -91,7 +94,6 @@ const studentsRequests = () => {
                   {student.student.firstName + ' ' + student.student.lastName}
                 </Table.Cell>
                 <Table.Cell>{student.student.email}</Table.Cell>
-                {/* <Table.Cell>{student.student.course}</Table.Cell> */}
                 <Table.Cell>{student.student.matricNo}</Table.Cell>
                 <Table.Cell>
                   <Button

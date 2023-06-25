@@ -1,7 +1,5 @@
-import { UserButton } from '@clerk/clerk-react'
 import { Alert, Avatar, Button, Table } from 'flowbite-react'
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../Auth/AuthProvider'
+import { useEffect, useState } from 'react'
 import { Axios } from '../../config/axios'
 
 type MentorRequestData = {
@@ -11,19 +9,15 @@ type MentorRequestData = {
         id: string
         firstName: string
         lastName: string
-        course: string
+        department: string
         email: string
-        matricNo: string
+        staffNo: string
       }
     }
   ]
 }
 
 const MentorshipRequests = () => {
-  // const { session } = useContext(AuthContext)
-  // const sessionData = JSON.parse(session)
-  // const { user } = sessionData
-
   const userData = JSON.parse(localStorage.getItem('userData')!)
 
   const [mount, setMount] = useState(false)
@@ -126,8 +120,8 @@ const MentorshipRequests = () => {
                   {mentor.mentor.firstName + ' ' + mentor.mentor.lastName}
                 </Table.Cell>
                 <Table.Cell>{mentor.mentor.email}</Table.Cell>
-                <Table.Cell>{mentor.mentor.course}</Table.Cell>
-                <Table.Cell>{mentor.mentor.matricNo}</Table.Cell>
+                <Table.Cell>{mentor.mentor.department}</Table.Cell>
+                <Table.Cell>{mentor.mentor.staffNo}</Table.Cell>
                 <Table.Cell>
                   <Button
                     color="failure"

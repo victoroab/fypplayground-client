@@ -67,6 +67,8 @@ const Register = () => {
     formState: { errors },
   } = useForm<SignUpData>()
 
+  const navigate = useNavigate()
+
   const signUp = async (formData: SignUpData) => {
     try {
       const request = await Axios.post(
@@ -168,25 +170,25 @@ const Register = () => {
   }
 
   const onSubmit: SubmitHandler<SignUpData> = async (formData: SignUpData) => {
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: formData.email,
-    //   password: formData.password,
-    // })
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    })
 
-    // if (data.user) {
-    //   try {
-    //     const result = await signUp(formData)
-    //     navigate('/sign-in')
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+    if (data.user) {
+      try {
+        const result = await signUp(formData)
+        navigate('/sign-in')
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
-    // if (error) {
-    //   console.log(error)
-    // }
-    const response = await signUp(formData)
-    console.log(response?.data)
+    if (error) {
+      console.log(error)
+    }
+    // const response = await signUp(formData)
+    // console.log(response?.data)
   }
 
   return (

@@ -169,28 +169,28 @@ const RegisterMentor = () => {
   }
 
   const onSubmit: SubmitHandler<SignUpData> = async (formData) => {
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: formData.email,
-    //   password: formData.password,
-    // })
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    })
 
-    // if (data.user) {
-    //   try {
-    //     const response = await signUp(formData)
-    //     if (response?.data.length > 1) {
-    //       navigate('/sign-in')
-    //     }
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+    if (data.user) {
+      try {
+        const response = await signUp(formData)
+        if (response?.data.length > 1) {
+          navigate('/sign-in')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
-    // if (error) {
-    //   console.log(error)
-    // }
+    if (error) {
+      console.log(error)
+    }
 
-    const response = await signUp(formData)
-    console.log(response?.data)
+    // const response = await signUp(formData)
+    // console.log(response?.data)
   }
 
   return (

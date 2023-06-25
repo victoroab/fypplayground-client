@@ -22,7 +22,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 const Dashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
-  console.log(userData)
   // const userData = { type: 'student', email: 'student2@gmail.com' }
   const queryClient = useQueryClient()
   const inputRef = useRef<any>(null)

@@ -1,7 +1,7 @@
 import { Alert, Table, Button, Avatar, Tooltip, Modal } from 'flowbite-react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Axios } from '../../config/axios'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 export type Mentor = {
@@ -14,16 +14,32 @@ export type Mentor = {
   rank: string
   staffNo: string
   department: string
-  Hobbies: { id: string; hobbies: string }
-  Skills: { id: string; skills: string }
+  Hobbies: { hobbies: string }
+  Skills: { skills: string }
+}
+
+export type RecommendedMentors = {
+  id: string
+  firstName: string
+  middleName: string
+  lastName: string
+  gender: string
+  email: string
+  department: string
+  staffNo: string
+  rank: string
+  similarityScore: number
+  Hobbies: { hobbies: string }
+  Skills: { skills: string }
 }
 
 const SearchMentors = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
 
-  const [mentor, setMentor] = useState<any>(null)
-
   const [mentors, setMentors] = useState<Mentor[]>([])
+  const [recommendedMentors, setRecommendedMentors] = useState<
+    RecommendedMentors[]
+  >([])
   const [alertState, setAlertState] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
@@ -31,34 +47,51 @@ const SearchMentors = () => {
   const onclick = () => setVisible(true)
   const onclose = () => setVisible(false)
 
-  const cp = async (studentEmail: string) => {
-    return Axios.post(
-      '/mentee/get-mentor',
-      { studentEmail: studentEmail },
-      { withCredentials: true }
-    ).then((res) => res.data)
-  }
-
-  const postMutation = useMutation({
-    mutationFn: cp,
-    onSuccess: (data, variables, context) => {
-      setMentor(data.mentor)
-    },
-  })
-
-  const fetchMentors = async () => {
+  const getMentors = async ({ studentEmail }: { studentEmail: string }) => {
     try {
       const mentors = await Axios.get('/mentors/view', {
         withCredentials: true,
-        headers: { 'x-user': userData.email },
+        headers: { 'x-user': studentEmail },
       })
-      if (mentor) setMentors(mentors?.data)
+      if (mentors) {
+        return mentors.data
+      }
     } catch (e) {
       console.log(e)
     }
   }
+
+  const postMutation = useMutation({
+    mutationFn: getMentors,
+    onSuccess: (data, variables, context) => {
+      setMentors(data)
+    },
+  })
+
+  const useMatchingAlgorithm = async ({
+    studentEmail,
+  }: {
+    studentEmail: string
+  }) => {
+    try {
+      const result = await Axios.get('/test-algorithm', {
+        withCredentials: true,
+        headers: { 'x-user': studentEmail },
+      })
+      return result.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const matchMutation = useMutation({
+    mutationFn: useMatchingAlgorithm,
+    onSuccess: (data) => {
+      setRecommendedMentors(data)
+    },
+  })
+
   useEffect(() => {
-    fetchMentors()
     postMutation.mutate(userData?.email)
   }, [])
 
@@ -68,12 +101,12 @@ const SearchMentors = () => {
     department: '',
     email: '',
     gender: '',
-    Hobbies: { id: '', hobbies: '' },
+    Hobbies: { hobbies: '' },
     lastName: '',
     rank: '',
     staffNo: '',
     middleName: '',
-    Skills: { id: '', skills: '' },
+    Skills: { skills: '' },
   })
 
   const viewModal = ({
@@ -88,7 +121,7 @@ const SearchMentors = () => {
     gender,
     staffNo,
     middleName,
-  }: Mentor) => {
+  }: Mentor | RecommendedMentors) => {
     setViewMentor({
       id,
       firstName,
@@ -103,16 +136,6 @@ const SearchMentors = () => {
       middleName,
     })
     onclick()
-  }
-
-  const requestMentorshipOnView = async () => {
-    await Axios.post(
-      `/mentor/${viewMentor.id}/request-mentor`,
-      userData.email,
-      {
-        withCredentials: true,
-      }
-    )
   }
 
   const requestMentorship = async (id: string) => {
@@ -144,7 +167,7 @@ const SearchMentors = () => {
   return (
     <div className="min-h-screen">
       <div className="grid items-center mb-4">
-        {!mentor ? (
+        {mentors ? (
           <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
             Mentors
           </span>
@@ -189,7 +212,7 @@ const SearchMentors = () => {
             color=""
             onClick={() => setVisible(false)}
           >
-            View
+            Close
           </Button>
         </Modal.Body>
       </Modal>
@@ -212,7 +235,7 @@ const SearchMentors = () => {
         </span>
       </Alert>
 
-      {!mentor ? (
+      {mentors ? (
         <Table hoverable={true} striped={true}>
           <Table.Head>
             <Table.HeadCell>
@@ -273,7 +296,7 @@ const SearchMentors = () => {
       )}
 
       <div className="grid items-center mb-6 mt-6">
-        {!mentor ? (
+        {mentors ? (
           <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
             Recommended Mentors
           </span>
@@ -282,7 +305,7 @@ const SearchMentors = () => {
         )}
       </div>
 
-      {!mentor ? (
+      {mentors ? (
         <Table hoverable={true}>
           <Table.Head>
             <Table.HeadCell>
@@ -292,7 +315,7 @@ const SearchMentors = () => {
             <Table.HeadCell>Email</Table.HeadCell>
             <Table.HeadCell>department</Table.HeadCell>
             <Table.HeadCell>staff No</Table.HeadCell>
-            <Table.HeadCell>Compatibiliy Score</Table.HeadCell>
+            <Table.HeadCell>Similarity Score /100</Table.HeadCell>
 
             <Table.HeadCell>
               <span className="sr-only">Edit</span>
@@ -302,65 +325,50 @@ const SearchMentors = () => {
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell>
-                <Avatar rounded={true} />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                Apple MacBook Pro 17"
-              </Table.Cell>
-              <Table.Cell>Sliver</Table.Cell>
-              <Table.Cell>Laptop</Table.Cell>
-              <Table.Cell>$2999</Table.Cell>
-              <Table.Cell>12</Table.Cell>
-              <Table.Cell>
-                <Button
-                  size="xs"
-                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                  color=""
-                >
-                  View
-                </Button>
-              </Table.Cell>
-              <Table.Cell>
-                <Button color="success" size="xs" outline={true}>
-                  Send Request
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell>
-                <Avatar rounded={true} />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                Microsoft Surface Pro
-              </Table.Cell>
-              <Table.Cell>White</Table.Cell>
-              <Table.Cell>Laptop PC</Table.Cell>
-              <Table.Cell>$1999</Table.Cell>
-              <Table.Cell>10</Table.Cell>
-              <Table.Cell>
-                <Button
-                  size="xs"
-                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                  color=""
-                >
-                  View
-                </Button>
-              </Table.Cell>
-              <Table.Cell>
-                <Button color="success" size="xs" outline={true}>
-                  Send Request
-                </Button>
-              </Table.Cell>
-            </Table.Row>
+            {recommendedMentors.map((mentor) => (
+              <Table.Row
+                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                key={mentor.id}
+              >
+                <Table.Cell>
+                  <Avatar rounded={true} />
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {mentor.firstName} {mentor.lastName}
+                </Table.Cell>
+                <Table.Cell>{mentor.email}</Table.Cell>
+                <Table.Cell>{mentor.department}</Table.Cell>
+                <Table.Cell>{mentor.staffNo}</Table.Cell>
+                <Table.Cell>{mentor.similarityScore}</Table.Cell>
+                <Table.Cell>
+                  <Button
+                    size="xs"
+                    className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                    color=""
+                    onClick={() => viewModal(mentor)}
+                  >
+                    View
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    color="success"
+                    size="xs"
+                    outline={true}
+                    onClick={() => requestMentorship(mentor.id)}
+                  >
+                    Send Request
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
           </Table.Body>
         </Table>
       ) : (
         ''
       )}
 
-      {!mentor ? (
+      {mentors ? (
         <Tooltip
           placement="left"
           content="Shows the 2 most compatible mentors for you based on the mentor matching system"
@@ -369,6 +377,7 @@ const SearchMentors = () => {
             className="mt-6 mb-4 bg-[#25425F] text-white border-2 border-[#25425F] hover:bg-[#25425F] outline-none"
             outline={true}
             color=""
+            onClick={() => matchMutation.mutate(userData?.email)}
           >
             <AiOutlineSearch className="mr-2 h-5 w-5" />
             Find Match
