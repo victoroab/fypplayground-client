@@ -97,11 +97,7 @@ const Messages = () => {
     <div className="text-lg font-bold min-h-[85vh]">
       <div className="flex min-h-[85vh] rounded-lg bg-gray-200 flex-col items-start justify-between mb-1 w-full border border-3 p-6 gap-1">
         <div className="overflow-y-scroll w-full border h-[45rem]">
-          {messages.length === 0 ? (
-            <div>
-              <Spinner color="gray" />
-            </div>
-          ) : (
+          {
             <div className="border flex flex-col" ref={bottomRef}>
               {messages
                 .sort(
@@ -136,7 +132,7 @@ const Messages = () => {
                 })}
               <div className="mt-10"></div>
             </div>
-          )}
+          }
         </div>
 
         <form
