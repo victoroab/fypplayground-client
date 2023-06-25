@@ -62,17 +62,19 @@ const Messages = () => {
     }
   }
 
+  console.log(mentor)
+
   const sentMessages = supabase
     .from('Messages')
     .select()
     .eq('sender', userData?.email)
-    .eq('receipent', userData?.mentor?.email)
+    .eq('receipent', mentor)
     .order('created_at', { ascending: true })
 
   const receivedMessages = supabase
     .from('Messages')
     .select()
-    .eq('sender', userData?.mentor?.email)
+    .eq('sender', mentor)
     .eq('receipent', userData?.email)
     .order('created_at', { ascending: true })
 
