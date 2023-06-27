@@ -232,40 +232,22 @@ const Dashboard = () => {
           </span>
 
           <div className="flex w-full flex-col self-start mr-6">
-            {/* <div className="flex w-full justify-start mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
-              <span className="font-bold w-full flex flex-col gap-3 items-start justify-center">
-                Question 1
-                <span className="text-md font-semibold">
-                  How satsified are you with the software?
-                </span>
-                <span className="flex gap-3 w-full items-center justify-between">
-                  <span className="flex gap-3">
-                    <Button size="lg" color={'dark'} outline={true}>
-                      1
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      2
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      3
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      4
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      5
-                    </Button>
-                  </span>
-                  <Tooltip
-                    content="Engaging this helps the developer improve the system"
-                    placement="top"
-                    animation="duration-300"
-                  >
-                    <BsQuestionCircle className="w-6 h-6 font-bold" />
-                  </Tooltip>
-                </span>
+            <div className="flex w-full flex-col self-start mr-6">
+              <span className="mb-1 text-md text-gray-900 font-semibold">
+                Provide Suggestions for the next fetature release
               </span>
-            </div> */}
+              <Textarea
+                className="w-full h-24 mb-3"
+                placeholder="..."
+              ></Textarea>
+              <Button
+                className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+                color=""
+                size="sm"
+              >
+                Send
+              </Button>
+            </div>
           </div>
         </div>
       </div>

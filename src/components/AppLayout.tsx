@@ -37,13 +37,13 @@ const AppLayout = () => {
 
   const location = useLocation()
 
-  if (session === 'null') {
-    return (
-      <div>
-        <Navigate to="/" state={{ from: location }} replace />
-      </div>
-    )
-  }
+  // if (session === 'null') {
+  //   return (
+  //     <div>
+  //       <Navigate to="/" state={{ from: location }} replace />
+  //     </div>
+  //   )
+  // }
 
   const userType = userData?.type // Comment out for development
 

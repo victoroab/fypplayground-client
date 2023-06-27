@@ -37,6 +37,7 @@ const MentorActions = () => {
             size="xs"
             className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
             color=""
+            onClick={() => navigate('/workspace/m/actions/schedules')}
           >
             {'>'}
           </Button>

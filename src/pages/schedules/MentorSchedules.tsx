@@ -3,7 +3,7 @@ import { Button } from 'flowbite-react'
 import { useRef } from 'react'
 import { Axios } from '../../config/axios'
 
-const Schedules = () => {
+const MentorSchedules = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
   const titleRef = useRef<any>(null)
   const dateRef = useRef<any>(null)
@@ -12,9 +12,9 @@ const Schedules = () => {
 
   const createSchedule = async () => {
     const response = await Axios.post(
-      '/mentee/create-schedule',
+      '/mentor/create-schedule',
       {
-        studentEmail: userData.email,
+        mentorEmail: userData.email,
         title: titleRef.current.value,
         date: dateRef.current.value,
       },
@@ -120,4 +120,4 @@ const Schedules = () => {
     </div>
   )
 }
-export default Schedules
+export default MentorSchedules

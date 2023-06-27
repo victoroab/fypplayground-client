@@ -33,28 +33,37 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<SignInData> = async (formData) => {
     setIsLoading(true)
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: formData.email,
-      password: formData.password,
-    })
+    // const { data, error } = await supabase.auth.signInWithPassword({
+    //   email: formData.email,
+    //   password: formData.password,
+    // })
 
-    if (data) {
-      const userType = await getUser(formData.email)
-      localStorage.setItem('userData', JSON.stringify(userType))
+    const userType = await getUser(formData.email)
+    localStorage.setItem('userData', JSON.stringify(userType))
 
-      if (data.session) {
-        if (userType.type === 'student') {
-          navigate('/workspace')
-        } else if (userType.type === 'mentor') {
-          navigate('/workspace/m')
-        }
-      }
+    if (userType.type === 'student') {
+      navigate('/workspace')
+    } else if (userType.type === 'mentor') {
+      navigate('/workspace/m')
     }
 
-    if (error) {
-      setError(error)
-      setIsLoading(false)
-    }
+    // if (data) {
+    //   const userType = await getUser(formData.email)
+    //   localStorage.setItem('userData', JSON.stringify(userType))
+
+    //   if (data.session) {
+    //     if (userType.type === 'student') {
+    //       navigate('/workspace')
+    //     } else if (userType.type === 'mentor') {
+    //       navigate('/workspace/m')
+    //     }
+    //   }
+    // }
+
+    // if (error) {
+    //   setError(error)
+    //   setIsLoading(false)
+    // }
   }
 
   // const signIn = async () => {

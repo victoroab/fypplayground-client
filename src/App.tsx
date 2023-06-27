@@ -24,7 +24,8 @@ import MentorMessages from './components/Messages/MentorMessages'
 import MentorUpload from './components/Upload/MentorUpload'
 import MentorSettings from './pages/Settings/MentorSettings'
 import Tasks from './pages/Tasks/Tasks'
-import Schedules from './pages/schedules/schedules'
+import Schedules from './pages/schedules/Schedules'
+import MentorSchedules from './pages/schedules/MentorSchedules'
 
 function App() {
   const router = createBrowserRouter([
@@ -91,6 +92,10 @@ function App() {
         { path: '/workspace/m/actions', element: <MentorActions /> },
         { path: '/workspace/m/actions/upload', element: <MentorUpload /> },
         { path: '/workspace/m/actions/message', element: <MentorMessages /> },
+        {
+          path: '/workspace/m/actions/schedules',
+          element: <MentorSchedules />,
+        },
         { path: '/workspace/m/mentees', element: <MenteesTable /> },
         { path: '/workspace/m/mentees/:studentId', element: <Mentees /> },
         {

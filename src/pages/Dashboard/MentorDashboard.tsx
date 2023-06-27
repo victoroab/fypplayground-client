@@ -10,12 +10,11 @@ import {
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { CChart } from '@coreui/react-chartjs'
 import { useNavigate } from 'react-router-dom'
 import { BsQuestionCircle } from 'react-icons/bs'
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../Auth/AuthProvider'
+import { useEffect, useRef, useState } from 'react'
 import { Axios } from '../../config/axios'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 const events = [
   { title: 'Meeting', start: new Date() },
@@ -26,6 +25,10 @@ const MentorDashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
   const navigate = useNavigate()
   const [students, setStudents] = useState<any[]>([])
+
+  const titleRef = useRef<any>(null)
+  const dateRef = useRef<any>(null)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     fetchStudents()
@@ -43,6 +46,54 @@ const MentorDashboard = () => {
       console.log(e)
     }
   }
+
+  const [events, setEvents] = useState([])
+
+  const getSchedules = async () => {
+    const response = await Axios.get('/mentor/get-schedule', {
+      withCredentials: true,
+      headers: { 'x-user': userData.email },
+    })
+    return response.data
+  }
+
+  const createSchedule = async () => {
+    const response = await Axios.post(
+      '/mentor/create-schedule',
+      {
+        mentorEmail: userData.email,
+        title: titleRef.current.value,
+        date: dateRef.current.value,
+      },
+      { withCredentials: true }
+    )
+    return response
+  }
+
+  const scheduleQuery = useQuery({
+    queryKey: ['schedules'],
+    queryFn: getSchedules,
+  })
+
+  useEffect(() => {
+    if (scheduleQuery.data) {
+      const eventsData = scheduleQuery.data.map((schedule: any) => ({
+        title: `- ${schedule.title}`,
+        date: new Date(schedule.date),
+      }))
+
+      setEvents(eventsData)
+    }
+  }, [scheduleQuery.data])
+
+  const scheduleMutation = useMutation({
+    mutationFn: createSchedule,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['schedules']),
+        (titleRef.current.value = ''),
+        (dateRef.current.value = '')
+    },
+  })
 
   function renderEventContent(eventInfo: any) {
     return (
@@ -85,45 +136,18 @@ const MentorDashboard = () => {
           className="flex flex-col w-[33rem] mb-3 h-64 items-center rounded-2xl bg-white dark:bg-gray-100 p-6"
         >
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
-          <span className="mb-4 text-md text-gray-900 font-semibold">
-            Please Engage
-          </span>
-
           <div className="flex w-full flex-col self-start mr-6">
-            {/* <div className="flex w-full justify-start mb-2 border rounded-2xl shadow-lg items-center gap-4 p-4">
-              <span className="font-bold w-full flex flex-col gap-3 items-start justify-center">
-                Question 1
-                <span className="text-md font-semibold">
-                  How satsified are you with the software?
-                </span>
-                <span className="flex gap-3 w-full items-center justify-between">
-                  <span className="flex gap-3">
-                    <Button size="lg" color={'dark'} outline={true}>
-                      1
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      2
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      3
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      4
-                    </Button>
-                    <Button size="lg" color={'dark'} outline={true}>
-                      5
-                    </Button>
-                  </span>
-                  <Tooltip
-                    content="Engaging this helps the developer improve the system"
-                    placement="top"
-                    animation="duration-300"
-                  >
-                    <BsQuestionCircle className="w-6 h-6 font-bold" />
-                  </Tooltip>
-                </span>
-              </span>
-            </div> */}
+            <span className="mb-1 text-md text-gray-900 font-semibold">
+              Provide Suggestions for the next fetature release
+            </span>
+            <Textarea className="w-full h-24 mb-3" placeholder="..."></Textarea>
+            <Button
+              className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
+              color=""
+              size="sm"
+            >
+              Send
+            </Button>
           </div>
         </div>
       </div>
@@ -151,45 +175,6 @@ const MentorDashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             My Tasks
           </span>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
-              >
-                View
-              </Button>
-            </span>
-          </Card>
           <Card className="h-16 mb-4 hover:bg-gray-50">
             <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
               Noteworthy technology
@@ -256,6 +241,7 @@ const MentorDashboard = () => {
                 sizing="md"
                 placeholder="Title of event"
                 className=""
+                ref={titleRef}
               />
             </div>
 
@@ -268,6 +254,7 @@ const MentorDashboard = () => {
                 <input
                   type="date"
                   id="date"
+                  ref={dateRef}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5"
                   placeholder="Select date"
                 />
@@ -279,6 +266,7 @@ const MentorDashboard = () => {
                 className="self-end text-white bg-[#25425F] hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
                 color=""
                 size="sm"
+                onClick={() => scheduleMutation.mutate()}
               >
                 Schedule
               </Button>
