@@ -161,7 +161,7 @@ const Features = () => {
 
               <div className="space-y-2">
                 <h5 className="text-xl font-semibold text-white transition group-hover:text-secondary">
-                  More features coming soon
+                  More features coming soon.
                 </h5>
                 <p className="text-gray-300">
                   Unlock a range of additional features on our platform,
