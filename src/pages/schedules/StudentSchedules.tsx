@@ -3,7 +3,7 @@ import { Button } from 'flowbite-react'
 import { useRef } from 'react'
 import { Axios } from '../../config/axios'
 
-const Schedules = () => {
+const StudentSchedules = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
   const titleRef = useRef<any>(null)
   const dateRef = useRef<any>(null)
@@ -120,4 +120,4 @@ const Schedules = () => {
     </div>
   )
 }
-export default Schedules
+export default StudentSchedules
