@@ -68,6 +68,7 @@ const Register = () => {
   } = useForm<SignUpData>()
 
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   const signUp = async (formData: SignUpData) => {
     try {
@@ -170,6 +171,7 @@ const Register = () => {
   }
 
   const onSubmit: SubmitHandler<SignUpData> = async (formData: SignUpData) => {
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
@@ -186,6 +188,7 @@ const Register = () => {
 
     if (error) {
       console.log(error)
+      setIsLoading(false)
     }
     // const response = await signUp(formData)
     // console.log(response?.data)

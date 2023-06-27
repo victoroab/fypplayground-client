@@ -62,6 +62,7 @@ type SignUpData = {
 
 const RegisterMentor = () => {
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -169,6 +170,7 @@ const RegisterMentor = () => {
   }
 
   const onSubmit: SubmitHandler<SignUpData> = async (formData) => {
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
@@ -187,6 +189,7 @@ const RegisterMentor = () => {
 
     if (error) {
       console.log(error)
+      setIsLoading(false)
     }
 
     // const response = await signUp(formData)

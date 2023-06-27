@@ -95,19 +95,23 @@ const Tasks = () => {
                 </Table.Cell>
                 <Table.Cell></Table.Cell>
                 <Table.Cell>
-                  <Button
-                    size="xs"
-                    color="gray"
-                    outline={true}
-                    onClick={() =>
-                      completeMutation.mutate({
-                        id: task.id,
-                        date: new Date().toDateString(),
-                      })
-                    }
-                  >
-                    Mark as Complete
-                  </Button>
+                  {task.completed.length > 2 ? (
+                    'Done'
+                  ) : (
+                    <Button
+                      size="xs"
+                      color="gray"
+                      outline={true}
+                      onClick={() =>
+                        completeMutation.mutate({
+                          id: task.id,
+                          date: new Date().toDateString(),
+                        })
+                      }
+                    >
+                      Mark as completed
+                    </Button>
+                  )}
                 </Table.Cell>
               </Table.Row>
             ))}

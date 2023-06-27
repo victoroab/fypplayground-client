@@ -47,7 +47,7 @@ const AppLayout = () => {
 
   const userType = userData?.type // Comment out for development
 
-  // const userType: any = 'mentor'
+  // const userType: any = 'student'
 
   const navigate = useNavigate()
 

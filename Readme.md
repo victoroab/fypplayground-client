@@ -3,7 +3,7 @@
 - [x] Create Mentor UI
 - [x] Create Registration and Login pages
 - [x] Integrate Mentor endpoints
-- [] Integrate matching system endpoint (Table should display the score)
+- [x] Integrate matching system endpoint (Table should display the score)
 - [x] Implement tasks Logic
 - [x] Change AppNavBar component name to AppLayout
 - [] Schedule event should send email notificaation to both mentor and mentee
@@ -15,11 +15,11 @@
 - [x] Create messages and file upload components for actions page
 - [x] Create ui for file and image upload
 - [x] Integrate file and image upload
-- [] Implement automated matching
+- [x] Implement automated matching
 - [] Put questions in feedback section on dashboard
 - [] Make graph for tasks dynamic
 - [] Create schedule meeting page with form that collects more information about meeting
-- [] Create task page with table that allows you to complete task
+- [x] Create task page with table that allows you to complete task
 - [] Create settings page
 - [] Make "workspace" on landing page display if user is authenticated
 - [] replace avatars with random images

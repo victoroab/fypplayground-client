@@ -5,15 +5,10 @@ import { useParams } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import { Axios } from '../../config/axios'
 import { AuthContext } from '../../Auth/AuthProvider'
+import { useQuery } from '@tanstack/react-query'
 
 const Mentees = () => {
   const { studentId } = useParams()
-  // const { session } = useContext(AuthContext)
-  // const sessionData = JSON.parse(session)
-  // const { user } = sessionData
-
-  const userData = JSON.parse(localStorage.getItem('userData')!)
-
   const [student, setStudent] = useState<any[]>([])
 
   useEffect(() => {
@@ -33,7 +28,39 @@ const Mentees = () => {
     }
   }
 
-  console.log(student)
+  const getTasks = async () => {
+    try {
+      const tasks = await Axios.get('/mentee/get-tasks', {
+        withCredentials: true,
+        headers: { 'x-user': student[0]?.email },
+      })
+      return tasks.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const tasksQuery = useQuery({
+    queryKey: ['tasks'],
+    queryFn: getTasks,
+  })
+
+  const getTaskNumbers = async () => {
+    try {
+      const numbers = await Axios.get('/mentee/get-task-number', {
+        withCredentials: true,
+        headers: { 'x-user': student[0]?.email },
+      })
+      return numbers.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const numbersQuery = useQuery({
+    queryKey: ['numbers'],
+    queryFn: getTaskNumbers,
+  })
 
   return (
     <div className="min-h-[86.7vh]">
@@ -41,7 +68,7 @@ const Mentees = () => {
         <div className="flex flex-col w-full justify-start items-center rounded-2xl bg-white dark:bg-gray-100 p-4 mr-6">
           <div className="flex flex-col w-full self-start mr-6">
             <span className="flex self-center font-bold mb-4">Bio</span>
-            {student.map((student, id) => (
+            {student?.map((student, id) => (
               <div
                 className="flex justify-around mb-2 border rounded-2xl shadow-lg gap-4 p-4"
                 key={id}
@@ -52,11 +79,11 @@ const Mentees = () => {
                     Name:{' '}
                     <span className="font-semibold">
                       {`${
-                        student.firstName +
+                        student?.firstName +
                         ' ' +
-                        student.middleName +
+                        student?.middleName +
                         ' ' +
-                        student.lastName
+                        student?.lastName
                       }`}
                     </span>
                   </span>
@@ -70,26 +97,26 @@ const Mentees = () => {
                 <div className="flex flex-col gap-3 justify-start items-start">
                   <span className="font-bold ">
                     Matric No:{' '}
-                    <span className="font-semibold">{student.matricNo}</span>
+                    <span className="font-semibold">{student?.matricNo}</span>
                   </span>
                   <span className="font-bold">
                     Email:{' '}
-                    <span className="font-semibold">{student.email}</span>
+                    <span className="font-semibold">{student?.email}</span>
                   </span>
                   <span className="font-bold">
                     Gender:{' '}
-                    <span className="font-semibold">{student.gender}</span>{' '}
+                    <span className="font-semibold">{student?.gender}</span>{' '}
                   </span>
                 </div>
                 <div className="flex flex-col gap-3 justify-start items-start">
                   <span className="font-bold">
                     Ethnicity:{' '}
-                    <span className="font-semibold">{student.ethnicity}</span>{' '}
+                    <span className="font-semibold">{student?.ethnicity}</span>{' '}
                   </span>
                   <span className="font-bold">
                     Hobbies:{' '}
                     <span className="font-semibold">
-                      {student.Hobbies.hobbies
+                      {student?.Hobbies.hobbies
                         .split(',')
                         .map((hobbie: any) => `${hobbie + ',' + ' '}`)}
                     </span>
@@ -97,7 +124,7 @@ const Mentees = () => {
                   <span className="font-bold">
                     Skills:{' '}
                     <span className="font-semibold">
-                      {student.Skills.skills
+                      {student?.Skills.skills
                         .split(',')
                         .map((skill: any) => `${skill + ',' + ' '}`)}
                     </span>
@@ -110,7 +137,7 @@ const Mentees = () => {
                   <span className="font-bold">
                     Days Available:{' '}
                     <span className="font-semibold">
-                      {student.Availability.days
+                      {student?.Availability.days
                         .split(',')
                         .map((day: any) => `${day + ',' + ' '}`)}
                     </span>
@@ -165,12 +192,17 @@ const Mentees = () => {
           </span>
           <div className="flex w-full">
             <div className="w-2/3">
-              <Card className="h-16 mb-4 hover:bg-gray-50">
-                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-                  Noteworthy technology
-                  <Badge icon={HiCheck} />
-                </span>
-              </Card>
+              {tasksQuery.data?.map((task: any, id: any) => (
+                <Card
+                  className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
+                  key={id}
+                >
+                  <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
+                    {task.title}
+                    {task.completed !== '' ? <Badge icon={HiCheck} /> : ''}
+                  </span>
+                </Card>
+              ))}
             </div>
             <div
               id="dash-r1"
@@ -189,7 +221,7 @@ const Mentees = () => {
                   datasets: [
                     {
                       backgroundColor: ['#34495E', '#85929E'],
-                      data: [60, 40],
+                      data: numbersQuery.data,
                     },
                   ],
                 }}

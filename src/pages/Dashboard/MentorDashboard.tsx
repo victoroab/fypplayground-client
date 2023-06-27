@@ -23,14 +23,8 @@ const events = [
 ]
 
 const MentorDashboard = () => {
-  // const { session } = useContext(AuthContext)
-  // const sessionData = JSON.parse(session)
-  // const { user } = sessionData
   const userData = JSON.parse(localStorage.getItem('userData')!)
-  console.log(userData?.email)
-
   const navigate = useNavigate()
-
   const [students, setStudents] = useState<any[]>([])
 
   useEffect(() => {
@@ -49,8 +43,6 @@ const MentorDashboard = () => {
       console.log(e)
     }
   }
-
-  console.log(students)
 
   function renderEventContent(eventInfo: any) {
     return (

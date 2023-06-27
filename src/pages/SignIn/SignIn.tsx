@@ -2,6 +2,7 @@ import { supabase } from '../../config/supabase'
 import { Link, useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useState } from 'react'
+import { Spinner } from 'flowbite-react'
 import { Axios } from '../../config/axios'
 
 type SignInData = {
@@ -12,6 +13,7 @@ type SignInData = {
 const SignIn = () => {
   const navigate = useNavigate()
   const [error, setError] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const getUser = async (email: string) => {
     const data = await Axios.post(
@@ -30,24 +32,28 @@ const SignIn = () => {
   } = useForm<SignInData>()
 
   const onSubmit: SubmitHandler<SignInData> = async (formData) => {
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
     })
 
-    const userType = await getUser(formData.email)
-    localStorage.setItem('userData', JSON.stringify(userType))
+    if (data) {
+      const userType = await getUser(formData.email)
+      localStorage.setItem('userData', JSON.stringify(userType))
 
-    if (data.session) {
-      if (userType.type === 'student') {
-        navigate('/workspace')
-      } else if (userType.type === 'mentor') {
-        navigate('/workspace/m')
+      if (data.session) {
+        if (userType.type === 'student') {
+          navigate('/workspace')
+        } else if (userType.type === 'mentor') {
+          navigate('/workspace/m')
+        }
       }
     }
 
     if (error) {
       setError(error)
+      setIsLoading(false)
     }
   }
 
@@ -133,7 +139,7 @@ const SignIn = () => {
                       type="submit"
                       className="w-full text-white bg-[#25425F] hover:bg-[#6E8498] focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
                     >
-                      Sign In
+                      {!isLoading ? 'Sign In' : <Spinner />}
                     </button>
 
                     {/* <span className="text-gray-400 text-sm">
