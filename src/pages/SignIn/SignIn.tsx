@@ -38,14 +38,14 @@ const SignIn = () => {
       password: formData.password,
     })
 
-    const userType = await getUser(formData.email)
-    localStorage.setItem('userData', JSON.stringify(userType))
+    // const userType = await getUser(formData.email)
+    // localStorage.setItem('userData', JSON.stringify(userType))
 
-    if (userType.type === 'student') {
-      navigate('/workspace')
-    } else if (userType.type === 'mentor') {
-      navigate('/workspace/m')
-    }
+    // if (userType.type === 'student') {
+    //   navigate('/workspace')
+    // } else if (userType.type === 'mentor') {
+    //   navigate('/workspace/m')
+    // }
 
     if (data) {
       const userType = await getUser(formData.email)

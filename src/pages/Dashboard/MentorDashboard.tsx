@@ -7,6 +7,8 @@ import {
   Label,
   TextInput,
   Tooltip,
+  Spinner,
+  Badge,
 } from 'flowbite-react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -15,16 +17,14 @@ import { BsQuestionCircle } from 'react-icons/bs'
 import { useEffect, useRef, useState } from 'react'
 import { Axios } from '../../config/axios'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-
-const events = [
-  { title: 'Meeting', start: new Date() },
-  { title: 'Check', start: new Date('March 14, 2023 15:13:00:') },
-]
+import { HiCheck } from 'react-icons/hi'
 
 const MentorDashboard = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
   const navigate = useNavigate()
   const [students, setStudents] = useState<any[]>([])
+
+  const inputRef = useRef<any>(null)
 
   const titleRef = useRef<any>(null)
   const dateRef = useRef<any>(null)
@@ -46,6 +46,64 @@ const MentorDashboard = () => {
       console.log(e)
     }
   }
+
+  const getTasks = async () => {
+    try {
+      const tasks = await Axios.get('/mentor/get-tasks', {
+        withCredentials: true,
+        headers: { 'x-user': userData?.email },
+      })
+      return tasks.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const tasksQuery = useQuery({
+    queryKey: ['tasks'],
+    queryFn: getTasks,
+  })
+
+  const createTask = async () => {
+    try {
+      const result = await Axios.post(
+        '/mentor/create-task',
+        {
+          mentorEmail: userData?.email,
+          title: inputRef.current.value,
+        },
+        { withCredentials: true }
+      )
+      return result
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const createTaskMutation = useMutation({
+    mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['tasks']), (inputRef.current.value = '')
+      queryClient.invalidateQueries(['numbers'])
+    },
+  })
+
+  const getTaskNumbers = async () => {
+    try {
+      const numbers = await Axios.get('/mentor/get-task-number', {
+        withCredentials: true,
+        headers: { 'x-user': userData.email },
+      })
+      return numbers.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const numbersQuery = useQuery({
+    queryKey: ['numbers'],
+    queryFn: getTaskNumbers,
+  })
 
   const [events, setEvents] = useState([])
 
@@ -138,7 +196,7 @@ const MentorDashboard = () => {
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
           <div className="flex w-full flex-col self-start mr-6">
             <span className="mb-1 text-md text-gray-900 font-semibold">
-              Provide Suggestions for the next fetature release
+              Provide Suggestions for the next feature release
             </span>
             <Textarea className="w-full h-24 mb-3" placeholder="..."></Textarea>
             <Button
@@ -175,19 +233,22 @@ const MentorDashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             My Tasks
           </span>
-          <Card className="h-16 mb-4 hover:bg-gray-50">
-            <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology
-              <Button
-                size="xs"
-                color=""
-                id="tsk-btn"
-                className="bg-white border-2 border-[#25425F] hover:bg-[#25425F] hover:text-white"
+          {tasksQuery.isLoading ? (
+            <Spinner />
+          ) : (
+            tasksQuery.data?.slice(0, 4).map((task: any, id: any) => (
+              <Card
+                className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
+                key={id}
+                onClick={() => navigate('/workspace/actions/tasks')}
               >
-                View
-              </Button>
-            </span>
-          </Card>
+                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
+                  {task.title}
+                  {task.completed !== '' ? <Badge icon={HiCheck} /> : ''}
+                </span>
+              </Card>
+            ))
+          )}
         </div>
       </div>
 
@@ -209,11 +270,16 @@ const MentorDashboard = () => {
               placeholder="Input a task"
               required={true}
               rows={4}
+              ref={inputRef}
             />
             <Button
               className="bg-[#25425F] text-white hover:bg-white hover:text-[#6E8498] hover:border-[#6E8498] border-2"
               color=""
               size="sm"
+              onClick={() => {
+                createTaskMutation.mutate()
+                // console.log(inputRef.current.value)
+              }}
             >
               Create
             </Button>

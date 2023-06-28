@@ -227,10 +227,6 @@ const Dashboard = () => {
           className="flex flex-col w-[33rem] mb-3 h-64 items-center rounded-2xl bg-white dark:bg-gray-100 p-6"
         >
           <span className="mb-4 text-lg text-gray-900 font-bold">Feedback</span>
-          <span className="mb-4 text-md text-gray-900 font-semibold">
-            Please Engage
-          </span>
-
           <div className="flex w-full flex-col self-start mr-6">
             <div className="flex w-full flex-col self-start mr-6">
               <span className="mb-1 text-md text-gray-900 font-semibold">
