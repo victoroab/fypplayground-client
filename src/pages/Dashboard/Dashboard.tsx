@@ -274,7 +274,7 @@ const Dashboard = () => {
           {tasksQuery.isLoading ? (
             <Spinner />
           ) : (
-            tasksQuery.data
+            tasksQuery?.data
               ?.map((task: any, id: any) => (
                 <Card
                   className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
