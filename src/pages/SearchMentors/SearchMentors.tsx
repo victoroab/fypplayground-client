@@ -35,6 +35,7 @@ export type RecommendedMentors = {
 
 const SearchMentors = () => {
   const userData = JSON.parse(localStorage.getItem('userData')!)
+  // check if student has a mentor here
 
   const [mentors, setMentors] = useState<Mentor[]>([])
   const [recommendedMentors, setRecommendedMentors] = useState<
@@ -63,7 +64,7 @@ const SearchMentors = () => {
 
   const postMutation = useMutation({
     mutationFn: getMentors,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       setMentors(data)
     },
   })
@@ -167,13 +168,16 @@ const SearchMentors = () => {
   return (
     <div className="min-h-screen">
       <div className="grid items-center mb-4">
-        {mentors ? (
+        {/* {mentors ? (
           <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
             Mentors
           </span>
         ) : (
           'You have a mentor'
-        )}
+        )} */}
+        <span className="flex items-center justify-around text-lg text-gray-900 font-bold">
+          Mentors
+        </span>
       </div>
 
       <Modal show={visible} size="xl" onClose={onclose}>
@@ -235,65 +239,61 @@ const SearchMentors = () => {
         </span>
       </Alert>
 
-      {mentors ? (
-        <Table hoverable={true} striped={true}>
-          <Table.Head>
-            <Table.HeadCell>
-              <span className="sr-only">Profile</span>
-            </Table.HeadCell>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
-            <Table.HeadCell>department</Table.HeadCell>
-            <Table.HeadCell>staff No</Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">View</span>
-            </Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">View</span>
-            </Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {mentors.map((mentor, id) => (
-              <Table.Row
-                className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                key={id}
-              >
-                <Table.Cell>
-                  <Avatar rounded={true} />
-                </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  {mentor.firstName + ' ' + mentor.lastName}
-                </Table.Cell>
-                <Table.Cell>{mentor.email}</Table.Cell>
-                <Table.Cell>{mentor.department}</Table.Cell>
-                <Table.Cell>{mentor.staffNo}</Table.Cell>
-                <Table.Cell>
-                  <Button
-                    size="xs"
-                    color=""
-                    className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
-                    onClick={() => viewModal(mentor)}
-                  >
-                    View
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    color="success"
-                    size="xs"
-                    outline={true}
-                    onClick={() => requestMentorship(mentor.id)}
-                  >
-                    Send Request
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-      ) : (
-        ''
-      )}
+      <Table hoverable={true} striped={true}>
+        <Table.Head>
+          <Table.HeadCell>
+            <span className="sr-only">Profile</span>
+          </Table.HeadCell>
+          <Table.HeadCell>Name</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell>department</Table.HeadCell>
+          <Table.HeadCell>staff No</Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">View</span>
+          </Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">View</span>
+          </Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {mentors?.map((mentor, id) => (
+            <Table.Row
+              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              key={id}
+            >
+              <Table.Cell>
+                <Avatar rounded={true} />
+              </Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                {mentor.firstName + ' ' + mentor.lastName}
+              </Table.Cell>
+              <Table.Cell>{mentor.email}</Table.Cell>
+              <Table.Cell>{mentor.department}</Table.Cell>
+              <Table.Cell>{mentor.staffNo}</Table.Cell>
+              <Table.Cell>
+                <Button
+                  size="xs"
+                  color=""
+                  className="bg-[#25425F] text-white hover:bg-white border-2 border-b-4 hover:text-[#6E8498] border-[#25425F] hover:border-[#6E8498]"
+                  onClick={() => viewModal(mentor)}
+                >
+                  View
+                </Button>
+              </Table.Cell>
+              <Table.Cell>
+                <Button
+                  color="success"
+                  size="xs"
+                  outline={true}
+                  onClick={() => requestMentorship(mentor.id)}
+                >
+                  Send Request
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
 
       <div className="grid items-center mb-6 mt-6">
         {mentors ? (

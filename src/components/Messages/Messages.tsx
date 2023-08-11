@@ -28,15 +28,6 @@ const Messages = () => {
     bottomRef!.current!.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }
 
-  useEffect(() => {
-    fetchMentor()
-    Promise.all([sentMessages, receivedMessages]).then((data) =>
-      setMessages([...data[0].data!, ...data[1].data!])
-    )
-    scrollToBottom()
-    // initialScroll()
-  }, [remount])
-
   supabase
     .channel('any')
     .on(
@@ -61,8 +52,6 @@ const Messages = () => {
       console.log(e)
     }
   }
-
-  console.log(mentor)
 
   const sentMessages = supabase
     .from('Messages')
@@ -94,6 +83,17 @@ const Messages = () => {
     scrollToBottom()
     messageRef.current!.value = ''
   }
+
+  useEffect(() => {
+    fetchMentor()
+    Promise.all([sentMessages, receivedMessages]).then((data) => {
+      setMessages([...data[0].data!, ...data[1].data!]),
+        setRemount((prev) => !prev)
+    })
+    scrollToBottom()
+
+    // initialScroll()
+  }, [])
 
   return (
     <div className="text-lg font-bold min-h-[85vh]">
