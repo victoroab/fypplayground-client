@@ -134,7 +134,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (scheduleQuery.data) {
-      const eventsData = scheduleQuery.data.map((schedule: any) => ({
+      const eventsData = scheduleQuery?.data?.map((schedule: any) => ({
         title: `- ${schedule.title}`,
         date: new Date(schedule.date),
       }))
