@@ -135,7 +135,7 @@ const MentorDashboard = () => {
 
   useEffect(() => {
     if (scheduleQuery.data) {
-      const eventsData = scheduleQuery.data.map((schedule: any) => ({
+      const eventsData = scheduleQuery?.data?.map((schedule: any) => ({
         title: `- ${schedule.title}`,
         date: new Date(schedule.date),
       }))
@@ -172,7 +172,7 @@ const MentorDashboard = () => {
             My Students
           </span>
           <div className="flex gap-7 w-full justify-start cursor-default">
-            {students.map((student, id) => (
+            {students?.map((student, id) => (
               <div
                 className="flex justify-center mb-2 border rounded-2xl shadow-lg items-center gap-3 p-4 pt-2 hover:border-[#6E8498]"
                 onClick={() => navigate(`/workspace/m/mentees/${student.id}`)}
@@ -236,11 +236,12 @@ const MentorDashboard = () => {
           {tasksQuery.isLoading ? (
             <Spinner />
           ) : (
-            tasksQuery.data?.slice(0, 4).map((task: any, id: any) => (
+            tasksQuery.data?.slice(0, 4)?.map((task: any, id: any) => (
               <Card
                 className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
                 key={id}
-                onClick={() => navigate('/workspace/actions/tasks')}
+                // onClick={() => navigate('/workspace/actions/tasks')}
+                // Add route for this
               >
                 <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
                   {task.title}

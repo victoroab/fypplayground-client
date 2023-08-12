@@ -116,9 +116,9 @@ const Mentees = () => {
                   <span className="font-bold">
                     Hobbies:{' '}
                     <span className="font-semibold">
-                      {student?.Hobbies.hobbies
-                        .split(',')
-                        .map((hobbie: any) => `${hobbie + ',' + ' '}`)}
+                      {student?.Hobbies?.hobbies
+                        ?.split(',')
+                        ?.map((hobbie: any) => `${hobbie + ',' + ' '}`)}
                     </span>
                   </span>
                   <span className="font-bold">
@@ -126,7 +126,7 @@ const Mentees = () => {
                     <span className="font-semibold">
                       {student?.Skills.skills
                         .split(',')
-                        .map((skill: any) => `${skill + ',' + ' '}`)}
+                        ?.map((skill: any) => `${skill + ',' + ' '}`)}
                     </span>
                   </span>
                 </div>
@@ -139,7 +139,7 @@ const Mentees = () => {
                     <span className="font-semibold">
                       {student?.Availability.days
                         .split(',')
-                        .map((day: any) => `${day + ',' + ' '}`)}
+                        ?.map((day: any) => `${day + ',' + ' '}`)}
                     </span>
                   </span>
                 </div>
