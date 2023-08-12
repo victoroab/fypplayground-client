@@ -271,24 +271,22 @@ const Dashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Tasks
           </span>
-          {/* {tasksQuery.isLoading ? (
+          {tasksQuery.isLoading ? (
             <Spinner />
           ) : (
-            tasksQuery?.data
-              ?.map((task: any, id: any) => (
-                <Card
-                  className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
-                  key={id}
-                  onClick={() => navigate('/workspace/actions/tasks')}
-                >
-                  <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
-                    {task.title}
-                    {task.completed !== '' ? <Badge icon={HiCheck} /> : ''}
-                  </span>
-                </Card>
-              ))
-              .slice(0, 4)
-          )} */}
+            tasksQuery?.data?.slice(0, 4)?.map((task: any, id: any) => (
+              <Card
+                className="h-auto mb-4 hover:bg-gray-50 cursor-pointer"
+                key={id}
+                onClick={() => navigate('/workspace/actions/tasks')}
+              >
+                <span className="text-l flex items-center justify-between font-bold tracking-tight text-gray-900 dark:text-white">
+                  {task.title}
+                  {task.completed !== '' ? <Badge icon={HiCheck} /> : ''}
+                </span>
+              </Card>
+            ))
+          )}
         </div>
       </div>
 
