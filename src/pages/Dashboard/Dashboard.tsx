@@ -271,7 +271,7 @@ const Dashboard = () => {
           <span className="mt-4 mb-4 text-xl font-bold text-gray-900 self-center">
             Tasks
           </span>
-          {tasksQuery.isLoading ? (
+          {/* {tasksQuery.isLoading ? (
             <Spinner />
           ) : (
             tasksQuery?.data
@@ -288,7 +288,7 @@ const Dashboard = () => {
                 </Card>
               ))
               .slice(0, 4)
-          )}
+          )} */}
         </div>
       </div>
 
