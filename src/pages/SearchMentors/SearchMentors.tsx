@@ -2,7 +2,7 @@ import { Alert, Table, Button, Avatar, Tooltip, Modal } from 'flowbite-react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { Axios } from '../../config/axios'
 import { useState, useEffect } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 export type Mentor = {
   id: string
@@ -48,6 +48,17 @@ const SearchMentors = () => {
   const onclick = () => setVisible(true)
   const onclose = () => setVisible(false)
 
+  const gMentors = async () => {
+    const response = await Axios.get('/mentors/view', {
+      withCredentials: true,
+      headers: { 'x-user': userData.email },
+    })
+    return response.data
+  }
+
+  const mentorsQuery = useQuery({ queryKey: ['mentors'], queryFn: gMentors })
+  console.log(mentorsQuery.data)
+
   const getMentors = async ({ studentEmail }: { studentEmail: string }) => {
     try {
       const mentors = await Axios.get('/mentors/view', {
@@ -62,12 +73,12 @@ const SearchMentors = () => {
     }
   }
 
-  const postMutation = useMutation({
-    mutationFn: getMentors,
-    onSuccess: (data) => {
-      setMentors(data)
-    },
-  })
+  // const postMutation = useMutation({
+  //   mutationFn: getMentors,
+  //   onSuccess: (data) => {
+  //     setMentors(data)
+  //   },
+  // })
 
   const useMatchingAlgorithm = async ({
     studentEmail,
@@ -93,7 +104,8 @@ const SearchMentors = () => {
   })
 
   useEffect(() => {
-    postMutation.mutate(userData?.email)
+    // postMutation.mutate(userData?.email)
+    setMentors(mentorsQuery.data)
   }, [])
 
   const [viewMentor, setViewMentor] = useState<Mentor>({
@@ -256,7 +268,7 @@ const SearchMentors = () => {
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {mentors?.map((mentor, id) => (
+          {mentorsQuery.data?.map((mentor: any, id: any) => (
             <Table.Row
               className="bg-white dark:border-gray-700 dark:bg-gray-800"
               key={id}
